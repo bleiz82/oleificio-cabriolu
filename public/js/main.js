@@ -81,20 +81,31 @@ function initGSAP(){
     }
   });
 
-  /* HERO TEXT */
-  const heroTL = gsap.timeline({
-    scrollTrigger:{
-      trigger:'.hero',
-      start:'top top',
-      end:'60% top',
-      scrub:1
+  /* HERO TEXT ANIMATION (Entra a frame 60, Esce all'inizio Prodotti) */
+  const heroContent = document.querySelector('.hero__content');
+  gsap.set(heroContent, { opacity: 0, y: 30 }); // Stato iniziale nascosto
+
+  // Entrata: inizia al 40% dello scroll hero, finisce al 50% (frame 60)
+  gsap.to(heroContent, {
+    opacity: 1, y: 0, duration: 1,
+    scrollTrigger: {
+      trigger: '.hero',
+      start: '40% top',
+      end: '55% top',
+      scrub: 1
     }
   });
-  heroTL
-    .to('.hero__line', { opacity:1, y:0, stagger:0.15, duration:1 })
-    .to('.hero__sub', { opacity:1, y:0, duration:0.8 }, '-=0.5')
-    .to('.hero__actions', { opacity:1, y:0, duration:0.6 }, '-=0.4')
-    .to('.hero__proof', { opacity:1, y:0, duration:0.5 }, '-=0.3');
+
+  // Uscita: sfuma appena iniziano i prodotti (frame 120+)
+  gsap.to(heroContent, {
+    opacity: 0, y: -20,
+    scrollTrigger: {
+      trigger: '.prodotti',
+      start: 'top bottom',
+      end: 'top 80%',
+      scrub: true
+    }
+  });
 
   /* HERO SCROLL INDICATOR */
   gsap.to('.hero__scroll', { opacity:1, duration:1, delay:1.5 });

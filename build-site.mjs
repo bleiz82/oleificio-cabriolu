@@ -43,7 +43,7 @@ const html = `<!DOCTYPE html>
 <!-- NAV -->
 <nav id="nav" class="nav">
 <div class="nav__inner">
-<a href="/" class="nav__logo" aria-label="Oleificio Cabriolu"><span class="nav__logo-text">CABRIOLU</span><span class="nav__logo-sub">dal 1890</span></a>
+<a href="/" class="nav__logo" aria-label="Oleificio Cabriolu"><img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu" class="nav__logo-img"></a>
 <ul class="nav__links">
 <li><a href="#prodotti">Prodotti</a></li>
 <li><a href="#storia">La Nostra Storia</a></li>
@@ -70,10 +70,10 @@ const html = `<!DOCTYPE html>
 <section id="hero" class="hero">
 <div class="hero__content">
 <h1 class="hero__title">
-<span class="hero__line hero__line--gold">L'olio che cercavi</span>
-<span class="hero__line">non viene dal supermercato</span>
+<span class="hero__line hero__line--gold">Cinque generazioni.</span>
+<span class="hero__line hero__line--cream">Un solo olio.</span>
 </h1>
-<p class="hero__sub">Extravergine sardo di cultivar Bosana e Nera di Villacidro, franto a freddo entro 24 ore dalla raccolta. Dal 1890, cinque generazioni di frantoiani.</p>
+<p class="hero__sub">Franto a freddo entro 24 ore. Cultivar Bosana e Nera di Villacidro, ai piedi del Monte Linas. Dal 1890, dalla Sardegna alla tua tavola.</p>
 <div class="hero__actions">
 <a href="#prodotti" class="btn btn--gold">Scopri i Nostri Oli</a>
 <a href="#storia" class="btn btn--outline">La Nostra Storia</a>
@@ -403,8 +403,8 @@ address{font-style:normal}
 .nav--scrolled{background:rgba(10,10,10,.92);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(200,169,110,.1)}
 .nav__inner{max-width:1200px;margin:0 auto;padding:0 24px;width:100%;display:flex;align-items:center;justify-content:space-between}
 .nav__logo{display:flex;flex-direction:column;line-height:1}
-.nav__logo-text{font-family:var(--font-display);font-weight:700;font-size:1.5rem;color:var(--gold);letter-spacing:3px}
-.nav__logo-sub{font-family:var(--font-body);font-weight:300;font-size:.65rem;letter-spacing:4px;color:var(--cream-dim);text-transform:uppercase}
+.nav__logo-img{width:160px;height:auto;display:block}
+@media(max-width:768px){.nav__logo-img{width:120px}}
 .nav__links{display:flex;gap:32px;align-items:center}
 .nav__links a{font-size:.85rem;letter-spacing:1px;text-transform:uppercase;color:var(--cream-dim);transition:color .3s;position:relative}
 .nav__links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s}
@@ -429,6 +429,7 @@ address{font-style:normal}
 .hero__title{font-family:var(--font-display);font-weight:700;font-size:clamp(2.2rem,6vw,4.5rem);line-height:1.12;margin-bottom:24px}
 .hero__line{display:block;opacity:0;transform:translateY(40px)}
 .hero__line--gold{color:var(--gold)}
+.hero__line--cream{color:var(--cream)}
 .hero__sub{font-size:1.05rem;color:var(--cream-dim);max-width:560px;line-height:1.7;margin-bottom:32px;opacity:0;transform:translateY(20px)}
 .hero__actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;transform:translateY(20px)}
 .hero__proof{display:flex;align-items:center;gap:12px;margin-top:28px;opacity:0;transform:translateY(20px)}
@@ -713,20 +714,31 @@ function initGSAP(){
     }
   });
 
-  /* HERO TEXT */
-  const heroTL = gsap.timeline({
-    scrollTrigger:{
-      trigger:'.hero',
-      start:'top top',
-      end:'60% top',
-      scrub:1
+  /* HERO TEXT ANIMATION (Entra a frame 60, Esce all'inizio Prodotti) */
+  const heroContent = document.querySelector('.hero__content');
+  gsap.set(heroContent, { opacity: 0, y: 30 }); // Stato iniziale nascosto
+
+  // Entrata: inizia al 40% dello scroll hero, finisce al 50% (frame 60)
+  gsap.to(heroContent, {
+    opacity: 1, y: 0, duration: 1,
+    scrollTrigger: {
+      trigger: '.hero',
+      start: '40% top',
+      end: '55% top',
+      scrub: 1
     }
   });
-  heroTL
-    .to('.hero__line', { opacity:1, y:0, stagger:0.15, duration:1 })
-    .to('.hero__sub', { opacity:1, y:0, duration:0.8 }, '-=0.5')
-    .to('.hero__actions', { opacity:1, y:0, duration:0.6 }, '-=0.4')
-    .to('.hero__proof', { opacity:1, y:0, duration:0.5 }, '-=0.3');
+
+  // Uscita: sfuma appena iniziano i prodotti (frame 120+)
+  gsap.to(heroContent, {
+    opacity: 0, y: -20,
+    scrollTrigger: {
+      trigger: '.prodotti',
+      start: 'top bottom',
+      end: 'top 80%',
+      scrub: true
+    }
+  });
 
   /* HERO SCROLL INDICATOR */
   gsap.to('.hero__scroll', { opacity:1, duration:1, delay:1.5 });
