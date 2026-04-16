@@ -57,8 +57,6 @@
   function initGSAP() {
     gsap.registerPlugin(ScrollTrigger);
 
-    const bodyH = document.body.scrollHeight - window.innerHeight;
-
     /* MASTER CANVAS */
     ScrollTrigger.create({
       trigger: 'body',
@@ -74,8 +72,8 @@
     });
 
     /* ═══════════════════════════════════════
-       HERO — fixed centrato con sfondo radiale scuro
-       v14: timing 50/5/40/5
+       HERO — fixed centrato
+       v16: timing 50/5/45 — appare a metà, resta fino alla fine
        ═══════════════════════════════════════ */
     const heroContent = document.querySelector('.hero__content');
     const heroChildren = heroContent.querySelectorAll('.hero__line, .hero__sub, .hero__actions, .hero__proof');
@@ -101,11 +99,10 @@
         onEnterBack: () => { heroContent.style.display = 'flex'; }
       }
     })
-      .to(heroContent, { opacity: 0, duration: 50 })          /* ← era 70 */
-      .to(heroContent, { opacity: 1, duration: 5 })
+      .to(heroContent, { opacity: 0, duration: 50 })                                           // 0-50%   invisibile
+      .to(heroContent, { opacity: 1, duration: 5 })                                            // 50-55%  fade in
       .to(heroChildren, { opacity: 1, y: 0, visibility: 'visible', stagger: 0.3, duration: 5 }, '<')
-      .to(heroContent, { opacity: 1, duration: 40 })          /* ← era 20 */
-      .to(heroContent, { opacity: 0, duration: 5 });
+      .to(heroContent, { opacity: 1, duration: 45 });                                          // 55-100% resta visibile
 
     /* Scroll indicator */
     const heroScroll = document.querySelector('.hero__scroll');
@@ -117,8 +114,8 @@
     }
 
     /* ═══════════════════════════════════════
-       PRODOTTI — ogni copy è fixed, SOLO visibile nella sua scena
-       v14: timing 50/5/40/5
+       PRODOTTI — copy fixed, visibile solo nella sua scena
+       v16: timing 50/5/45 — entra a metà scena, resta fino alla fine
        ═══════════════════════════════════════ */
     const allCopies = [];
 
@@ -170,10 +167,9 @@
           }
         }
       })
-        .to(copy, { opacity: 0, duration: 50 })               /* ← era 70 */
-        .to(copy, { opacity: 1, x: 0, y: 0, visibility: 'visible', duration: 5 })  /* ← era 10 */
-        .to(copy, { opacity: 1, duration: 40 })               /* ← era 15 */
-        .to(copy, { opacity: 0, y: -30, duration: 5 });
+        .to(copy, { opacity: 0, duration: 50 })                                              // 0-50%   invisibile (bottiglia si posiziona)
+        .to(copy, { opacity: 1, x: 0, y: 0, visibility: 'visible', duration: 5 })           // 50-55%  fade in
+        .to(copy, { opacity: 1, duration: 45 });                                             // 55-100% RESTA FISSO fino a fine scena
     });
 
     /* NAV */
