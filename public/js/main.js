@@ -57,6 +57,8 @@
   function initGSAP() {
     gsap.registerPlugin(ScrollTrigger);
 
+    const bodyH = document.body.scrollHeight - window.innerHeight;
+
     /* MASTER CANVAS */
     ScrollTrigger.create({
       trigger: 'body',
@@ -72,23 +74,30 @@
     });
 
     /* ═══════════════════════════════════════
-       HERO — fixed centrato, sfondo scuro opaco sfumato
+       HERO — fixed centrato con sfondo radiale scuro
        ═══════════════════════════════════════ */
     const heroContent = document.querySelector('.hero__content');
     const heroChildren = heroContent.querySelectorAll('.hero__line, .hero__sub, .hero__actions, .hero__proof');
 
-    heroContent.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 24px;z-index:5;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);';
+    heroContent.style.cssText = [
+      'position:fixed', 'top:0', 'left:50%', 'transform:translateX(-50%)',
+      'width:100%', 'max-width:800px', 'height:100vh',
+      'display:flex', 'flex-direction:column', 'justify-content:center', 'align-items:center',
+      'text-align:center', 'padding:40px 24px', 'z-index:5', 'pointer-events:none',
+      'background:radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, transparent 100%)'
+    ].join(';') + ';';
     heroContent.querySelectorAll('.btn').forEach(b => b.style.pointerEvents = 'auto');
     gsap.set(heroChildren, { opacity: 0, y: 30, visibility: 'hidden' });
-    gsap.set(heroContent, { opacity: 0 });
+    gsap.set(heroContent, { opacity: 0, display: 'flex' });
 
-    /* Timing: nascosto 70%, fade-in 5%, visibile 20%, fade-out 5% */
     gsap.timeline({
       scrollTrigger: {
         trigger: '.hero',
         start: 'top top',
         end: 'bottom top',
-        scrub: true
+        scrub: true,
+        onLeave: () => { heroContent.style.display = 'none'; },
+        onEnterBack: () => { heroContent.style.display = 'flex'; }
       }
     })
       .to(heroContent, { opacity: 0, duration: 70 })
@@ -107,35 +116,59 @@
     }
 
     /* ═══════════════════════════════════════
-       PRODOTTI — copy fixed, entra a 70% della scena
+       PRODOTTI — ogni copy è fixed, ma SOLO visibile nella sua scena
        ═══════════════════════════════════════ */
-    document.querySelectorAll('.prodotti__scene').forEach(scene => {
+    const allCopies = [];
+
+    document.querySelectorAll('.prodotti__scene').forEach((scene, idx) => {
       const copy = scene.querySelector('.prodotti__copy');
       const side = scene.dataset.copySide;
       const fromX = side === 'right' ? 60 : side === 'left' ? -60 : 0;
 
-      let cssPos = 'position:fixed;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 5vw;z-index:5;pointer-events:none;max-width:480px;';
-      if (side === 'left') cssPos += 'left:0;right:auto;';
-      if (side === 'right') cssPos += 'left:auto;right:0;';
-      if (side === 'center') cssPos += 'left:50%;transform:translateX(-50%);text-align:center;align-items:center;max-width:600px;';
+      let cssPos = [
+        'position:fixed', 'top:0', 'height:100vh',
+        'display:none',
+        'flex-direction:column', 'justify-content:center',
+        'padding:0 5vw', 'z-index:5', 'pointer-events:none', 'max-width:480px'
+      ];
 
-      cssPos += 'background:linear-gradient(';
-      if (side === 'left') cssPos += 'to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);';
-      else if (side === 'right') cssPos += 'to left, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);';
-      else cssPos += 'to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);';
+      if (side === 'left') cssPos.push('left:0', 'right:auto');
+      if (side === 'right') cssPos.push('left:auto', 'right:0');
+      if (side === 'center') cssPos.push('left:50%', 'transform:translateX(-50%)', 'text-align:center', 'align-items:center', 'max-width:600px');
 
-      copy.style.cssText = cssPos;
+      /* Sfondo laterale */
+      if (side === 'left') cssPos.push('background:linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%)');
+      else if (side === 'right') cssPos.push('background:linear-gradient(to left, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%)');
+      else cssPos.push('background:radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)');
+
+      copy.style.cssText = cssPos.join(';') + ';';
       copy.querySelectorAll('.btn').forEach(b => b.style.pointerEvents = 'auto');
 
       gsap.set(copy, { opacity: 0, x: fromX, y: 30, visibility: 'hidden' });
 
-      /* Timing: nascosto 70%, fade-in 10%, visibile 15%, fade-out 5% */
+      allCopies.push(copy);
+
       gsap.timeline({
         scrollTrigger: {
           trigger: scene,
           start: 'top top',
           end: 'bottom top',
-          scrub: true
+          scrub: true,
+          onEnter: () => {
+            /* Nascondi tutti gli altri copy, mostra solo questo */
+            allCopies.forEach((c, i) => { c.style.display = i === idx ? 'flex' : 'none'; });
+            heroContent.style.display = 'none';
+          },
+          onLeave: () => { copy.style.display = 'none'; },
+          onEnterBack: () => {
+            allCopies.forEach((c, i) => { c.style.display = i === idx ? 'flex' : 'none'; });
+            heroContent.style.display = 'none';
+          },
+          onLeaveBack: () => {
+            copy.style.display = 'none';
+            /* Se torniamo all'hero, riattivalo */
+            if (idx === 0) heroContent.style.display = 'flex';
+          }
         }
       })
         .to(copy, { opacity: 0, duration: 70 })
