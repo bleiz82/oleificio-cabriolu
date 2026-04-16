@@ -1,1146 +1,357 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>Oleificio Cabriolu | Olio Extravergine d'Oliva Sardo dal 1890 — Villacidro, Sardegna</title>
-  <meta name="description" content="Oleificio Cabriolu — Olio extravergine d'oliva sardo dal 1890, Villacidro. Cultivar Bosana e Nera di Villacidro, frangitura a freddo. Acquista online con spedizione in tutta Italia.">
-  <link rel="canonical" href="https://www.oleificiocabriolu.it/">
-  
-  <link rel="alternate" hreflang="it" href="https://www.oleificiocabriolu.it/">
-  <link rel="alternate" hreflang="en" href="https://www.oleificiocabriolu.it/en/">
-  <link rel="alternate" hreflang="de" href="https://www.oleificiocabriolu.it/de/">
-  <link rel="alternate" hreflang="fr" href="https://www.oleificiocabriolu.it/fr/">
-  <link rel="alternate" hreflang="es" href="https://www.oleificiocabriolu.it/es/">
-  <link rel="alternate" hreflang="x-default" href="https://www.oleificiocabriolu.it/">
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.oleificiocabriolu.it/">
-  <meta property="og:title" content="Oleificio Cabriolu | Olio Extravergine d'Oliva Sardo dal 1890">
-  <meta property="og:description" content="Cinque generazioni di passione per l'olio extravergine d'oliva ai piedi del Monte Linas.">
-  <meta property="og:image" content="/img/hero/og-home.jpg">
-  <meta property="og:locale" content="it_IT">
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://www.oleificiocabriolu.it/">
-  <meta name="twitter:title" content="Oleificio Cabriolu | Olio Extravergine d'Oliva Sardo dal 1890">
-  <meta name="twitter:description" content="Cinque generazioni di passione per l'olio extravergine d'oliva ai piedi del Monte Linas.">
-  <meta name="twitter:image" content="/img/hero/og-home.jpg">
-
-  <!-- Preloads -->
-  <link rel="preload" href="/fonts/cormorant-garamond-v16-latin-600.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/fonts/cormorant-garamond-v16-latin-700.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/fonts/inter-v13-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/img/hero/hero-fallback.avif" as="image" fetchpriority="high">
-
-  <!-- Favicons -->
-  <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-
-  <!-- Critical CSS -->
-  <style>
-    :root {
-      --black: #000000;
-      --gold: #C8860A;
-      --gold-light: #D4A033;
-      --gold-glow: rgba(200, 134, 10, 0.4);
-      --green: #4A7C59;
-      --white: #F5F0E8;
-      --gray: #888888;
-      --font-heading: 'Cormorant Garamond', serif;
-      --font-body: 'Inter', sans-serif;
-      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    @font-face {
-      font-family: 'Cormorant Garamond';
-      src: url('/fonts/cormorant-garamond-v16-latin-600.woff2') format('woff2');
-      font-weight: 600; font-style: normal; font-display: swap;
-    }
-    @font-face {
-      font-family: 'Cormorant Garamond';
-      src: url('/fonts/cormorant-garamond-v16-latin-700.woff2') format('woff2');
-      font-weight: 700; font-style: normal; font-display: swap;
-    }
-    @font-face {
-      font-family: 'Inter';
-      src: url('/fonts/inter-v13-latin-regular.woff2') format('woff2');
-      font-weight: 400; font-style: normal; font-display: swap;
-    }
-    @font-face {
-      font-family: 'Inter';
-      src: url('/fonts/inter-v13-latin-300.woff2') format('woff2');
-      font-weight: 300; font-style: normal; font-display: swap;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { 
-      background: var(--black); 
-      color: var(--white); 
-      font-family: var(--font-body); 
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Selection */
-    ::selection { background: var(--gold); color: var(--black); }
-
-    /* Nav */
-    .nav {
-      position: fixed; top: 0; left: 0; width: 100%; height: 80px;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 4vw; z-index: 1000; transition: all 0.5s var(--ease-out-expo);
-    }
-    .nav.scrolled {
-      height: 64px; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(200,134,10,0.15);
-    }
-    .nav__logo { height: 36px; display: flex; align-items: center; }
-    .nav__logo svg { height: 100%; fill: var(--gold); }
-    .nav__links { display: flex; gap: 32px; list-style: none; }
-    .nav__links a {
-      font-family: var(--font-body); font-weight: 300; font-size: 13px;
-      color: var(--white); text-transform: uppercase; letter-spacing: 2px;
-      text-decoration: none; transition: color 0.3s;
-    }
-    .nav__links a:hover { color: var(--gold); }
-    .nav__right { display: flex; align-items: center; gap: 24px; }
-    .nav__lang { display: flex; gap: 12px; font-size: 11px; font-weight: 300; letter-spacing: 2px; }
-    .nav__lang span { cursor: pointer; color: var(--gray); transition: color 0.3s; }
-    .nav__lang span.active { color: var(--gold); }
-    .nav__lang span:hover { color: var(--white); }
-    .nav__cta {
-      border: 1px solid var(--gold); color: var(--gold); padding: 10px 24px;
-      border-radius: 2px; font-size: 13px; text-transform: uppercase; 
-      letter-spacing: 2px; text-decoration: none; transition: all 0.4s var(--ease-out-quart);
-    }
-    .nav__cta:hover { background: var(--gold); color: var(--black); }
-    .nav__hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; }
-    .nav__hamburger span { width: 24px; height: 2px; background: var(--gold); transition: 0.3s; }
-
-    /* Hero */
-    .hero {
-      position: relative; width: 100vw; height: 100vh; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .hero__video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 1;
-    }
-    .hero__overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
-    }
-    .hero__content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-      text-align: center;
-      width: 90%;
-      max-width: 800px;
-    }
-    .hero__line { width: 0; height: 1.5px; background: var(--gold); margin: 0 auto 16px; }
-    .hero__subtitle {
-      font-family: var(--font-body); font-weight: 300; font-size: 12px;
-      letter-spacing: 5px; color: var(--gold); opacity: 0; transform: translateY(30px);
-    }
-    .hero__title {
-      font-family: var(--font-heading); font-weight: 700; line-height: 0.9;
-      margin: 20px 0;
-    }
-    .hero__title span { display: block; }
-    .hero__title--1 { 
-      font-size: clamp(40px, 8vw, 120px); color: var(--white); 
-      clip-path: inset(0 100% 0 0);
-    }
-    .hero__title--2 { 
-      font-size: clamp(48px, 10vw, 150px); color: var(--gold);
-      clip-path: inset(0 0 0 100%);
-    }
-    .hero__desc {
-      font-family: var(--font-body); font-weight: 300; 
-      font-size: clamp(14px, 1.2vw, 18px); color: var(--white);
-      max-width: 480px; margin: 0 auto 40px; opacity: 0;
-    }
-    .hero__buttons { display: flex; gap: 16px; justify-content: center; opacity: 0; }
-    .hero__btn {
-      padding: 14px 32px; font-size: 13px; text-transform: uppercase;
-      letter-spacing: 2px; text-decoration: none; border-radius: 2px;
-      transition: all 0.4s var(--ease-out-quart);
-    }
-    .hero__btn--primary { border: 1px solid var(--gold); color: var(--gold); }
-    .hero__btn--primary:hover { background: var(--gold); color: var(--black); }
-    .hero__btn--secondary { color: var(--white); }
-    .hero__btn--secondary:hover { text-decoration: underline; text-underline-offset: 4px; color: var(--gold); }
-
-    .hero__bottle-wrap {
-      position: absolute; right: 8%; top: 50%; translate: 0 -50%;
-      height: 70vh; pointer-events: none; z-index: 5; opacity: 0;
-    }
-    .hero__bottle-wrap img { height: 100%; width: auto; rotate: 8deg; }
-
-    .hero__scroll {
-      position: absolute; bottom: 30px; left: 50%; translate: -50% 0;
-      display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 10;
-    }
-    .hero__scroll-line { width: 1.5px; height: 24px; background: var(--gold); }
-    .hero__scroll-text { font-size: 10px; font-weight: 300; color: var(--gold); opacity: 0.5; letter-spacing: 2px; }
-
-    /* Performance optimization: hidden initially */
-    .oil-spread, .products-hscroll, .storia, .frangitura, .territorio, .testimonials, .cta-final, .footer {
-      visibility: hidden;
-    }
-    body.is-ready .oil-spread, 
-    body.is-ready .products-hscroll, 
-    body.is-ready .storia, 
-    body.is-ready .frangitura, 
-    body.is-ready .territorio, 
-    body.is-ready .testimonials, 
-    body.is-ready .cta-final, 
-    body.is-ready .footer {
-      visibility: visible;
-    }
-  </style>
-
-  <!-- Deferred and Async CSS -->
-  <link rel="preload" href="/css/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/css/main.css"></noscript>
-
-  <!-- Schema.org JSON-LD -->
-  <script type="application/ld+json">
-  [
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "Oleificio Cabriolu",
-      "image": "https://www.oleificiocabriolu.it/img/hero/og-home.jpg",
-      "@id": "https://www.oleificiocabriolu.it/",
-      "url": "https://www.oleificiocabriolu.it/",
-      "telephone": "+39070XXXXXX",
-      "priceRange": "€€",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Zona Industriale",
-        "addressLocality": "Villacidro",
-        "postalCode": "09039",
-        "addressRegion": "SU",
-        "addressCountry": "IT"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 39.4597,
-        "longitude": 8.7422
-      },
-      "foundingDate": "1890",
-      "founders": [
-        { "@type": "Person", "name": "Jessica Cabriolu" },
-        { "@type": "Person", "name": "Mattia Cabriolu" }
-      ],
-      "sameAs": [
-        "https://www.instagram.com/oleificiocabriolu/",
-        "https://www.facebook.com/oleificiocabriolu/"
-      ]
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "Olio Extravergine d'Oliva EVO Puro",
-      "image": "https://www.oleificiocabriolu.it/img/prodotti/product-evo-puro.avif",
-      "description": "Frangitura a freddo delle migliori olive Bosana e Nera di Villacidro. Profumo intenso, sapore equilibrato.",
-      "brand": {
-        "@type": "Brand",
-        "name": "Oleificio Cabriolu"
-      },
-      "offers": {
-        "@type": "Offer",
-        "url": "https://www.oleificiocabriolu.it/",
-        "priceCurrency": "EUR",
-        "price": "12.90",
-        "availability": "https://schema.org/InStock"
-      }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Quali cultivar di olive utilizzate?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Utilizziamo principalmente la Bosana e la Nera di Villacidro, due cultivar autoctone sarde coltivate nei nostri uliveti ai piedi del Monte Linas."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Come avviene la frangitura?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "La frangitura avviene a freddo, a temperatura controllata inferiore ai 27°C, entro poche ore dalla raccolta per preservare tutte le proprietà organolettiche."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Spedite in tutta Italia?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Sì, spediamo in tutta Italia con corriere espresso. La spedizione è gratuita per ordini superiori a €45. Spediamo anche in Europa."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Offrite il servizio di frangitura conto terzi?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Sì, nel periodo ottobre-gennaio offriamo il servizio di frangitura a freddo per i produttori locali. È necessaria la prenotazione."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Da quanto tempo esiste l'oleificio?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "L'Oleificio Cabriolu è stato fondato nel 1890 dal nonno Antoniccu ed è oggi gestito dalla quinta generazione della famiglia, Jessica e Mattia Cabriolu."
-          }
-        }
-      ]
-    }
-  ]
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Olio Extravergine Sardo dal 1890 | Oleificio Cabriolu Villacidro</title>
+<meta name="description" content="Olio extravergine d'oliva sardo dal 1890. Cultivar Bosana e Nera di Villacidro, frangitura a freddo entro 24h. 125 recensioni, 4.9 stelle. Spedizione gratuita sopra 45€.">
+<link rel="canonical" href="https://www.oleificiocabriolu.it/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Oleificio Cabriolu — Olio EVO Sardo dal 1890">
+<meta property="og:description" content="Cinque generazioni di passione. Cultivar autoctone, frangitura a freddo. 125 recensioni, 4.9 stelle.">
+<meta property="og:image" content="https://www.oleificiocabriolu.it/img/hero/og-home.jpg">
+<meta property="og:url" content="https://www.oleificiocabriolu.it/">
+<meta property="og:locale" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="preload" href="/fonts/cormorant-garamond-v16-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-v13-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/img/frames/desktop/frame_0001.webp" as="image">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"LocalBusiness","@id":"https://www.oleificiocabriolu.it/#business","name":"Oleificio Cabriolu","image":"https://www.oleificiocabriolu.it/img/hero/og-home.jpg","telephone":"+39 070 0000000","email":"info@oleificiocabriolu.it","url":"https://www.oleificiocabriolu.it","address":{"@type":"PostalAddress","streetAddress":"Zona Industriale","addressLocality":"Villacidro","addressRegion":"SU","postalCode":"09039","addressCountry":"IT"},"geo":{"@type":"GeoCoordinates","latitude":39.4597,"longitude":8.7422},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"13:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"15:00","closes":"18:00"}],"foundingDate":"1890","founder":[{"@type":"Person","name":"Jessica Cabriolu"},{"@type":"Person","name":"Mattia Cabriolu"}],"priceRange":"€€","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"125","bestRating":"5"},"sameAs":["https://www.instagram.com/oleificiocabriolu/","https://www.facebook.com/oleificiocabriolu"]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Quali cultivar utilizza l'Oleificio Cabriolu?","acceptedAnswer":{"@type":"Answer","text":"Utilizziamo cultivar autoctone sarde: Bosana e Nera di Villacidro, coltivate nei nostri 25 ettari di uliveti ai piedi del Monte Linas."}},
+{"@type":"Question","name":"Cosa significa frangitura a freddo?","acceptedAnswer":{"@type":"Answer","text":"La frangitura a freddo avviene a temperatura controllata sotto i 27°C entro 24 ore dalla raccolta, preservando polifenoli, antiossidanti e profilo aromatico."}},
+{"@type":"Question","name":"Quanto costa la spedizione?","acceptedAnswer":{"@type":"Answer","text":"Gratuita sopra 45€. Sotto i 45€ costa 6,90€ in tutta Italia."}},
+{"@type":"Question","name":"Offrite frangitura conto terzi?","acceptedAnswer":{"@type":"Answer","text":"Sì, il frantoio è aperto ai produttori locali per la frangitura conto terzi da ottobre a dicembre."}},
+{"@type":"Question","name":"Come conservo l'olio extravergine?","acceptedAnswer":{"@type":"Answer","text":"In luogo fresco e buio, tra 14°C e 18°C. Una volta aperto, consumare entro 4-6 mesi."}},
+{"@type":"Question","name":"Da quanto esiste l'Oleificio Cabriolu?","acceptedAnswer":{"@type":"Answer","text":"Dal 1890. Oggi alla quinta generazione con Jessica e Mattia Cabriolu."}}
+]}
+]}</script>
 </head>
 <body>
 
-  <!-- Nav -->
-  <nav class="nav" id="nav">
-    <a href="/" class="nav__logo" aria-label="Oleificio Cabriolu Logo">
-      <svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
-        <path d="M40 20c0 0-15 20-5 40s25 10 25 10-10-25-20-50z" fill="currentColor"/>
-        <path d="M35 30c0 0-10 15-2 30s20 8 20 8-8-20-18-38z" fill="currentColor" opacity="0.7"/>
-        <text x="75" y="65" font-family="Cormorant Garamond" font-size="36" font-weight="700" letter-spacing="4">CABRIOLU</text>
-      </svg>
-    </a>
-    <ul class="nav__links">
-      <li><a href="#storia">La Storia</a></li>
-      <li><a href="#prodotti">Prodotti</a></li>
-      <li><a href="#frangitura">Frangitura</a></li>
-      <li><a href="#territorio">Territorio</a></li>
-      <li><a href="#contatti">Contatti</a></li>
-    </ul>
-    <div class="nav__right">
-      <div class="nav__lang">
-        <span class="active">IT</span> | <span>EN</span> | <span>DE</span>
-      </div>
-      <a href="#prodotti" class="nav__cta">Acquista Olio</a>
-      <div class="nav__hamburger" aria-label="Menu Mobile">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-  </nav>
+<!-- CANVAS SFONDO -->
+<canvas id="bc" aria-hidden="true"></canvas>
 
-  <!-- Mobile Overlay -->
-  <div class="mobile-overlay">
-    <a href="#storia">La Storia</a>
-    <a href="#prodotti">Prodotti</a>
-    <a href="#frangitura">Frangitura</a>
-    <a href="#territorio">Territorio</a>
-    <a href="#contatti">Contatti</a>
-    <a href="#prodotti" class="nav__cta">Acquista Olio</a>
-  </div>
+<!-- NAV -->
+<nav id="nav" class="nav">
+<div class="nav__inner">
+<a href="/" class="nav__logo" aria-label="Oleificio Cabriolu"><span class="nav__logo-text">CABRIOLU</span><span class="nav__logo-sub">dal 1890</span></a>
+<ul class="nav__links">
+<li><a href="#prodotti">Prodotti</a></li>
+<li><a href="#storia">La Nostra Storia</a></li>
+<li><a href="#frangitura">Frangitura</a></li>
+<li><a href="#territorio">Territorio</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#contatti" class="nav__cta">Contatti</a></li>
+</ul>
+<button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</div>
+</nav>
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+<ul>
+<li><a href="#prodotti">Prodotti</a></li>
+<li><a href="#storia">La Nostra Storia</a></li>
+<li><a href="#frangitura">Frangitura</a></li>
+<li><a href="#territorio">Territorio</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#contatti">Contatti</a></li>
+</ul>
+</div>
 
-  <!-- Hero -->
-  <section class="hero">
-    <video id="heroVideo" class="hero__video" muted playsinline preload="auto" poster="/img/hero/hero-fallback.avif">
-      <source src="/video/hero-cabriolu.webm" type="video/webm">
-      <source src="/video/hero-cabriolu.mp4" type="video/mp4">
-    </video>
-    <div class="hero__overlay"></div>
-    
-    <div class="hero__content">
-      <div class="hero__line" id="heroLine"></div>
-      <p class="hero__subtitle" id="heroSub">DAL 1890 · VILLACIDRO · SARDEGNA</p>
-      <h1 class="hero__title">
-        <span class="hero__title--1">OLEIFICIO</span>
-        <span class="hero__title--2">CABRIOLU</span>
-      </h1>
-      <p class="hero__desc">Cinque generazioni di passione per l'olio extravergine d'oliva ai piedi del Monte Linas</p>
-      <div class="hero__buttons">
-        <a href="#prodotti" class="hero__btn hero__btn--primary">Scopri i Prodotti</a>
-        <a href="#storia" class="hero__btn hero__btn--secondary">La Nostra Storia</a>
-      </div>
-    </div>
+<!-- ========== HERO (frame 1-120) ========== -->
+<section id="hero" class="hero">
+<div class="hero__content">
+<h1 class="hero__title">
+<span class="hero__line hero__line--gold">L'olio che cercavi</span>
+<span class="hero__line">non viene dal supermercato</span>
+</h1>
+<p class="hero__sub">Extravergine sardo di cultivar Bosana e Nera di Villacidro, franto a freddo entro 24 ore dalla raccolta. Dal 1890, cinque generazioni di frantoiani.</p>
+<div class="hero__actions">
+<a href="#prodotti" class="btn btn--gold">Scopri i Nostri Oli</a>
+<a href="#storia" class="btn btn--outline">La Nostra Storia</a>
+</div>
+<div class="hero__proof">
+<div class="hero__stars">★★★★★</div>
+<span>4.9/5 — 125 recensioni verificate</span>
+</div>
+</div>
+<div class="hero__scroll"><span>Scorri per esplorare</span><div class="hero__scroll-bar"></div></div>
+</section>
 
-    <div class="hero__bottle-wrap">
-      <picture>
-        <source srcset="/img/prodotti/bottle-hero-parallax.avif" type="image/avif">
-        <img src="/img/prodotti/bottle-hero-parallax.webp" alt="Olio Cabriolu Hero Bottle" width="400" height="800" loading="eager" fetchpriority="high">
-      </picture>
-    </div>
+<!-- ========== PRODOTTI (frame 121-840) ========== -->
+<section id="prodotti" class="prodotti">
 
-    <div class="hero__scroll">
-      <div class="hero__scroll-line"></div>
-      <span class="hero__scroll-text">Scorri</span>
-    </div>
-  </section>
+<!-- SCENA A: EVO PURO (frame 121-240) — bottiglia finisce a DX, copy a SX -->
+<div class="prodotti__scene" data-frame-start="121" data-frame-end="240" data-copy-side="left">
+<div class="prodotti__copy">
+<span class="prodotti__tag">Il Nostro Flagship</span>
+<h2 class="prodotti__name">Extravergine Puro</h2>
+<p class="prodotti__cultivar">Monocultivar Bosana &amp; Nera di Villacidro</p>
+<p class="prodotti__desc">Fruttato medio-intenso con note di carciofo fresco, mandorla verde e pomodoro. Frangitura a freddo entro 24 ore dalla raccolta, ciclo continuo a due fasi. Un olio che racconta la Sardegna in ogni goccia.</p>
+<p class="prodotti__formats">Disponibile in 0.25L · 0.50L · 0.75L</p>
+<a href="/prodotti/evo-puro" class="btn btn--gold btn--sm">Scopri EVO Puro</a>
+</div>
+</div>
 
-  <!-- Section 3: Oil Spread Transition -->
-  <section class="oil-spread">
-    <div class="oil-spread__bg" id="oilBlob"></div>
-    <div class="oil-spread__text">
-      <span class="oil-spread__line">L'ESSENZA DELLA SARDEGNA</span>
-      <span class="oil-spread__line">IN OGNI GOCCIA</span>
-    </div>
-  </section>
+<!-- SCENA B: PEPERONCINO (frame 241-360) — bottiglia finisce a SX, copy a DX -->
+<div class="prodotti__scene" data-frame-start="241" data-frame-end="360" data-copy-side="right">
+<div class="prodotti__copy">
+<span class="prodotti__tag">Aromatizzato</span>
+<h2 class="prodotti__name">Olio al Peperoncino</h2>
+<p class="prodotti__cultivar">Infuso con peperoncino sardo selezionato</p>
+<p class="prodotti__desc">Piccantezza decisa ma equilibrata, su una base di extravergine Cabriolu. Ideale su bruschette, pasta aglio olio, pizza e grigliate. Il calore della Sardegna in un condimento.</p>
+<p class="prodotti__formats">Disponibile in 0.25L</p>
+<a href="/prodotti/olio-peperoncino" class="btn btn--gold btn--sm">Scopri Olio al Peperoncino</a>
+</div>
+</div>
 
-  <!-- Section 4: Products Horizontal Scroll -->
-  <section class="products-hscroll" id="prodotti">
-    <div class="products-hscroll__track">
-      
-      <!-- Panel 1 -->
-      <div class="products-hscroll__panel">
-        <div class="product-info">
-          <h2 class="product-info__name">EVO Puro</h2>
-          <p class="product-info__price">€12,90</p>
-          <p class="product-info__desc">Frangitura a freddo delle migliori olive Bosana e Nera di Villacidro. Profumo intenso, sapore equilibrato con note di carciofo e mandorla.</p>
-          <p class="product-info__size">0.50 L</p>
-          <button class="product-info__cta">Aggiungi al Carrello →</button>
-        </div>
-        <div class="product-image">
-          <picture>
-            <source srcset="/img/prodotti/product-evo-puro.avif" type="image/avif">
-            <img src="/img/prodotti/product-evo-puro.webp" alt="EVO Puro" width="500" height="800">
-          </picture>
-          <div class="product-image__accents">
-            <div class="product-accent" style="width:12px; height:12px; background:var(--gold); top:20%; left:20%;"></div>
-            <div class="product-accent" style="width:8px; height:8px; background:var(--gold); top:60%; left:80%; animation-delay: 1s;"></div>
-          </div>
-        </div>
-      </div>
+<!-- SCENA C: BASILICO (frame 361-480) — bottiglia finisce a DX, copy a SX -->
+<div class="prodotti__scene" data-frame-start="361" data-frame-end="480" data-copy-side="left">
+<div class="prodotti__copy">
+<span class="prodotti__tag">Aromatizzato</span>
+<h2 class="prodotti__name">Olio al Basilico</h2>
+<p class="prodotti__cultivar">Infuso con basilico fresco mediterraneo</p>
+<p class="prodotti__desc">Freschezza verde e aromatica che trasforma insalate, caprese, pesce alla griglia e bruschette. L'essenza del Mediterraneo catturata nel nostro extravergine.</p>
+<p class="prodotti__formats">Disponibile in 0.25L</p>
+<a href="/prodotti/olio-basilico" class="btn btn--gold btn--sm">Scopri Olio al Basilico</a>
+</div>
+</div>
 
-      <!-- Panel 2 -->
-      <div class="products-hscroll__panel">
-        <div class="product-info">
-          <h2 class="product-info__name">Olio al Peperoncino</h2>
-          <p class="product-info__price">€9,90</p>
-          <p class="product-info__desc">Extravergine infuso con peperoncino sardo piccante. Ideale su bruschetta, pizza e piatti di pesce.</p>
-          <p class="product-info__size">0.25 L</p>
-          <button class="product-info__cta">Aggiungi al Carrello →</button>
-        </div>
-        <div class="product-image">
-          <picture>
-            <source srcset="/img/prodotti/product-olio-peperoncino.avif" type="image/avif">
-            <img src="/img/prodotti/product-olio-peperoncino.webp" alt="Olio al Peperoncino" width="500" height="800">
-          </picture>
-          <div class="product-image__accents">
-            <div class="product-accent" style="width:10px; height:10px; background:#FF4500; top:30%; left:15%;"></div>
-          </div>
-        </div>
-      </div>
+<!-- SCENA D: LIMONE (frame 481-600) — bottiglia finisce a SX, copy a DX -->
+<div class="prodotti__scene" data-frame-start="481" data-frame-end="600" data-copy-side="right">
+<div class="prodotti__copy">
+<span class="prodotti__tag">Aromatizzato</span>
+<h2 class="prodotti__name">Olio al Limone</h2>
+<p class="prodotti__cultivar">Infuso con agrumi sardi selezionati</p>
+<p class="prodotti__desc">Agrumato, luminoso e delicato. Sublime su crostacei, tartare di pesce, verdure al vapore e dolci. Un raggio di sole liquido che esalta ogni piatto.</p>
+<p class="prodotti__formats">Disponibile in 0.25L</p>
+<a href="/prodotti/olio-limone" class="btn btn--gold btn--sm">Scopri Olio al Limone</a>
+</div>
+</div>
 
-      <!-- Panel 3 -->
-      <div class="products-hscroll__panel">
-        <div class="product-info">
-          <h2 class="product-info__name">Olio al Basilico</h2>
-          <p class="product-info__price">€9,90</p>
-          <p class="product-info__desc">Aroma mediterraneo intenso. Sublime su pasta fresca, caprese e verdure grigliate.</p>
-          <p class="product-info__size">0.25 L</p>
-          <button class="product-info__cta">Aggiungi al Carrello →</button>
-        </div>
-        <div class="product-image">
-          <picture>
-            <source srcset="/img/prodotti/product-olio-basilico.avif" type="image/avif">
-            <img src="/img/prodotti/product-olio-basilico.webp" alt="Olio al Basilico" width="500" height="800">
-          </picture>
-          <div class="product-image__accents">
-            <div class="product-accent" style="width:16px; height:10px; border-radius:50% 0; background:var(--green); top:70%; left:25%;"></div>
-          </div>
-        </div>
-      </div>
+<!-- SCENA E: LATTE (frame 601-720) — copy al centro -->
+<div class="prodotti__scene" data-frame-start="601" data-frame-end="720" data-copy-side="center">
+<div class="prodotti__copy">
+<span class="prodotti__tag">Formati Famiglia</span>
+<h2 class="prodotti__name">Latte Professionali</h2>
+<p class="prodotti__cultivar">Lo stesso EVO Puro, nel formato che preferisci</p>
+<p class="prodotti__desc">Per chi non vuole mai restare senza. La latta protegge l'olio dalla luce, preservando polifenoli e aromi più a lungo. Ideale per famiglie, ristoratori e chi usa l'olio ogni giorno.</p>
+<p class="prodotti__formats">Disponibile in 3L · 5L</p>
+<a href="/prodotti/latte" class="btn btn--gold btn--sm">Scopri le Latte</a>
+</div>
+</div>
 
-      <!-- Panel 4 -->
-      <div class="products-hscroll__panel">
-        <div class="product-info">
-          <h2 class="product-info__name">Olio al Limone</h2>
-          <p class="product-info__price">€9,90</p>
-          <p class="product-info__desc">Delicata infusione di limoni di Sardegna. Perfetto per insalate, carpacci e frutti di mare.</p>
-          <p class="product-info__size">0.25 L</p>
-          <button class="product-info__cta">Aggiungi al Carrello →</button>
-        </div>
-        <div class="product-image">
-          <picture>
-            <source srcset="/img/prodotti/product-olio-limone.avif" type="image/avif">
-            <img src="/img/prodotti/product-olio-limone.webp" alt="Olio al Limone" width="500" height="800">
-          </picture>
-          <div class="product-image__accents">
-            <div class="product-accent" style="width:14px; height:14px; background:#FFD700; top:40%; left:85%;"></div>
-          </div>
-        </div>
-      </div>
+<!-- SCENA G: COFANETTO (frame 721-840) — bottiglia finisce a DX, copy a SX -->
+<div class="prodotti__scene" data-frame-start="721" data-frame-end="840" data-copy-side="left">
+<div class="prodotti__copy">
+<span class="prodotti__tag">Idea Regalo</span>
+<h2 class="prodotti__name">Cofanetto Luxury</h2>
+<p class="prodotti__cultivar">Quattro oli in un'elegante confezione regalo</p>
+<p class="prodotti__desc">EVO Puro, Peperoncino, Basilico e Limone racchiusi in un cofanetto premium. Il regalo perfetto per chi ama la cucina, le feste, i compleanni o semplicemente il bello.</p>
+<a href="/prodotti/cofanetto" class="btn btn--gold btn--sm">Scopri il Cofanetto</a>
+</div>
+</div>
 
-    </div>
-  </section>
+</section>
 
-  <!-- Mobile Products Wrapper -->
-  <div class="products-mobile">
-    <h2 class="products-mobile__title">I NOSTRI PRODOTTI</h2>
-    
-    <div class="product-card-mobile">
-      <div class="product-card-mobile__image">
-        <img src="/img/prodotti/product-evo-puro.webp" alt="EVO Puro">
-      </div>
-      <div class="product-card-mobile__info">
-        <h3 class="product-card-mobile__name">EVO Puro</h3>
-        <p class="product-card-mobile__price">€12,90</p>
-        <p class="product-card-mobile__desc">Bosana e Nera di Villacidro.</p>
-        <p class="product-card-mobile__size">0.50 L</p>
-        <a href="#" class="product-card-mobile__cta">Acquista</a>
-      </div>
-    </div>
-    <div class="products-mobile__divider"></div>
+<!-- ========== STORIA ========== -->
+<section id="storia" class="section storia">
+<div class="section__inner">
+<p class="section__overtitle ani">Cinque Generazioni di Frantoiani</p>
+<h2 class="section__title ani">La Nostra Storia</h2>
+<div class="storia__timeline">
+<div class="storia__line-track"><div class="storia__line-fill"></div></div>
 
-    <div class="product-card-mobile">
-      <div class="product-card-mobile__image">
-        <img src="/img/prodotti/product-olio-peperoncino.webp" alt="Olio Peperoncino">
-      </div>
-      <div class="product-card-mobile__info">
-        <h3 class="product-card-mobile__name">Al Peperoncino</h3>
-        <p class="product-card-mobile__price">€9,90</p>
-        <p class="product-card-mobile__desc">Infuso piccante.</p>
-        <p class="product-card-mobile__size">0.25 L</p>
-        <a href="#" class="product-card-mobile__cta">Acquista</a>
-      </div>
-    </div>
-  </div>
+<div class="storia__item ani">
+<div class="storia__year-badge">1890</div>
+<div class="storia__card">
+<div class="storia__img"><picture><source srcset="/img/storia/storia-1890.avif" type="image/avif"><img src="/img/storia/storia-1890.webp" alt="Frantoio Cabriolu nel 1890" width="800" height="500" loading="lazy"></picture></div>
+<div class="storia__text"><h3>La Fondazione</h3><p>Nonno Antoniccu Cabriolu pianta i primi ulivi nella campagna di Villacidro, ai piedi del Monte Linas. Nasce un frantoio a macine di granito che diventerà il cuore della famiglia per cinque generazioni.</p></div>
+</div></div>
 
-  <!-- Section 5: Storia Timeline -->
-  <section class="storia" id="storia">
-    <h2 class="storia__title">LA NOSTRA STORIA</h2>
-    <div class="storia__container">
-      <svg class="storia__line-svg"><line x1="1" y1="0" x2="1" y2="100%" /></svg>
-      
-      <!-- Node 1 -->
-      <div class="storia__node">
-        <div class="storia__node-dot"></div>
-        <div class="storia__watermark">1890</div>
-        <h3 class="storia__year">1890</h3>
-        <div class="storia__image">
-          <picture>
-            <source srcset="/img/storia/storia-1890.avif" type="image/avif">
-            <img src="/img/storia/storia-1890.webp" alt="Storia 1890" width="800" height="500" loading="lazy">
-          </picture>
-        </div>
-        <p class="storia__text">Nonno Antoniccu avvia il primo frantoio nella tenuta di famiglia, ai piedi del Monte Linas. Una macina in pietra mossa da un asino: l'inizio di tutto.</p>
-      </div>
+<div class="storia__item storia__item--reverse ani">
+<div class="storia__year-badge">1940</div>
+<div class="storia__card">
+<div class="storia__img"><picture><source srcset="/img/storia/storia-1940.avif" type="image/avif"><img src="/img/storia/storia-1940.webp" alt="Oleificio Cabriolu anni 40" width="800" height="500" loading="lazy"></picture></div>
+<div class="storia__text"><h3>La Tradizione Resiste</h3><p>Nonostante la guerra, la seconda generazione custodisce il frantoio e gli uliveti. L'olio Cabriolu diventa un riferimento per tutta la comunità di Villacidro e del Medio Campidano.</p></div>
+</div></div>
 
-      <!-- Node 2 -->
-      <div class="storia__node">
-        <div class="storia__node-dot"></div>
-        <div class="storia__watermark">1940</div>
-        <h3 class="storia__year">1940</h3>
-        <div class="storia__image">
-          <picture>
-            <source srcset="/img/storia/storia-1940.avif" type="image/avif">
-            <img src="/img/storia/storia-1940.webp" alt="Storia 1940" width="800" height="500" loading="lazy">
-          </picture>
-        </div>
-        <p class="storia__text">La seconda generazione amplia il frantoio. L'olio Cabriolu diventa un punto di riferimento per tutta la comunità di Villacidro.</p>
-      </div>
+<div class="storia__item ani">
+<div class="storia__year-badge">1970</div>
+<div class="storia__card">
+<div class="storia__img"><picture><source srcset="/img/storia/storia-1970.avif" type="image/avif"><img src="/img/storia/storia-1970.webp" alt="Modernizzazione frantoio anni 70" width="800" height="500" loading="lazy"></picture></div>
+<div class="storia__text"><h3>La Modernizzazione</h3><p>La terza generazione introduce il ciclo continuo a due fasi mantenendo la temperatura sotto i 27°C. La qualità sale, la produzione cresce, la tradizione resta intatta.</p></div>
+</div></div>
 
-      <!-- Node 3 -->
-      <div class="storia__node">
-        <div class="storia__node-dot"></div>
-        <div class="storia__watermark">1970</div>
-        <h3 class="storia__year">1970</h3>
-        <div class="storia__image">
-          <picture>
-            <source srcset="/img/storia/storia-1970.avif" type="image/avif">
-            <img src="/img/storia/storia-1970.webp" alt="Storia 1970" width="800" height="500" loading="lazy">
-          </picture>
-        </div>
-        <p class="storia__text">Arriva la meccanizzazione. Nuove presse idrauliche sostituiscono la vecchia macina, ma la filosofia resta la stessa: qualità senza compromessi.</p>
-      </div>
+<div class="storia__item storia__item--reverse ani">
+<div class="storia__year-badge">Oggi</div>
+<div class="storia__card">
+<div class="storia__img"><picture><source srcset="/img/storia/storia-oggi.avif" type="image/avif"><img src="/img/storia/storia-oggi.webp" alt="Jessica e Mattia Cabriolu" width="800" height="500" loading="lazy"></picture></div>
+<div class="storia__text"><h3>Jessica &amp; Mattia</h3><p>La quinta generazione porta l'Oleificio Cabriolu nel mondo. Stessa passione, stesse cultivar, stessa terra — ora accessibili in tutta Italia e in Europa con un click.</p></div>
+</div></div>
 
-      <!-- Node 4 -->
-      <div class="storia__node">
-        <div class="storia__node-dot"></div>
-        <div class="storia__watermark">2025</div>
-        <h3 class="storia__year">Oggi</h3>
-        <div class="storia__image">
-          <picture>
-            <source srcset="/img/storia/storia-oggi.avif" type="image/avif">
-            <img src="/img/storia/storia-oggi.webp" alt="Storia Oggi" width="800" height="500" loading="lazy">
-          </picture>
-        </div>
-        <p class="storia__text">Jessica e Mattia, quinta generazione, guidano l'oleificio con passione e innovazione. Frangitura a freddo, cultivar autoctone, e lo stesso amore di nonno Antoniccu.</p>
-      </div>
-    </div>
-  </section>
+</div></div></section>
 
-  <!-- Section 6: Frangitura Split Screen -->
-  <section class="frangitura" id="frangitura">
-    <div class="frangitura__image-wrap">
-      <picture>
-        <source srcset="/img/frangitura/frangitura-azione.avif" type="image/avif">
-        <img src="/img/frangitura/frangitura-azione.webp" alt="Frangitura in azione" width="1000" height="1000" loading="lazy">
-      </picture>
-    </div>
-    
-    <div class="frangitura__divider">
-      <svg width="2" height="100%"><path d="M1 0V1000" /></svg>
-    </div>
+<!-- ========== FRANGITURA ========== -->
+<section id="frangitura" class="section frangitura">
+<div class="frangitura__bg"><picture><source srcset="/img/frangitura/frangitura-azione.avif" type="image/avif"><img src="/img/frangitura/frangitura-azione.webp" alt="Frangitura a freddo Cabriolu" width="768" height="1376" loading="lazy"></picture></div>
+<div class="frangitura__content">
+<p class="section__overtitle ani">Il Processo</p>
+<h2 class="section__title ani">Frangitura a Freddo</h2>
+<p class="frangitura__lead ani">Dalla raccolta alla bottiglia in meno di 24 ore</p>
+<p class="frangitura__desc ani">Le olive vengono raccolte a mano dai nostri 25 ettari di uliveti e frante entro 24 ore a temperatura controllata sotto i 27°C. Il ciclo continuo a due fasi preserva polifenoli, antiossidanti e l'intero profilo aromatico.</p>
+<ul class="frangitura__list ani">
+<li>Raccolta manuale entro 24 ore</li>
+<li>Temperatura costante &lt; 27°C</li>
+<li>Ciclo continuo a 2 fasi</li>
+<li>Stoccaggio in acciaio inox sotto azoto</li>
+</ul>
+<a href="#faq" class="btn btn--gold ani">Domande sulla Frangitura?</a>
+</div></section>
 
-    <div class="frangitura__content">
-      <svg class="frangitura__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      <h2 class="frangitura__title">LA FRANGITURA</h2>
-      <p class="frangitura__subtitle">Servizio Conto Terzi</p>
-      <p class="frangitura__text">Offriamo il servizio di frangitura a freddo per i produttori locali. Estrazione a temperatura controllata inferiore ai 27°C, nel periodo ottobre-gennaio. Prenota la tua sessione con Jessica.</p>
-      <ul class="frangitura__bullets">
-        <li>Estrazione a freddo &lt; 27°C</li>
-        <li>Periodo: Ottobre – Gennaio</li>
-        <li>Su prenotazione</li>
-      </ul>
-      <a href="#" class="frangitura__cta chatbot-trigger">Prenota la Frangitura</a>
-    </div>
-  </section>
+<!-- ========== TERRITORIO ========== -->
+<section id="territorio" class="section territorio">
+<div class="territorio__bg"><picture><source srcset="/img/storia/monte-linas-panorama.avif" type="image/avif"><img src="/img/storia/monte-linas-panorama.webp" alt="Monte Linas Villacidro" width="1584" height="672" loading="lazy"></picture></div>
+<div class="section__inner">
+<p class="section__overtitle ani">Villacidro, Sardegna</p>
+<h2 class="section__title ani">Il Nostro Territorio</h2>
+<div class="territorio__grid">
+<div class="territorio__counter ani" data-target="1890" data-static="true"><span class="territorio__number">0000</span><span class="territorio__label">Anno di Fondazione</span></div>
+<div class="territorio__counter ani" data-target="25" data-suffix="+"><span class="territorio__number">0</span><span class="territorio__label">Ettari di Uliveti</span></div>
+<div class="territorio__counter ani" data-target="5000" data-suffix="+"><span class="territorio__number">0</span><span class="territorio__label">Alberi d'Olivo</span></div>
+<div class="territorio__counter ani" data-target="5"><span class="territorio__number">0</span><span class="territorio__label">Generazioni</span></div>
+</div></div></section>
 
-  <!-- Section 7: Territorio -->
-  <section class="territorio" id="territorio">
-    <div class="territorio__bg">
-      <picture>
-        <source srcset="/img/storia/monte-linas-panorama.avif" type="image/avif">
-        <img src="/img/storia/monte-linas-panorama.webp" alt="Monte Linas Panorama" width="1920" height="1080" loading="lazy">
-      </picture>
-    </div>
-    <div class="territorio__overlay"></div>
-    <div class="territorio__content">
-      <h2 class="territorio__title">IL NOSTRO TERRITORIO</h2>
-      <p class="territorio__subtitle">Villacidro · Monte Linas · Sud Sardegna</p>
-      
-      <div class="territorio__counters">
-        <div class="counter">
-          <div class="counter__number-wrap" data-target="1890">
-            <span class="counter__static">1890</span>
-          </div>
-          <p class="counter__label">Anno di Fondazione</p>
-        </div>
-        <div class="counter">
-          <div class="counter__number-wrap" data-target="25">
-            <span class="counter__static">25</span><span class="counter__static">+</span>
-          </div>
-          <p class="counter__label">Ettari di Uliveti</p>
-        </div>
-        <div class="counter">
-          <div class="counter__number-wrap" data-target="5000">
-            <span class="counter__static">5.000</span><span class="counter__static">+</span>
-          </div>
-          <p class="counter__label">Alberi di Olivo</p>
-        </div>
-        <div class="counter">
-          <div class="counter__number-wrap" data-target="5">
-            <span class="counter__static">5</span>
-          </div>
-          <p class="counter__label">Generazioni</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- ========== RIPROVA SOCIALE ========== -->
+<section id="recensioni" class="section recensioni">
+<div class="section__inner">
+<p class="section__overtitle ani">125 Recensioni Verificate</p>
+<h2 class="section__title ani">4.9 su 5 Stelle</h2>
+<div class="recensioni__hero ani">
+<div class="recensioni__big-stars">★★★★★</div>
+<div class="recensioni__big-score">4.9<span>/5</span></div>
+<p class="recensioni__count">Basato su <strong>125 recensioni</strong> verificate</p>
+<div class="recensioni__bars">
+<div class="recensioni__bar"><span>5★</span><div class="recensioni__bar-track"><div class="recensioni__bar-fill" data-width="89"></div></div><span>89%</span></div>
+<div class="recensioni__bar"><span>4★</span><div class="recensioni__bar-track"><div class="recensioni__bar-fill" data-width="8"></div></div><span>8%</span></div>
+<div class="recensioni__bar"><span>3★</span><div class="recensioni__bar-track"><div class="recensioni__bar-fill" data-width="2"></div></div><span>2%</span></div>
+<div class="recensioni__bar"><span>2★</span><div class="recensioni__bar-track"><div class="recensioni__bar-fill" data-width="1"></div></div><span>1%</span></div>
+<div class="recensioni__bar"><span>1★</span><div class="recensioni__bar-track"><div class="recensioni__bar-fill" data-width="0"></div></div><span>0%</span></div>
+</div>
+</div>
+<div class="recensioni__grid">
 
-  <!-- Section 8: Testimonials -->
-  <section class="testimonials">
-    <h2 class="testimonials__title">DICONO DI NOI</h2>
-    
-    <div class="testimonial-card">
-      <svg class="testimonial-card__quote-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H16.017C15.4647 8 15.017 8.44772 15.017 9V12C15.017 12.5523 14.5693 13 14.017 13H11.017V21H14.017ZM5.017 21L5.017 18C5.017 16.8954 5.91243 16 7.017 16H10.017C10.5693 16 11.017 15.5523 11.017 15V9C11.017 8.44772 10.5693 8 10.017 8H7.017C6.46472 8 6.017 8.44772 6.017 9V12C6.017 12.5523 5.56929 13 5.017 13H2.017V21H5.017Z"/></svg>
-      <p class="testimonial-card__text">"L'olio di Cabriolu ha un profumo che ti trasporta direttamente tra gli ulivi del Monte Linas. Qualità eccezionale, lo uso ogni giorno nel mio ristorante."</p>
-      <div class="testimonial-card__divider"></div>
-      <p class="testimonial-card__author">Marco Ferreli</p>
-      <p class="testimonial-card__role">Chef, Ristorante Su Nuraxi, Cagliari</p>
-      <div class="testimonial-card__stars">
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-      </div>
-    </div>
+<article class="recensioni__card ani">
+<div class="recensioni__card-stars">★★★★★</div>
+<blockquote>"Il miglior olio extravergine che abbia mai assaggiato. Si sente la Sardegna in ogni goccia. Fruttato intenso con note di carciofo incredibili. Non torno più al supermercato."</blockquote>
+<div class="recensioni__author"><strong>Marco R.</strong><span>Chef — Milano</span><span class="recensioni__verified">✓ Acquisto verificato</span></div>
+</article>
 
-    <div class="testimonial-card">
-      <svg class="testimonial-card__quote-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H16.017C15.4647 8 15.017 8.44772 15.017 9V12C15.017 12.5523 14.5693 13 14.017 13H11.017V21H14.017ZM5.017 21L5.017 18C5.017 16.8954 5.91243 16 7.017 16H10.017C10.5693 16 11.017 15.5523 11.017 15V9C11.017 8.44772 10.5693 8 10.017 8H7.017C6.46472 8 6.017 8.44772 6.017 9V12C6.017 12.5523 5.56929 13 5.017 13H2.017V21H5.017Z"/></svg>
-      <p class="testimonial-card__text">"Da quando ho scoperto il monocultivar Bosana di Cabriolu, non riesco più a tornare indietro. Un sapore unico, autentico, che racconta la Sardegna."</p>
-      <div class="testimonial-card__divider"></div>
-      <p class="testimonial-card__author">Claudia Manca</p>
-      <p class="testimonial-card__role">Food Blogger, Milano</p>
-      <div class="testimonial-card__stars">
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-      </div>
-    </div>
+<article class="recensioni__card ani">
+<div class="recensioni__card-stars">★★★★★</div>
+<blockquote>"Ordinato il cofanetto per Natale. Packaging curatissimo, qualità superiore. I miei ospiti sono rimasti entusiasti. Ne ho già riordinati tre per i compleanni."</blockquote>
+<div class="recensioni__author"><strong>Anna S.</strong><span>Food Blogger — Roma</span><span class="recensioni__verified">✓ Acquisto verificato</span></div>
+</article>
 
-    <div class="testimonial-card">
-      <svg class="testimonial-card__quote-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H16.017C15.4647 8 15.017 8.44772 15.017 9V12C15.017 12.5523 14.5693 13 14.017 13H11.017V21H14.017ZM5.017 21L5.017 18C5.017 16.8954 5.91243 16 7.017 16H10.017C10.5693 16 11.017 15.5523 11.017 15V9C11.017 8.44772 10.5693 8 10.017 8H7.017C6.46472 8 6.017 8.44772 6.017 9V12C6.017 12.5523 5.56929 13 5.017 13H2.017V21H5.017Z"/></svg>
-      <p class="testimonial-card__text">"La mia famiglia porta le olive al frantoio Cabriolu da tre generazioni. Professionalità, passione e un olio che non ha eguali."</p>
-      <div class="testimonial-card__divider"></div>
-      <p class="testimonial-card__author">Giovanni Piras</p>
-      <p class="testimonial-card__role">Agricoltore, Villacidro</p>
-      <div class="testimonial-card__stars">
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-      </div>
-    </div>
-  </section>
+<article class="recensioni__card ani">
+<div class="recensioni__card-stars">★★★★★</div>
+<blockquote>"Compro la latta da 5L ogni anno da tre anni. Con quest'olio anche un piatto semplice diventa speciale. Spedizione sempre velocissima e imballaggio perfetto."</blockquote>
+<div class="recensioni__author"><strong>Giuseppe M.</strong><span>Cliente dal 2019 — Torino</span><span class="recensioni__verified">✓ Acquisto verificato</span></div>
+</article>
 
-  <!-- Section 9: CTA Finale -->
-  <section class="cta-final">
-    <div class="cta-final__bg-bottle">
-      <img src="/img/prodotti/product-evo-puro.webp" alt="EVO Puro Background">
-    </div>
-    <div class="cta-final__drips" id="ctaDrips">
-      <svg width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="none">
-        <path d="M200 0C200 200 250 300 250 500" />
-        <path d="M500 0C500 150 450 250 450 450" />
-        <path d="M800 0C800 250 750 350 750 550" />
-      </svg>
-    </div>
-    <div class="cta-final__content">
-      <h2 class="cta-final__line cta-final__line--white">PORTA LA SARDEGNA</h2>
-      <h2 class="cta-final__line cta-final__line--gold">SULLA TUA TAVOLA</h2>
-      <p class="cta-final__text">Ordina il nostro olio extravergine e assapora cinque generazioni di tradizione</p>
-      <a href="#" class="cta-final__button">ACQUISTA ORA</a>
-      <p class="cta-final__shipping">Spedizione gratuita in Italia sopra €45</p>
-    </div>
-  </section>
+<article class="recensioni__card ani">
+<div class="recensioni__card-stars">★★★★★</div>
+<blockquote>"L'olio al peperoncino è una bomba sulla pizza. Piccante ma non copre il sapore dell'olio. Qualità che si sente al primo assaggio. Consigliatissimo."</blockquote>
+<div class="recensioni__author"><strong>Laura T.</strong><span>Pizzaiola — Napoli</span><span class="recensioni__verified">✓ Acquisto verificato</span></div>
+</article>
 
-  <!-- Section 10: Footer -->
-  <footer class="footer" id="contatti">
-    <div class="footer__grid">
-      <div class="footer__col">
-        <div class="footer__logo">
-          <svg viewBox="0 0 300 100" fill="white"><text x="0" y="65" font-family="Cormorant Garamond" font-size="36" font-weight="700" letter-spacing="4">CABRIOLU</text></svg>
-        </div>
-        <p class="footer__tagline">Olio Extravergine d'Oliva dal 1890</p>
-        <div class="footer__social">
-          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg></a>
-        </div>
-      </div>
-      <div class="footer__col">
-        <h3 class="footer__heading">NAVIGAZIONE</h3>
-        <ul class="footer__links">
-          <li><a href="#storia">La Storia</a></li>
-          <li><a href="#prodotti">Prodotti</a></li>
-          <li><a href="#frangitura">Frangitura</a></li>
-          <li><a href="#territorio">Territorio</a></li>
-          <li><a href="#contatti">Contatti</a></li>
-        </ul>
-        <h3 class="footer__heading">PUNTI VENDITA</h3>
-        <p class="footer__tagline">Villacidro (sede) | Cagliari</p>
-      </div>
-      <div class="footer__col">
-        <h3 class="footer__heading">CONTATTI</h3>
-        <div class="footer__contact">
-          <p><a href="mailto:info@oleificiocabriolu.it">info@oleificiocabriolu.it</a></p>
-          <p>Zona Industriale, 09039 Villacidro (SU)</p>
-          <p>Sardegna, Italia</p>
-        </div>
-      </div>
-    </div>
-    <div class="footer__bottom">
-      <div class="footer__bottom-left">
-        <span>© 2026 Oleificio Cabriolu — P.IVA XXXXXXXXXXX</span>
-      </div>
-      <div class="footer__bottom-center">
-        <a href="#">Privacy Policy</a> | <a href="#">Cookie Policy</a> | <a href="#">Termini</a>
-      </div>
-      <div class="footer__bottom-right">
-        <a href="https://www.digidentityagency.it" target="_blank" rel="noopener">Sito realizzato da DigIdentity Agency</a>
-      </div>
-    </div>
-  </footer>
+<article class="recensioni__card ani">
+<div class="recensioni__card-stars">★★★★★</div>
+<blockquote>"Sono tedesca e ho scoperto Cabriolu durante una vacanza in Sardegna. Ora lo ordino regolarmente. È incomparabile con qualsiasi olio che trovo qui in Germania."</blockquote>
+<div class="recensioni__author"><strong>Katharina W.</strong><span>Cliente — Berlino</span><span class="recensioni__verified">✓ Acquisto verificato</span></div>
+</article>
 
-  <!-- Cookie Banner -->
-  <div class="cookie-banner" id="cookieBanner">
-    <p class="cookie-banner__text">Questo sito utilizza cookie tecnici e analitici per migliorare l'esperienza d'uso. <a href="#">Leggi la Cookie Policy</a></p>
-    <div class="cookie-banner__actions">
-      <button class="cookie-banner__reject" id="cookieReject">Rifiuta</button>
-      <button class="cookie-banner__accept" id="cookieAccept">Accetta</button>
-    </div>
-  </div>
+<article class="recensioni__card ani">
+<div class="recensioni__card-stars">★★★★★</div>
+<blockquote>"Uso l'olio al limone sul pesce e le verdure. Delicato, mai troppo forte. Lo compro come regalo per amici e parenti — piace sempre a tutti."</blockquote>
+<div class="recensioni__author"><strong>Francesca D.</strong><span>Insegnante — Cagliari</span><span class="recensioni__verified">✓ Acquisto verificato</span></div>
+</article>
 
-  <!-- Chatbot FAB -->
-  <button class="chatbot-fab" id="chatbotFab" aria-label="Apri Chat">
-    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/></svg>
-  </button>
-  <div id="cabriolu-chatbot"></div>
+</div></div></section>
 
-  <!-- Scripts -->
-  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<!-- ========== FAQ ========== -->
+<section id="faq" class="section faq">
+<div class="section__inner">
+<p class="section__overtitle ani">Domande Frequenti</p>
+<h2 class="section__title ani">Tutto sull'Olio Cabriolu</h2>
+<div class="faq__list">
+<details class="faq__item ani"><summary>Quali cultivar utilizza l'Oleificio Cabriolu?</summary><p>Utilizziamo esclusivamente cultivar autoctone sarde: Bosana e Nera di Villacidro, coltivate nei nostri 25 ettari di uliveti ai piedi del Monte Linas. La Bosana dona un fruttato medio-intenso con note di carciofo e mandorla, la Nera di Villacidro aggiunge complessità con sentori di pomodoro verde ed erbe aromatiche.</p></details>
+<details class="faq__item ani"><summary>Cosa significa frangitura a freddo?</summary><p>La frangitura a freddo avviene a temperatura controllata sotto i 27°C entro 24 ore dalla raccolta. Questo processo preserva i polifenoli, gli antiossidanti e il profilo aromatico dell'olio, garantendo qualità superiore rispetto alla frangitura industriale.</p></details>
+<details class="faq__item ani"><summary>Quanto costa la spedizione?</summary><p>La spedizione è gratuita per ordini superiori a 45€. Per importi inferiori il costo è di 6,90€ per tutta Italia. Spediamo anche in Europa — contattaci per i costi internazionali.</p></details>
+<details class="faq__item ani"><summary>Offrite frangitura conto terzi?</summary><p>Sì, il nostro frantoio è aperto ai produttori locali per la frangitura conto terzi durante la stagione di raccolta (ottobre-dicembre). Contattaci per prenotare il turno.</p></details>
+<details class="faq__item ani"><summary>Come conservo l'olio extravergine?</summary><p>Conservalo in luogo fresco e buio, tra 14°C e 18°C, lontano da fonti di calore e luce diretta. Una volta aperto, consuma entro 4-6 mesi. Le nostre latte proteggono naturalmente dalla luce.</p></details>
+<details class="faq__item ani"><summary>Da quanto esiste l'Oleificio Cabriolu?</summary><p>L'Oleificio Cabriolu è stato fondato nel 1890 a Villacidro da nonno Antoniccu. Oggi è alla quinta generazione con Jessica e Mattia Cabriolu.</p></details>
+</div></div></section>
 
-  <script defer>
-    document.addEventListener('DOMContentLoaded', () => {
-      // 1. Initial State
-      gsap.set('.hero__subtitle, .hero__desc, .hero__buttons', { opacity: 0, y: 30 });
-      gsap.set('.hero__title--1', { clipPath: 'inset(0 100% 0 0)' });
-      gsap.set('.hero__title--2', { clipPath: 'inset(0 0 0 100%)' });
-      gsap.set('.hero__bottle-wrap', { x: 300, rotate: 8, opacity: 0 });
+<!-- ========== BLOG ========== -->
+<section id="blog" class="section blog">
+<div class="section__inner">
+<p class="section__overtitle ani">Dal Blog</p>
+<h2 class="section__title ani">Storie dall'Uliveto</h2>
+<div class="blog__grid">
+<article class="blog__card ani"><div class="blog__badge">Guida</div><h3>Come Riconoscere un Olio EVO di Qualità</h3><p>Colore, profumo, sapore: i tre sensi per distinguere un extravergine autentico da un prodotto industriale.</p><a href="/blog/riconoscere-olio-evo-qualita" class="blog__link">Leggi l'articolo →</a></article>
+<article class="blog__card ani"><div class="blog__badge">Processo</div><h3>Frangitura a Freddo: Cosa Significa Davvero</h3><p>Temperatura, tempistica, tecnologia. Tutto quello che c'è dietro un olio franto a freddo entro 24 ore.</p><a href="/blog/frangitura-a-freddo-significato" class="blog__link">Leggi l'articolo →</a></article>
+<article class="blog__card ani"><div class="blog__badge">Territorio</div><h3>Cultivar Bosana: l'Oliva Regina della Sardegna</h3><p>Origini, caratteristiche organolettiche e perché la Bosana produce uno degli oli più premiati d'Italia.</p><a href="/blog/cultivar-bosana-sardegna" class="blog__link">Leggi l'articolo →</a></article>
+</div></div></section>
 
-      // Split words for animations
-      const splitText = (selector) => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(el => {
-          const words = el.innerText.split(' ');
-          el.innerHTML = words.map(word => `<span class="word">${word}</span>`).join(' ');
-        });
-      };
+<!-- ========== CTA FINALE (frame 841-960, bottiglia versa = sfondo) ========== -->
+<section id="cta-final" class="section cta-final">
+<div class="section__inner">
+<h2 class="cta-final__title ani"><span class="cta-final__word">Porta</span> <span class="cta-final__word">la</span> <span class="cta-final__word">Sardegna</span> <span class="cta-final__word">a</span> <span class="cta-final__word cta-final__word--gold">Tavola</span></h2>
+<p class="cta-final__sub ani">Spedizione gratuita per ordini sopra €45</p>
+<a href="#prodotti" class="btn btn--gold btn--lg ani">Acquista Ora</a>
+</div>
+</section>
 
-      splitText('.product-info__name');
-      splitText('.storia__title');
-      splitText('.storia__text');
-      splitText('.territorio__title');
-      splitText('.testimonials__title');
-      splitText('.cta-final__line');
+<!-- ========== FOOTER ========== -->
+<footer id="contatti" class="footer">
+<div class="footer__inner">
+<div class="footer__brand">
+<span class="footer__logo">CABRIOLU</span><span class="footer__logo-sub">dal 1890</span>
+<p class="footer__tagline">Olio Extravergine d'Oliva Sardo — Villacidro, Sardegna</p>
+<div class="footer__social">
+<a href="https://www.instagram.com/oleificiocabriolu/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+<a href="https://www.facebook.com/oleificiocabriolu" target="_blank" rel="noopener" aria-label="Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+</div>
+</div>
+<div class="footer__nav"><h4>Navigazione</h4><ul><li><a href="#prodotti">Prodotti</a></li><li><a href="#storia">Storia</a></li><li><a href="#frangitura">Frangitura</a></li><li><a href="#territorio">Territorio</a></li><li><a href="#faq">FAQ</a></li><li><a href="#blog">Blog</a></li></ul></div>
+<div class="footer__contact"><h4>Contatti</h4><address><p>Zona Industriale<br>09039 Villacidro (SU)<br>Sardegna, Italia</p><p><a href="tel:+390700000000">+39 070 000 0000</a></p><p><a href="mailto:info@oleificiocabriolu.it">info@oleificiocabriolu.it</a></p></address><h4>Orari</h4><p>Lun — Ven: 08:00 — 13:00 / 15:00 — 18:00</p></div>
+<div class="footer__info"><h4>Punto Vendita</h4><p>Visita il nostro frantoio a Villacidro per acquistare direttamente e degustare i nostri oli. Frangitura conto terzi disponibile da ottobre a dicembre.</p></div>
+</div>
+<div class="footer__bottom">
+<p>&copy; 2026 Oleificio Cabriolu — Tutti i diritti riservati</p>
+<div class="footer__legal"><a href="/privacy">Privacy</a><a href="/cookie">Cookie</a><a href="/termini">Termini</a></div>
+<p class="footer__credit">by <a href="https://www.digidentityagency.com" target="_blank" rel="noopener">DigIdentity Agency</a></p>
+</div>
+</footer>
 
-      // 2. Initialize Lenis
-      const lenis = new Lenis({
-        lerp: 0.07,
-        duration: 1.2,
-        smoothWheel: true,
-        gestureOrientation: 'vertical'
-      });
+<!-- COOKIE -->
+<div class="cookie-banner" id="cookieBanner"><p>Utilizziamo cookie tecnici e analitici. <a href="/cookie">Scopri di più</a></p><div class="cookie-banner__actions"><button class="btn btn--gold btn--sm" id="cookieAccept">Accetta</button><button class="btn btn--outline btn--sm" id="cookieReject">Rifiuta</button></div></div>
 
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
+<!-- CHATBOT FAB -->
+<button class="chatbot-fab" id="chatbotFab" aria-label="Assistente virtuale"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg></button>
+<div class="chatbot-panel" id="chatbotPanel" aria-hidden="true">
+<div class="chatbot-panel__header"><span>Assistente Cabriolu</span><button id="chatbotClose">✕</button></div>
+<div class="chatbot-panel__body" id="chatbotBody"><p class="chatbot-panel__welcome">Ciao! Chiedimi tutto sui nostri oli, spedizioni, o prenota una visita al frantoio.</p></div>
+<div class="chatbot-panel__input"><input type="text" id="chatbotInput" placeholder="Scrivi un messaggio..." aria-label="Messaggio"><button id="chatbotSend">→</button></div>
+</div>
 
-      // Connect Lenis to ScrollTrigger
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add((time) => {
-        lenis.raf(time * 1000);
-      });
-      gsap.ticker.lagSmoothing(0);
-
-      // Register ScrollTrigger
-      gsap.registerPlugin(ScrollTrigger);
-
-      // 3. Animations
-      
-      // Ready State
-      document.body.classList.add('is-ready');
-
-      // Nav Scroll
-      ScrollTrigger.create({
-        start: 'top -80',
-        onUpdate: (self) => {
-          if (self.direction === 1) {
-            document.querySelector('.nav').classList.add('scrolled');
-          } else {
-            if (window.scrollY < 80) document.querySelector('.nav').classList.remove('scrolled');
-          }
-        }
-      });
-
-      // Mobile Menu
-      const hamburger = document.querySelector('.nav__hamburger');
-      const overlay = document.querySelector('.mobile-overlay');
-      hamburger.addEventListener('click', () => {
-        overlay.classList.toggle('is-active');
-        if (overlay.classList.contains('is-active')) {
-          gsap.to('.mobile-overlay a', { opacity: 1, y: 0, stagger: 0.1, duration: 0.5, ease: 'back.out' });
-        } else {
-          gsap.set('.mobile-overlay a', { opacity: 0, y: 40 });
-        }
-      });
-      overlay.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => overlay.classList.remove('is-active'));
-      });
-
-      // Hero Video Scrub
-      const heroVideo = document.getElementById('heroVideo');
-      heroVideo.pause();
-      heroVideo.preload = 'auto';
-
-      function initHeroScrub() {
-        // Create the pinning and video scrub
-        ScrollTrigger.create({
-          trigger: '.hero',
-          start: 'top top',
-          end: '+=300%',
-          pin: true,
-          scrub: 0.5,
-          onUpdate: (self) => {
-            if (heroVideo.readyState >= 2) {
-              heroVideo.currentTime = self.progress * heroVideo.duration;
-            }
-          }
-        });
-
-        // Create the hero content timeline
-        const heroTL = gsap.timeline({
-          scrollTrigger: {
-            trigger: '.hero',
-            start: 'top top',
-            end: '+=300%',
-            scrub: 0.6
-          }
-        });
-
-        // Gold line
-        heroTL.fromTo('.hero__line', { width: 0 }, { width: 40, duration: 0.15 }, 0);
-        // Subtitle
-        heroTL.fromTo('.hero__subtitle', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.2 }, 0.05);
-        // Title line 1
-        heroTL.fromTo('.hero__title--1', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 0.25 }, 0.15);
-        // Title line 2
-        heroTL.fromTo('.hero__title--2', { clipPath: 'inset(0 0 0 100%)' }, { clipPath: 'inset(0 0 0 0%)', duration: 0.25 }, 0.20);
-        // Paragraph and buttons
-        heroTL.fromTo('.hero__desc', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.2 }, 0.40);
-        heroTL.fromTo('.hero__buttons', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.2 }, 0.45);
-        // Bottle
-        heroTL.fromTo('.hero__bottle-wrap', { x: 300, rotation: 8, opacity: 0 }, { x: 0, rotation: 3, opacity: 1, duration: 0.3 }, 0.50);
-        // Fade out at end
-        heroTL.to('.hero__content', { y: -30, opacity: 0, duration: 0.15 }, 0.85);
-      }
-
-      // Try to init immediately if video already loaded, otherwise wait
-      if (heroVideo.readyState >= 2) {
-        initHeroScrub();
-      } else {
-        // Force the video to start loading
-        heroVideo.load();
-        heroVideo.addEventListener('loadeddata', initHeroScrub, { once: true });
-        // Fallback: if loadeddata doesn't fire within 3 seconds, try anyway
-        setTimeout(() => {
-          if (heroVideo.readyState >= 2) {
-            initHeroScrub();
-          } else {
-            // Last resort: listen for canplay
-            heroVideo.addEventListener('canplay', initHeroScrub, { once: true });
-          }
-        }, 3000);
-      }
-
-      // Oil Spread - image texture expands from center
-      const oilBg = document.getElementById('oilBlob');
-      if (oilBg) {
-        const oilTL = gsap.timeline({
-          scrollTrigger: {
-            trigger: '.oil-spread',
-            start: 'top top',
-            end: '+=150%',
-            pin: true,
-            scrub: 1
-          }
-        });
-        oilTL.fromTo('.oil-spread__bg', 
-          { scale: 0.01, opacity: 0, borderRadius: '50%' }, 
-          { scale: 1.5, opacity: 1, borderRadius: '0%', duration: 0.7, ease: 'power2.inOut' }, 0)
-        .fromTo('.oil-spread__line', 
-          { opacity: 0, y: 40 }, 
-          { opacity: 1, y: 0, stagger: 0.15, duration: 0.3 }, 0.3)
-        .to('.oil-spread__text', { opacity: 0, y: -20, duration: 0.15 }, 0.85)
-        .to('.oil-spread__bg', { opacity: 0, duration: 0.1 }, 0.9);
-      }
-
-      // Horizontal Scroll
-      if (window.innerWidth > 768) {
-        const panels = gsap.utils.toArray('.products-hscroll__panel');
-        const track = document.querySelector('.products-hscroll__track');
-        
-        gsap.to(track, {
-          x: () => -(track.scrollWidth - window.innerWidth),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '.products-hscroll',
-            start: 'top top',
-            end: () => '+=' + track.scrollWidth,
-            pin: true,
-            scrub: 1,
-            invalidateOnRefresh: true
-          }
-        });
-
-        // Individual panels reveal
-        panels.forEach((panel, i) => {
-          gsap.timeline({
-            scrollTrigger: {
-              trigger: panel,
-              containerAnimation: gsap.getById('mainScrollTL'), // Hypothetical, scrub handles it
-              start: 'left center', // This works different with track animation
-              // Using track's progress for individual panel reveals
-            }
-          });
-          
-          // Simple reveal for each panel as it comes into view
-          gsap.timeline({
-            scrollTrigger: {
-              trigger: panel,
-              start: 'left center',
-              horizontal: true, // If we were scrolling natively, but we use track X
-            }
-          });
-
-          // Accurate way with track scrollTrigger
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: panel,
-              start: () => `top top-=${i * window.innerWidth}`,
-              end: () => `top top-=${(i + 1) * window.innerWidth}`,
-              scrub: true
-            }
-          });
-          
-          tl.to(panel.querySelectorAll('.word'), { opacity: 1, y: 0, stagger: 0.05, duration: 0.5 })
-            .to(panel.querySelector('.product-info__price'), { opacity: 1, duration: 0.3 }, "-=0.2")
-            .to(panel.querySelector('.product-info__desc'), { opacity: 1, duration: 0.3 }, "-=0.2")
-            .to(panel.querySelector('.product-info__size'), { opacity: 1, duration: 0.2 }, "-=0.1")
-            .to(panel.querySelector('.product-info__cta'), { opacity: 1, duration: 0.2 }, "-=0.1")
-            .fromTo(panel.querySelector('.product-image img'), { opacity: 0, x: 200, rotate: 12 }, { opacity: 1, x: 0, rotate: 0, duration: 1 }, 0);
-        });
-      }
-
-      // Storia Timeline
-      gsap.to('.storia__line-svg line', {
-        attr: { y2: '100%' },
-        scrollTrigger: { trigger: '.storia', start: 'top 30%', end: 'bottom 80%', scrub: 1 }
-      });
-
-      gsap.utils.toArray('.storia__node').forEach(node => {
-        const tl = gsap.timeline({
-          scrollTrigger: { trigger: node, start: 'top 70%' }
-        });
-        tl.to(node.querySelector('.storia__node-dot'), { scale: 1, duration: 0.5, ease: 'back.out' })
-          .to(node.querySelector('.storia__watermark'), { opacity: 0.04, scale: 1.1, duration: 1 }, 0)
-          .to(node.querySelector('.storia__image img'), { clipPath: 'circle(75% at 50% 50%)', duration: 1.5, ease: 'power2.inOut' }, 0.2)
-          .to(node.querySelectorAll('.storia__text .word'), { opacity: 1, stagger: 0.02 }, 0.5);
-      });
-
-      // Frangitura
-      const frankTL = gsap.timeline({
-        scrollTrigger: { trigger: '.frangitura', start: 'top bottom', end: 'bottom top', scrub: 1 }
-      });
-      frankTL.to('.frangitura__image-wrap img', { scale: 1.2, ease: 'none' });
-
-      gsap.timeline({
-        scrollTrigger: { trigger: '.frangitura', start: 'top 50%' }
-      })
-      .to('.frangitura__title', { clipPath: 'inset(0 0% 0 0)', duration: 1 })
-      .to('.frangitura__text', { opacity: 1, duration: 0.8 }, "-=0.5");
-
-      // Territorio Counters
-      const initCounters = () => {
-        const counters = document.querySelectorAll('.counter');
-        counters.forEach(counter => {
-          const wrap = counter.querySelector('.counter__number-wrap');
-          const target = parseInt(wrap.dataset.target);
-          const staticSpan = wrap.querySelector('.counter__static');
-          
-          if (window.innerWidth > 768) {
-            // Slot machine style
-            const digits = target.toString().split('');
-            wrap.innerHTML = '';
-            digits.forEach(d => {
-              const col = document.createElement('div');
-              col.className = 'counter__digit-col';
-              for(let i=0; i<=9; i++) col.innerHTML += `<span>${i}</span>`;
-              wrap.appendChild(col);
-              
-              gsap.from(col, {
-                y: 0,
-                scrollTrigger: { trigger: counter, start: 'top 80%', once: true },
-                onStart: () => {
-                  gsap.to(col, { y: -parseInt(d) * (wrap.offsetHeight), duration: 2.5, ease: 'power4.out', delay: Math.random() * 0.5 });
-                }
-              });
-            });
-          } else {
-            // Mobile simple increment
-            let obj = { val: 0 };
-            gsap.to(obj, {
-              val: target,
-              duration: 2,
-              scrollTrigger: { trigger: counter, start: 'top 90%', once: true },
-              onUpdate: () => {
-                staticSpan.innerHTML = Math.ceil(obj.val) + (target === 25 || target === 5000 ? '+' : '');
-              }
-            });
-          }
-        });
-      };
-      initCounters();
-
-      // Testimonials Stacking
-      if (window.innerWidth > 768) {
-        gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
-          ScrollTrigger.create({
-            trigger: card,
-            start: 'top 20%',
-            end: 'bottom top',
-            onToggle: self => {
-              if (self.isActive) card.classList.add('is-active');
-              else card.classList.remove('is-active');
-            }
-          });
-        });
-      }
-
-      // CTA Drips
-      gsap.utils.toArray('#ctaDrips path').forEach((path, i) => {
-        const length = path.getTotalLength();
-        gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
-        gsap.to(path, {
-          strokeDashoffset: 0,
-          duration: 2,
-          delay: i * 0.4,
-          scrollTrigger: { trigger: '.cta-final', start: 'top 60%' }
-        });
-      });
-
-      // 4. UI Logic
-      // Cookie Consent
-      const cookieBanner = document.getElementById('cookieBanner');
-      if (!localStorage.getItem('cookie-consent')) {
-        setTimeout(() => cookieBanner.classList.add('is-visible'), 2000);
-      }
-      document.getElementById('cookieAccept').addEventListener('click', () => {
-        localStorage.setItem('cookie-consent', 'accepted');
-        cookieBanner.classList.remove('is-visible');
-      });
-      document.getElementById('cookieReject').addEventListener('click', () => {
-        localStorage.setItem('cookie-consent', 'rejected');
-        cookieBanner.classList.remove('is-visible');
-      });
-
-      // Chatbot Placeholder
-      document.getElementById('chatbotFab').addEventListener('click', () => {
-        console.log('Chatbot will load here');
-        alert('Il nostro assistente AI Cabriolu sarà disponibile a breve!');
-      });
-
-      // Refresh ScrollTrigger after assets
-      window.addEventListener('load', () => ScrollTrigger.refresh());
-    });
-  </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="/js/main.js" defer></script>
 </body>
 </html>
