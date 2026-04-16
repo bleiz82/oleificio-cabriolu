@@ -57,24 +57,13 @@
   function initGSAP() {
     gsap.registerPlugin(ScrollTrigger);
 
-    /* MASTER CANVAS */
-    ScrollTrigger.create({
-      trigger: 'body',
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate: self => {
-        const f = Math.floor(self.progress * (TOTAL_FRAMES - 1));
-        if (f !== currentFrame) {
-          currentFrame = f;
-          drawFrame(currentFrame);
-        }
-      }
-    });
-
     /* ═══════════════════════════════════════
-       HERO — fixed centrato
-       v16: timing 50/5/45 — appare a metà, resta fino alla fine
+       MASTER CANVAS + COPY CONTROL basato sui frame reali
+       v17: il copy appare quando il frame raggiunge il punto medio
+            del range definito in data-frame-start / data-frame-end
        ═══════════════════════════════════════ */
+
+    /* --- Prepara hero --- */
     const heroContent = document.querySelector('.hero__content');
     const heroChildren = heroContent.querySelectorAll('.hero__line, .hero__sub, .hero__actions, .hero__proof');
 
@@ -86,43 +75,27 @@
       'background:radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, transparent 100%)'
     ].join(';') + ';';
     heroContent.querySelectorAll('.btn').forEach(b => b.style.pointerEvents = 'auto');
+
+    /* Hero: frame 1-120, copy appare al frame 60 */
+    const HERO_SHOW = 60;
+    const HERO_END = 120;
+    let heroVisible = false;
+    let heroAnimated = false;
+
     gsap.set(heroChildren, { opacity: 0, y: 30, visibility: 'hidden' });
     gsap.set(heroContent, { opacity: 0, display: 'flex' });
 
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-        onLeave: () => { heroContent.style.display = 'none'; },
-        onEnterBack: () => { heroContent.style.display = 'flex'; }
-      }
-    })
-      .to(heroContent, { opacity: 0, duration: 50 })                                           // 0-50%   invisibile
-      .to(heroContent, { opacity: 1, duration: 5 })                                            // 50-55%  fade in
-      .to(heroChildren, { opacity: 1, y: 0, visibility: 'visible', stagger: 0.3, duration: 5 }, '<')
-      .to(heroContent, { opacity: 1, duration: 45 });                                          // 55-100% resta visibile
-
-    /* Scroll indicator */
-    const heroScroll = document.querySelector('.hero__scroll');
-    if (heroScroll) {
-      gsap.set(heroScroll, { opacity: 1 });
-      gsap.timeline({
-        scrollTrigger: { trigger: '.hero', start: 'top top', end: '25% top', scrub: true }
-      }).to(heroScroll, { opacity: 0 });
-    }
-
-    /* ═══════════════════════════════════════
-       PRODOTTI — copy fixed, visibile solo nella sua scena
-       v16: timing 50/5/45 — entra a metà scena, resta fino alla fine
-       ═══════════════════════════════════════ */
+    /* --- Prepara prodotti --- */
+    const scenes = [];
     const allCopies = [];
 
     document.querySelectorAll('.prodotti__scene').forEach((scene, idx) => {
       const copy = scene.querySelector('.prodotti__copy');
       const side = scene.dataset.copySide;
       const fromX = side === 'right' ? 60 : side === 'left' ? -60 : 0;
+      const frameStart = parseInt(scene.dataset.frameStart);
+      const frameEnd = parseInt(scene.dataset.frameEnd);
+      const frameMid = Math.floor((frameStart + frameEnd) / 2);
 
       let cssPos = [
         'position:fixed', 'top:0', 'height:100vh',
@@ -145,32 +118,75 @@
       gsap.set(copy, { opacity: 0, x: fromX, y: 30, visibility: 'hidden' });
 
       allCopies.push(copy);
-
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: scene,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-          onEnter: () => {
-            allCopies.forEach((c, i) => { c.style.display = i === idx ? 'flex' : 'none'; });
-            heroContent.style.display = 'none';
-          },
-          onLeave: () => { copy.style.display = 'none'; },
-          onEnterBack: () => {
-            allCopies.forEach((c, i) => { c.style.display = i === idx ? 'flex' : 'none'; });
-            heroContent.style.display = 'none';
-          },
-          onLeaveBack: () => {
-            copy.style.display = 'none';
-            if (idx === 0) heroContent.style.display = 'flex';
-          }
-        }
-      })
-        .to(copy, { opacity: 0, duration: 50 })                                              // 0-50%   invisibile (bottiglia si posiziona)
-        .to(copy, { opacity: 1, x: 0, y: 0, visibility: 'visible', duration: 5 })           // 50-55%  fade in
-        .to(copy, { opacity: 1, duration: 45 });                                             // 55-100% RESTA FISSO fino a fine scena
+      scenes.push({ copy, side, fromX, frameStart, frameEnd, frameMid, visible: false, animated: false });
     });
+
+    /* --- MASTER ScrollTrigger: controlla frame + visibilità copy --- */
+    ScrollTrigger.create({
+      trigger: 'body',
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: self => {
+        const f = Math.floor(self.progress * (TOTAL_FRAMES - 1));
+        if (f !== currentFrame) {
+          currentFrame = f;
+          drawFrame(currentFrame);
+        }
+
+        /* --- HERO copy: visibile da frame HERO_SHOW a frame HERO_END --- */
+        const shouldShowHero = (f >= HERO_SHOW && f < HERO_END);
+        if (shouldShowHero && !heroVisible) {
+          heroVisible = true;
+          heroContent.style.display = 'flex';
+          if (!heroAnimated) {
+            heroAnimated = true;
+            gsap.to(heroContent, { opacity: 1, duration: 0.5, ease: 'power2.out' });
+            gsap.to(heroChildren, { opacity: 1, y: 0, visibility: 'visible', stagger: 0.08, duration: 0.5, ease: 'power2.out' });
+          } else {
+            gsap.to(heroContent, { opacity: 1, duration: 0.3 });
+          }
+        } else if (!shouldShowHero && heroVisible) {
+          heroVisible = false;
+          gsap.to(heroContent, { opacity: 0, duration: 0.3, onComplete: () => { heroContent.style.display = 'none'; } });
+        }
+
+        /* --- PRODOTTI copy: visibile da frameMid a frameEnd --- */
+        scenes.forEach((s, idx) => {
+          const shouldShow = (f >= s.frameMid && f < s.frameEnd);
+          if (shouldShow && !s.visible) {
+            s.visible = true;
+            /* Nascondi tutti gli altri */
+            allCopies.forEach((c, i) => {
+              if (i !== idx) {
+                c.style.display = 'none';
+                scenes[i].visible = false;
+              }
+            });
+            heroContent.style.display = 'none';
+            heroVisible = false;
+            s.copy.style.display = 'flex';
+            if (!s.animated) {
+              s.animated = true;
+              gsap.to(s.copy, { opacity: 1, x: 0, y: 0, visibility: 'visible', duration: 0.5, ease: 'power2.out' });
+            } else {
+              gsap.to(s.copy, { opacity: 1, duration: 0.3 });
+            }
+          } else if (!shouldShow && s.visible) {
+            s.visible = false;
+            gsap.to(s.copy, { opacity: 0, duration: 0.3, onComplete: () => { s.copy.style.display = 'none'; } });
+          }
+        });
+      }
+    });
+
+    /* Scroll indicator */
+    const heroScroll = document.querySelector('.hero__scroll');
+    if (heroScroll) {
+      gsap.set(heroScroll, { opacity: 1 });
+      gsap.timeline({
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: '25% top', scrub: true }
+      }).to(heroScroll, { opacity: 0 });
+    }
 
     /* NAV */
     const nav = document.getElementById('nav');
