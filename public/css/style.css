@@ -1,4 +1,4 @@
-
+﻿
 @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/cormorant-garamond-v16-latin-700.woff2') format('woff2')}
 @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter-v13-latin-regular.woff2') format('woff2')}
 @font-face{font-family:'Inter';font-style:normal;font-weight:300;font-display:swap;src:url('/fonts/inter-v13-latin-300.woff2') format('woff2')}
@@ -58,7 +58,7 @@ address{font-style:normal}
 
 /* HERO */
 .hero{position:relative;z-index:2;min-height:300vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
-.hero__content{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 24px;max-width:800px;margin:0 auto;z-index:2}
+.hero__content{position:fixed;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 24px;max-width:800px;margin:0 auto;z-index:2}
 .hero__title{font-family:var(--font-display);font-weight:700;font-size:clamp(2.2rem,6vw,4.5rem);line-height:1.12;margin-bottom:24px}
 .hero__line{display:block;opacity:0;transform:translateY(40px)}
 .hero__line--gold{color:var(--gold)}
@@ -76,7 +76,7 @@ address{font-style:normal}
 /* PRODOTTI SCENES */
 .prodotti{position:relative;z-index:2}
 .prodotti__scene{min-height:300vh;position:relative}
-.prodotti__copy{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 5vw;max-width:480px;z-index:3;opacity:0}
+.prodotti__copy{position:fixed;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 5vw;max-width:480px;z-index:3;opacity:0}
 .prodotti__scene[data-copy-side="left"] .prodotti__copy{margin-right:auto}
 .prodotti__scene[data-copy-side="right"] .prodotti__copy{margin-left:auto}
 .prodotti__scene[data-copy-side="center"] .prodotti__copy{margin:0 auto;text-align:center;align-items:center}
@@ -257,3 +257,4 @@ address{font-style:normal}
 @media(prefers-reduced-motion:reduce){
 *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
+

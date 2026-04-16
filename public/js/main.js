@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-  /* ── COSTANTI ── */
   const TOTAL_FRAMES = 960;
   const DESKTOP_PATH = '/img/frames/desktop/frame_';
   const MOBILE_PATH = '/img/frames/mobile/frame_';
@@ -9,7 +8,6 @@
   const IS_MOBILE = window.innerWidth < 768;
   const BASE_PATH = IS_MOBILE ? MOBILE_PATH : DESKTOP_PATH;
 
-  /* ── CANVAS ── */
   const canvas = document.getElementById('bc');
   const ctx = canvas.getContext('2d');
   const frames = [];
@@ -56,7 +54,6 @@
     return Promise.all(promises);
   }
 
-  /* ── GSAP ── */
   function initGSAP() {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -75,72 +72,76 @@
     });
 
     /* ═══════════════════════════════════════
-       HERO
+       HERO — fixed overlay, entra a 50%, esce a 100%
        ═══════════════════════════════════════ */
     const heroContent = document.querySelector('.hero__content');
-    const heroAll = heroContent.querySelectorAll('.hero__line, .hero__sub, .hero__actions, .hero__proof');
+    const heroChildren = heroContent.querySelectorAll('.hero__line, .hero__sub, .hero__actions, .hero__proof');
 
-    /* Forza stato iniziale nascosto su TUTTI i figli */
-    gsap.set(heroAll, { opacity: 0, y: 30, visibility: 'hidden' });
+    /* Forza fixed + centrato + nascosto */
+    heroContent.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 24px;z-index:5;pointer-events:none;';
+    heroContent.querySelectorAll('.btn').forEach(b => b.style.pointerEvents = 'auto');
+    gsap.set(heroChildren, { opacity: 0, y: 30, visibility: 'hidden' });
+    gsap.set(heroContent, { opacity: 0 });
 
-    gsap.timeline({
+    /* Timeline hero legata allo scroll della sezione .hero */
+    const heroTL = gsap.timeline({
       scrollTrigger: {
         trigger: '.hero',
         start: 'top top',
         end: 'bottom top',
         scrub: true
       }
-    })
-      /* 0% → 50%: resta nascosto */
-      .to(heroAll, { opacity: 0, y: 30, visibility: 'hidden', duration: 50 })
-      /* 50% → 60%: fade in tutti i figli */
-      .to(heroAll, { opacity: 1, y: 0, visibility: 'visible', stagger: 0.5, duration: 10 })
-      /* 60% → 92%: resta visibile */
-      .to(heroAll, { opacity: 1, y: 0, duration: 32 })
-      /* 92% → 100%: fade out */
-      .to(heroAll, { opacity: 0, y: -30, duration: 8 });
+    });
+    heroTL
+      .to(heroContent, { opacity: 0, duration: 45 })
+      .to(heroContent, { opacity: 1, duration: 5 })
+      .to(heroChildren, { opacity: 1, y: 0, visibility: 'visible', stagger: 0.3, duration: 5 }, '<')
+      .to(heroContent, { opacity: 1, duration: 35 })
+      .to(heroContent, { opacity: 0, duration: 10 });
 
     /* Scroll indicator */
     const heroScroll = document.querySelector('.hero__scroll');
     if (heroScroll) {
       gsap.set(heroScroll, { opacity: 1 });
       gsap.timeline({
-        scrollTrigger: { trigger: '.hero', start: 'top top', end: '30% top', scrub: true }
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: '25% top', scrub: true }
       }).to(heroScroll, { opacity: 0 });
     }
 
     /* ═══════════════════════════════════════
-       PRODOTTI — ogni scena
+       PRODOTTI — ogni copy fixed, entra a 50% della sua scena
        ═══════════════════════════════════════ */
     document.querySelectorAll('.prodotti__scene').forEach(scene => {
       const copy = scene.querySelector('.prodotti__copy');
       const side = scene.dataset.copySide;
       const fromX = side === 'right' ? 60 : side === 'left' ? -60 : 0;
 
-      /* Forza nascosto */
+      /* Forza fixed + posizionamento per lato */
+      let cssPos = 'position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 5vw;z-index:5;pointer-events:none;max-width:480px;';
+      if (side === 'right') cssPos += 'left:auto;right:0;';
+      if (side === 'center') cssPos += 'left:50%;transform:translateX(-50%);text-align:center;align-items:center;';
+      copy.style.cssText = cssPos;
+      copy.querySelectorAll('.btn').forEach(b => b.style.pointerEvents = 'auto');
+
       gsap.set(copy, { opacity: 0, x: fromX, y: 30, visibility: 'hidden' });
 
-      gsap.timeline({
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: scene,
           start: 'top top',
           end: 'bottom top',
           scrub: true
         }
-      })
-        /* 0% → 50%: nascosto */
-        .to(copy, { opacity: 0, x: fromX, y: 30, visibility: 'hidden', duration: 50 })
-        /* 50% → 60%: fade in */
+      });
+      tl
+        .to(copy, { opacity: 0, duration: 45 })
         .to(copy, { opacity: 1, x: 0, y: 0, visibility: 'visible', duration: 10 })
-        /* 60% → 92%: visibile */
-        .to(copy, { opacity: 1, x: 0, y: 0, duration: 32 })
-        /* 92% → 100%: fade out */
-        .to(copy, { opacity: 0, y: -30, duration: 8 });
+        .to(copy, { opacity: 1, duration: 35 })
+        .to(copy, { opacity: 0, y: -30, duration: 10 });
     });
 
-    /* ═══════════════════════════════════════
-       NAV
-       ═══════════════════════════════════════ */
+    /* ═══════════════════════════════════════ */
+    /* NAV */
     const nav = document.getElementById('nav');
     ScrollTrigger.create({
       start: 80,
@@ -229,7 +230,6 @@
 
   } /* end initGSAP */
 
-  /* ── MOBILE MENU ── */
   function initBurger() {
     const burger = document.getElementById('navBurger');
     const menu = document.getElementById('mobileMenu');
@@ -252,7 +252,6 @@
     });
   }
 
-  /* ── COOKIE ── */
   function initCookie() {
     const banner = document.getElementById('cookieBanner');
     if (!banner || localStorage.getItem('cb-consent')) return;
@@ -267,7 +266,6 @@
     });
   }
 
-  /* ── CHATBOT ── */
   function initChatbot() {
     const fab = document.getElementById('chatbotFab');
     const panel = document.getElementById('chatbotPanel');
@@ -283,7 +281,6 @@
     });
   }
 
-  /* ── SMOOTH ── */
   function initSmooth() {
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
@@ -297,7 +294,6 @@
     });
   }
 
-  /* ── FAQ ── */
   function initFAQ() {
     document.querySelectorAll('.faq__item').forEach(item => {
       item.addEventListener('toggle', () => {
@@ -310,7 +306,6 @@
     });
   }
 
-  /* ── AVVIO ── */
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
   preloadFrames().then(() => {
