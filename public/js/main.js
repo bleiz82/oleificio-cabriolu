@@ -72,31 +72,30 @@
     });
 
     /* ═══════════════════════════════════════
-       HERO — fixed overlay, entra a 50%, esce a 100%
+       HERO — fixed al centro, sfondo scuro dietro il testo
        ═══════════════════════════════════════ */
     const heroContent = document.querySelector('.hero__content');
     const heroChildren = heroContent.querySelectorAll('.hero__line, .hero__sub, .hero__actions, .hero__proof');
 
-    /* Forza fixed + centrato + nascosto */
-    heroContent.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 24px;z-index:5;pointer-events:none;';
+    /* Fixed centrato con sfondo scuro semi-trasparente */
+    heroContent.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 24px;z-index:5;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);';
     heroContent.querySelectorAll('.btn').forEach(b => b.style.pointerEvents = 'auto');
     gsap.set(heroChildren, { opacity: 0, y: 30, visibility: 'hidden' });
     gsap.set(heroContent, { opacity: 0 });
 
-    /* Timeline hero legata allo scroll della sezione .hero */
-    const heroTL = gsap.timeline({
+    /* Timeline: nascosto 55%, fade-in 5%, visibile 30%, fade-out 10% */
+    gsap.timeline({
       scrollTrigger: {
         trigger: '.hero',
         start: 'top top',
         end: 'bottom top',
         scrub: true
       }
-    });
-    heroTL
-      .to(heroContent, { opacity: 0, duration: 45 })
+    })
+      .to(heroContent, { opacity: 0, duration: 55 })
       .to(heroContent, { opacity: 1, duration: 5 })
       .to(heroChildren, { opacity: 1, y: 0, visibility: 'visible', stagger: 0.3, duration: 5 }, '<')
-      .to(heroContent, { opacity: 1, duration: 35 })
+      .to(heroContent, { opacity: 1, duration: 25 })
       .to(heroContent, { opacity: 0, duration: 10 });
 
     /* Scroll indicator */
@@ -109,38 +108,44 @@
     }
 
     /* ═══════════════════════════════════════
-       PRODOTTI — ogni copy fixed, entra a 50% della sua scena
+       PRODOTTI — copy fixed, entra a 55% della scena
        ═══════════════════════════════════════ */
     document.querySelectorAll('.prodotti__scene').forEach(scene => {
       const copy = scene.querySelector('.prodotti__copy');
       const side = scene.dataset.copySide;
       const fromX = side === 'right' ? 60 : side === 'left' ? -60 : 0;
 
-      /* Forza fixed + posizionamento per lato */
-      let cssPos = 'position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 5vw;z-index:5;pointer-events:none;max-width:480px;';
+      let cssPos = 'position:fixed;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 5vw;z-index:5;pointer-events:none;max-width:480px;';
+      if (side === 'left') cssPos += 'left:0;right:auto;';
       if (side === 'right') cssPos += 'left:auto;right:0;';
-      if (side === 'center') cssPos += 'left:50%;transform:translateX(-50%);text-align:center;align-items:center;';
+      if (side === 'center') cssPos += 'left:50%;transform:translateX(-50%);text-align:center;align-items:center;max-width:600px;';
+
+      /* Sfondo scuro dietro il copy */
+      cssPos += 'background:linear-gradient(';
+      if (side === 'left') cssPos += 'to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);';
+      else if (side === 'right') cssPos += 'to left, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);';
+      else cssPos += 'to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 80%, transparent 100%);';
+
       copy.style.cssText = cssPos;
       copy.querySelectorAll('.btn').forEach(b => b.style.pointerEvents = 'auto');
 
       gsap.set(copy, { opacity: 0, x: fromX, y: 30, visibility: 'hidden' });
 
-      const tl = gsap.timeline({
+      /* Timeline: nascosto 55%, fade-in 10%, visibile 25%, fade-out 10% */
+      gsap.timeline({
         scrollTrigger: {
           trigger: scene,
           start: 'top top',
           end: 'bottom top',
           scrub: true
         }
-      });
-      tl
-        .to(copy, { opacity: 0, duration: 45 })
+      })
+        .to(copy, { opacity: 0, duration: 55 })
         .to(copy, { opacity: 1, x: 0, y: 0, visibility: 'visible', duration: 10 })
-        .to(copy, { opacity: 1, duration: 35 })
+        .to(copy, { opacity: 1, duration: 25 })
         .to(copy, { opacity: 0, y: -30, duration: 10 });
     });
 
-    /* ═══════════════════════════════════════ */
     /* NAV */
     const nav = document.getElementById('nav');
     ScrollTrigger.create({
