@@ -75,68 +75,67 @@
     });
 
     /* ═══════════════════════════════════════
-       HERO — testo nascosto, entra a 50% scroll hero, resta fino a 100%
+       HERO
        ═══════════════════════════════════════ */
     const heroContent = document.querySelector('.hero__content');
+    const heroAll = heroContent.querySelectorAll('.hero__line, .hero__sub, .hero__actions, .hero__proof');
 
-    /* Nascondi subito */
-    gsap.set(heroContent, { autoAlpha: 0, y: 30 });
+    /* Forza stato iniziale nascosto su TUTTI i figli */
+    gsap.set(heroAll, { opacity: 0, y: 30, visibility: 'hidden' });
 
-    /* Fase 1: invisibile da 0% a 50% dello scroll hero */
-    /* Fase 2: fade-in da 50% a 60% */
-    /* Fase 3: visibile e fisso da 60% a 95% */
-    /* Fase 4: fade-out da 95% a 100% */
     gsap.timeline({
       scrollTrigger: {
         trigger: '.hero',
         start: 'top top',
         end: 'bottom top',
-        scrub: true,
-        pin: false
+        scrub: true
       }
     })
-      .to(heroContent, { autoAlpha: 0, y: 30, duration: 50 })   /* 0-50%: resta nascosto */
-      .to(heroContent, { autoAlpha: 1, y: 0, duration: 10 })    /* 50-60%: fade in */
-      .to(heroContent, { autoAlpha: 1, y: 0, duration: 35 })    /* 60-95%: resta visibile */
-      .to(heroContent, { autoAlpha: 0, y: -30, duration: 5 });   /* 95-100%: fade out */
+      /* 0% → 50%: resta nascosto */
+      .to(heroAll, { opacity: 0, y: 30, visibility: 'hidden', duration: 50 })
+      /* 50% → 60%: fade in tutti i figli */
+      .to(heroAll, { opacity: 1, y: 0, visibility: 'visible', stagger: 0.5, duration: 10 })
+      /* 60% → 92%: resta visibile */
+      .to(heroAll, { opacity: 1, y: 0, duration: 32 })
+      /* 92% → 100%: fade out */
+      .to(heroAll, { opacity: 0, y: -30, duration: 8 });
 
     /* Scroll indicator */
     const heroScroll = document.querySelector('.hero__scroll');
     if (heroScroll) {
-      gsap.set(heroScroll, { autoAlpha: 1 });
+      gsap.set(heroScroll, { opacity: 1 });
       gsap.timeline({
-        scrollTrigger: {
-          trigger: '.hero',
-          start: 'top top',
-          end: '30% top',
-          scrub: true
-        }
-      }).to(heroScroll, { autoAlpha: 0 });
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: '30% top', scrub: true }
+      }).to(heroScroll, { opacity: 0 });
     }
 
     /* ═══════════════════════════════════════
-       PRODOTTI — ogni scena: copy nascosto, entra a 50%, resta fino a 95%, esce
+       PRODOTTI — ogni scena
        ═══════════════════════════════════════ */
     document.querySelectorAll('.prodotti__scene').forEach(scene => {
       const copy = scene.querySelector('.prodotti__copy');
       const side = scene.dataset.copySide;
       const fromX = side === 'right' ? 60 : side === 'left' ? -60 : 0;
 
-      gsap.set(copy, { autoAlpha: 0, x: fromX, y: 30 });
+      /* Forza nascosto */
+      gsap.set(copy, { opacity: 0, x: fromX, y: 30, visibility: 'hidden' });
 
       gsap.timeline({
         scrollTrigger: {
           trigger: scene,
           start: 'top top',
           end: 'bottom top',
-          scrub: true,
-          pin: false
+          scrub: true
         }
       })
-        .to(copy, { autoAlpha: 0, x: fromX, y: 30, duration: 50 })  /* 0-50%: nascosto */
-        .to(copy, { autoAlpha: 1, x: 0, y: 0, duration: 10 })       /* 50-60%: fade in */
-        .to(copy, { autoAlpha: 1, x: 0, y: 0, duration: 35 })       /* 60-95%: visibile */
-        .to(copy, { autoAlpha: 0, y: -30, duration: 5 });             /* 95-100%: fade out */
+        /* 0% → 50%: nascosto */
+        .to(copy, { opacity: 0, x: fromX, y: 30, visibility: 'hidden', duration: 50 })
+        /* 50% → 60%: fade in */
+        .to(copy, { opacity: 1, x: 0, y: 0, visibility: 'visible', duration: 10 })
+        /* 60% → 92%: visibile */
+        .to(copy, { opacity: 1, x: 0, y: 0, duration: 32 })
+        /* 92% → 100%: fade out */
+        .to(copy, { opacity: 0, y: -30, duration: 8 });
     });
 
     /* ═══════════════════════════════════════
@@ -150,19 +149,11 @@
       }
     });
 
-    /* ═══════════════════════════════════════
-       GENERIC .ani
-       ═══════════════════════════════════════ */
+    /* GENERIC .ani */
     document.querySelectorAll('.ani').forEach(el => {
       gsap.to(el, {
-        opacity: 1, y: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse'
-        }
+        opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' }
       });
     });
 
@@ -218,9 +209,8 @@
 
     /* RECENSIONI BARS */
     document.querySelectorAll('.recensioni__bar-fill').forEach(bar => {
-      const w = bar.dataset.width;
       gsap.to(bar, {
-        width: w + '%', duration: 1.2, ease: 'power2.out',
+        width: bar.dataset.width + '%', duration: 1.2, ease: 'power2.out',
         scrollTrigger: { trigger: bar, start: 'top 90%', once: true }
       });
     });
