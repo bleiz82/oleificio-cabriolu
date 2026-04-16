@@ -61,9 +61,25 @@
   function initGSAP() {
     gsap.registerPlugin(ScrollTrigger);
 
+    const bodyH = document.body.scrollHeight - window.innerHeight;
+
     /* ====================================================
-       ELEMENTI DA CONTROLLARE VIA FRAME
+       Calcola frame REALE per ogni sezione (posizione DOM)
        ==================================================== */
+    function getFrameAt(el, position) {
+      /* position: 'top' | 'bottom' | 'mid' */
+      const rect = el.getBoundingClientRect();
+      const top = rect.top + window.scrollY;
+      const bot = top + el.scrollHeight;
+      let px;
+      if (position === 'top') px = top;
+      else if (position === 'bottom') px = bot;
+      else px = (top + bot) / 2;
+      return Math.round((px / bodyH) * TOTAL_FRAMES);
+    }
+
+    /* ── HERO ── */
+    const heroEl = document.querySelector('.hero');
     const heroContent = document.querySelector('.hero__content');
     const heroLines = document.querySelectorAll('.hero__line');
     const heroSub = document.querySelector('.hero__sub');
@@ -71,27 +87,37 @@
     const heroProof = document.querySelector('.hero__proof');
     const heroScroll = document.querySelector('.hero__scroll');
 
-    /* Stato iniziale hero */
+    const HERO_MID = getFrameAt(heroEl, 'mid');    /* ≈ 51  */
+    const HERO_END = getFrameAt(heroEl, 'bottom');  /* ≈ 102 */
+
+    /* Stato iniziale */
     gsap.set(heroContent, { opacity: 1, visibility: 'visible' });
     gsap.set(heroLines, { opacity: 0, y: 40 });
     gsap.set(heroSub, { opacity: 0, y: 20 });
     gsap.set(heroActions, { opacity: 0, y: 20 });
     gsap.set(heroProof, { opacity: 0, y: 20 });
 
-    /* Stato iniziale prodotti copy */
-    const scenes = document.querySelectorAll('.prodotti__scene');
-    scenes.forEach(scene => {
-      gsap.set(scene.querySelector('.prodotti__copy'), { opacity: 0, y: 30 });
+    /* ── PRODOTTI SCENE — calcolo frame reali dal DOM ── */
+    const scenes = [];
+    document.querySelectorAll('.prodotti__scene').forEach(scene => {
+      const copy = scene.querySelector('.prodotti__copy');
+      const side = scene.dataset.copySide;
+      const fromX = side === 'right' ? 60 : side === 'left' ? -60 : 0;
+      const fStart = getFrameAt(scene, 'top');
+      const fEnd = getFrameAt(scene, 'bottom');
+      const fMid = Math.round((fStart + fEnd) / 2);
+
+      gsap.set(copy, { opacity: 0, x: fromX, y: 30 });
+
+      scenes.push({ copy, fromX, fStart, fEnd, fMid, shown: false, hidden: false });
     });
 
-    /* Traccia stati per evitare animazioni ripetute */
+    /* Traccia stato hero */
     let heroShown = false;
     let heroHidden = false;
-    const sceneShown = new Array(scenes.length).fill(false);
-    const sceneHidden = new Array(scenes.length).fill(false);
 
     /* ====================================================
-       MASTER SCROLL → controlla TUTTO basandosi sul frame
+       MASTER SCROLL — un solo onUpdate governa tutto
        ==================================================== */
     ScrollTrigger.create({
       trigger: 'body',
@@ -99,62 +125,62 @@
       end: 'bottom bottom',
       onUpdate: self => {
         const f = Math.floor(self.progress * (TOTAL_FRAMES - 1));
+
+        /* Aggiorna canvas */
         if (f !== currentFrame) {
           currentFrame = f;
           drawFrame(currentFrame);
         }
 
-        /* ── HERO TEXT: entra frame 50-65, esce frame 115-125 ── */
-        if (f >= 50 && f <= 120 && !heroShown) {
+        /* ══════ HERO TEXT ══════
+           Entra a HERO_MID (≈51), resta visibile fino a HERO_END (≈102)
+           Esce da HERO_END a HERO_END+10 */
+
+        if (f >= HERO_MID && f <= HERO_END && !heroShown) {
           heroShown = true;
           heroHidden = false;
-          gsap.to(heroLines, { opacity: 1, y: 0, stagger: 0.08, duration: 0.6, ease: 'power2.out' });
-          gsap.to(heroSub, { opacity: 1, y: 0, duration: 0.5, delay: 0.2, ease: 'power2.out' });
-          gsap.to(heroActions, { opacity: 1, y: 0, duration: 0.4, delay: 0.35, ease: 'power2.out' });
-          gsap.to(heroProof, { opacity: 1, y: 0, duration: 0.4, delay: 0.45, ease: 'power2.out' });
+          gsap.to(heroLines, { opacity: 1, y: 0, stagger: 0.08, duration: 0.5, ease: 'power2.out' });
+          gsap.to(heroSub, { opacity: 1, y: 0, duration: 0.4, delay: 0.15, ease: 'power2.out' });
+          gsap.to(heroActions, { opacity: 1, y: 0, duration: 0.4, delay: 0.25, ease: 'power2.out' });
+          gsap.to(heroProof, { opacity: 1, y: 0, duration: 0.3, delay: 0.35, ease: 'power2.out' });
         }
-        if (f > 120 && !heroHidden) {
+        if (f > HERO_END + 10 && !heroHidden) {
           heroHidden = true;
-          gsap.to(heroContent, { opacity: 0, y: -30, duration: 0.4, ease: 'power2.in' });
+          gsap.to(heroContent, { opacity: 0, y: -30, duration: 0.3, ease: 'power2.in' });
         }
-        if (f < 50 && heroShown) {
+        /* Scroll indietro: resetta */
+        if (f < HERO_MID && heroShown) {
           heroShown = false;
           heroHidden = false;
-          gsap.to([heroLines, heroSub, heroActions, heroProof], { opacity: 0, y: 20, duration: 0.3 });
+          gsap.set([heroLines, heroSub, heroActions, heroProof], { opacity: 0, y: 20 });
           gsap.set(heroContent, { opacity: 1, y: 0 });
         }
 
-        /* ── SCROLL INDICATOR: sparisce a frame 20 ── */
+        /* Scroll indicator */
         if (heroScroll) {
-          if (f < 5) gsap.set(heroScroll, { opacity: 1 });
-          if (f >= 20) gsap.set(heroScroll, { opacity: 0 });
+          heroScroll.style.opacity = f < 15 ? '1' : '0';
         }
 
-        /* ── PRODOTTI: ogni scena, copy entra a metà, esce a fine ── */
-        scenes.forEach((scene, i) => {
-          const copy = scene.querySelector('.prodotti__copy');
-          const side = scene.dataset.copySide;
-          const fromX = side === 'right' ? 60 : side === 'left' ? -60 : 0;
-          const fs = parseInt(scene.dataset.frameStart);
-          const fe = parseInt(scene.dataset.frameEnd);
-          const fm = Math.floor((fs + fe) / 2);
+        /* ══════ PRODOTTI COPY ══════
+           Ogni scena: copy entra a fMid, resta fino a fEnd, esce fEnd→fEnd+5 */
 
-          /* Entra a metà scena */
-          if (f >= fm && f <= fe && !sceneShown[i]) {
-            sceneShown[i] = true;
-            sceneHidden[i] = false;
-            gsap.to(copy, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'power2.out' });
+        scenes.forEach(s => {
+          /* ENTRA a metà scena */
+          if (f >= s.fMid && f <= s.fEnd + 5 && !s.shown) {
+            s.shown = true;
+            s.hidden = false;
+            gsap.to(s.copy, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' });
           }
-          /* Esce a fine scena */
-          if (f > fe && !sceneHidden[i]) {
-            sceneHidden[i] = true;
-            gsap.to(copy, { opacity: 0, y: -30, duration: 0.3, ease: 'power2.in' });
+          /* ESCE a fine scena */
+          if (f > s.fEnd + 5 && !s.hidden) {
+            s.hidden = true;
+            gsap.to(s.copy, { opacity: 0, y: -25, duration: 0.25, ease: 'power2.in' });
           }
-          /* Reset se si scrolla indietro prima di metà */
-          if (f < fm && sceneShown[i]) {
-            sceneShown[i] = false;
-            sceneHidden[i] = false;
-            gsap.set(copy, { opacity: 0, x: fromX, y: 30 });
+          /* RESET scroll indietro */
+          if (f < s.fMid && s.shown) {
+            s.shown = false;
+            s.hidden = false;
+            gsap.set(s.copy, { opacity: 0, x: s.fromX, y: 30 });
           }
         });
       }
