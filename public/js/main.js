@@ -39,7 +39,6 @@
 
   function preloadFrames() {
     const promises = [];
-    /* Primo frame subito (priorità) */
     const first = new Image();
     first.onload = () => { frames[0] = first; drawFrame(0); };
     first.src = BASE_PATH + '0001' + EXT;
@@ -62,7 +61,12 @@
   function initGSAP() {
     gsap.registerPlugin(ScrollTrigger);
 
-    /* ====== MASTER CANVAS SCRUB ====== */
+    /* ====================================================
+       MASTER CANVAS SCRUB — il body intero = 960 frame
+       progress 0.0 = frame 0, progress 1.0 = frame 959
+       ==================================================== */
+    const bodyH = document.body.scrollHeight - window.innerHeight;
+
     ScrollTrigger.create({
       trigger: 'body',
       start: 'top top',
@@ -76,72 +80,98 @@
       }
     });
 
-    /* ====== HERO ====== */
+    /* ====================================================
+       HELPER: calcola la posizione scroll per un dato frame
+       ==================================================== */
+    function scrollAtFrame(f) {
+      return (f / TOTAL_FRAMES) * bodyH;
+    }
+
+    /* ====================================================
+       HERO — testo entra a frame 60, resta fino a frame 120
+       ==================================================== */
     const heroContent = document.querySelector('.hero__content');
     const heroLines = document.querySelectorAll('.hero__line');
     const heroSub = document.querySelector('.hero__sub');
     const heroActions = document.querySelector('.hero__actions');
     const heroProof = document.querySelector('.hero__proof');
 
-    /* Stato iniziale: tutto nascosto */
-    gsap.set(heroContent, { opacity: 1 });           /* contenitore visibile */
-    gsap.set(heroLines, { opacity: 0, y: 40 });    /* figli nascosti */
+    gsap.set(heroContent, { opacity: 1 });
+    gsap.set(heroLines, { opacity: 0, y: 40 });
     gsap.set(heroSub, { opacity: 0, y: 20 });
     gsap.set(heroActions, { opacity: 0, y: 20 });
     gsap.set(heroProof, { opacity: 0, y: 20 });
 
-    /* Entrata hero: dal 30% al 50% dello scroll hero (≈ frame 36-60) */
-    const heroEnterTL = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.hero',
-        start: '30% top',
-        end: '50% top',
-        scrub: 1
-      }
-    });
-    heroEnterTL
-      .to(heroLines, { opacity: 1, y: 0, stagger: 0.15, duration: 1 })
-      .to(heroSub, { opacity: 1, y: 0, duration: 0.8 }, '-=0.5')
-      .to(heroActions, { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
-      .to(heroProof, { opacity: 1, y: 0, duration: 0.5 }, '-=0.3');
-
-    /* Uscita hero: sfuma quando iniziano i prodotti */
-    gsap.to(heroContent, {
-      opacity: 0, y: -40,
-      scrollTrigger: {
-        trigger: '.prodotti',
-        start: 'top bottom',
-        end: 'top 60%',
-        scrub: true
-      }
+    /* Entrata: frame 50 → frame 65 (rapida, ~15 frame) */
+    ScrollTrigger.create({
+      trigger: 'body',
+      start: scrollAtFrame(50) + 'px top',
+      end: scrollAtFrame(65) + 'px top',
+      scrub: 1,
+      animation: gsap.timeline()
+        .to(heroLines, { opacity: 1, y: 0, stagger: 0.15, duration: 1 })
+        .to(heroSub, { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
+        .to(heroActions, { opacity: 1, y: 0, duration: 0.5 }, '-=0.3')
+        .to(heroProof, { opacity: 1, y: 0, duration: 0.4 }, '-=0.2')
     });
 
-    /* HERO SCROLL INDICATOR */
+    /* Uscita: frame 115 → frame 125 (sfuma appena prima della scena prodotti) */
+    ScrollTrigger.create({
+      trigger: 'body',
+      start: scrollAtFrame(115) + 'px top',
+      end: scrollAtFrame(125) + 'px top',
+      scrub: 1,
+      animation: gsap.to(heroContent, { opacity: 0, y: -30 })
+    });
+
+    /* HERO SCROLL INDICATOR — visibile subito, sparisce a frame 20 */
     gsap.to('.hero__scroll', { opacity: 1, duration: 1, delay: 1.5 });
-    gsap.to('.hero__scroll', {
-      opacity: 0,
-      scrollTrigger: { trigger: '.hero', start: '20% top', end: '25% top', scrub: true }
+    ScrollTrigger.create({
+      trigger: 'body',
+      start: scrollAtFrame(15) + 'px top',
+      end: scrollAtFrame(25) + 'px top',
+      scrub: true,
+      animation: gsap.to('.hero__scroll', { opacity: 0 })
     });
 
-    /* ====== PRODOTTI COPY ====== */
+    /* ====================================================
+       PRODOTTI — ogni scena: copy entra a metà, resta fino a fine
+       Frame map:
+         Scena A (EVO Puro):    121-240  → copy entra 180, esce 235
+         Scena B (Peperoncino): 241-360  → copy entra 300, esce 355
+         Scena C (Basilico):    361-480  → copy entra 420, esce 475
+         Scena D (Limone):      481-600  → copy entra 540, esce 595
+         Scena E (Latte):       601-720  → copy entra 660, esce 715
+         Scena F (Cofanetto):   721-840  → copy entra 780, esce 835
+       ==================================================== */
     document.querySelectorAll('.prodotti__scene').forEach(scene => {
       const copy = scene.querySelector('.prodotti__copy');
       const side = scene.dataset.copySide;
       const fromX = side === 'right' ? 80 : side === 'left' ? -80 : 0;
+      const frameStart = parseInt(scene.dataset.frameStart);
+      const frameEnd = parseInt(scene.dataset.frameEnd);
+      const frameMid = Math.floor((frameStart + frameEnd) / 2);
 
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: scene,
-          start: '10% bottom',    /* copy appare quando scena entra */
-          end: '90% top',         /* copy scompare quando scena esce */
-          scrub: 1
-        }
-      })
-        .fromTo(copy,
+      /* Entrata: da metà scena, durata ~15 frame */
+      ScrollTrigger.create({
+        trigger: 'body',
+        start: scrollAtFrame(frameMid) + 'px top',
+        end: scrollAtFrame(frameMid + 15) + 'px top',
+        scrub: 1,
+        animation: gsap.fromTo(copy,
           { opacity: 0, x: fromX, y: 30 },
-          { opacity: 1, x: 0, y: 0, duration: 1 }
+          { opacity: 1, x: 0, y: 0 }
         )
-        .to(copy, { opacity: 0, y: -40, duration: 0.6 }, '+=0.5');
+      });
+
+      /* Uscita: ultimi 10 frame della scena */
+      ScrollTrigger.create({
+        trigger: 'body',
+        start: scrollAtFrame(frameEnd - 10) + 'px top',
+        end: scrollAtFrame(frameEnd) + 'px top',
+        scrub: 1,
+        animation: gsap.to(copy, { opacity: 0, y: -30 })
+      });
     });
 
     /* ====== NAV SCROLL ====== */
@@ -350,7 +380,7 @@
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
-  }  /* ← QUESTA PARENTESI MANCAVA! */
+  }
 
   /* ── FAQ TOGGLE ── */
   function initFAQ() {
