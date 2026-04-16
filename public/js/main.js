@@ -75,6 +75,7 @@
 
     /* ═══════════════════════════════════════
        HERO — fixed centrato con sfondo radiale scuro
+       v14: timing 50/5/40/5
        ═══════════════════════════════════════ */
     const heroContent = document.querySelector('.hero__content');
     const heroChildren = heroContent.querySelectorAll('.hero__line, .hero__sub, .hero__actions, .hero__proof');
@@ -100,10 +101,10 @@
         onEnterBack: () => { heroContent.style.display = 'flex'; }
       }
     })
-      .to(heroContent, { opacity: 0, duration: 70 })
+      .to(heroContent, { opacity: 0, duration: 50 })          /* ← era 70 */
       .to(heroContent, { opacity: 1, duration: 5 })
       .to(heroChildren, { opacity: 1, y: 0, visibility: 'visible', stagger: 0.3, duration: 5 }, '<')
-      .to(heroContent, { opacity: 1, duration: 20 })
+      .to(heroContent, { opacity: 1, duration: 40 })          /* ← era 20 */
       .to(heroContent, { opacity: 0, duration: 5 });
 
     /* Scroll indicator */
@@ -116,7 +117,8 @@
     }
 
     /* ═══════════════════════════════════════
-       PRODOTTI — ogni copy è fixed, ma SOLO visibile nella sua scena
+       PRODOTTI — ogni copy è fixed, SOLO visibile nella sua scena
+       v14: timing 50/5/40/5
        ═══════════════════════════════════════ */
     const allCopies = [];
 
@@ -136,7 +138,6 @@
       if (side === 'right') cssPos.push('left:auto', 'right:0');
       if (side === 'center') cssPos.push('left:50%', 'transform:translateX(-50%)', 'text-align:center', 'align-items:center', 'max-width:600px');
 
-      /* Sfondo laterale */
       if (side === 'left') cssPos.push('background:linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%)');
       else if (side === 'right') cssPos.push('background:linear-gradient(to left, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%)');
       else cssPos.push('background:radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)');
@@ -155,7 +156,6 @@
           end: 'bottom top',
           scrub: true,
           onEnter: () => {
-            /* Nascondi tutti gli altri copy, mostra solo questo */
             allCopies.forEach((c, i) => { c.style.display = i === idx ? 'flex' : 'none'; });
             heroContent.style.display = 'none';
           },
@@ -166,14 +166,13 @@
           },
           onLeaveBack: () => {
             copy.style.display = 'none';
-            /* Se torniamo all'hero, riattivalo */
             if (idx === 0) heroContent.style.display = 'flex';
           }
         }
       })
-        .to(copy, { opacity: 0, duration: 70 })
-        .to(copy, { opacity: 1, x: 0, y: 0, visibility: 'visible', duration: 10 })
-        .to(copy, { opacity: 1, duration: 15 })
+        .to(copy, { opacity: 0, duration: 50 })               /* ← era 70 */
+        .to(copy, { opacity: 1, x: 0, y: 0, visibility: 'visible', duration: 5 })  /* ← era 10 */
+        .to(copy, { opacity: 1, duration: 40 })               /* ← era 15 */
         .to(copy, { opacity: 0, y: -30, duration: 5 });
     });
 
