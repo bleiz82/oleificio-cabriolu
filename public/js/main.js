@@ -28,10 +28,13 @@
     const iR = img.naturalWidth / img.naturalHeight;
     const cR = cW / cH;
     let dW, dH, dX, dY;
-    if (cR > iR) { dW = cW; dH = cW / iR; }
-    else { dH = cH; dW = cH * iR; }
-    dX = (cW - dW) / 2;
+
+    /* v19: forza sempre larghezza piena (width-priority cover) */
+    dW = cW;
+    dH = cW / iR;
+    dX = 0;
     dY = (cH - dH) / 2;
+
     ctx.drawImage(img, dX, dY, dW, dH);
   }
 
