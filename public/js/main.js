@@ -132,6 +132,7 @@
       allCopies.push(copy);
       scenes.push({ copy, side, fromX, isCenter, frameStart, frameEnd, frameMid, visible: false, animated: false });
     });
+    let copyLocked = false;
 
     /* --- SCROLL TRIGGER 1: frame 1-840 su hero+prodotti (INVARIATO v22) --- */
     ScrollTrigger.create({
@@ -164,35 +165,39 @@
         }
 
         /* PRODOTTI copy */
-        scenes.forEach((s, idx) => {
-          const shouldShow = (f >= s.frameMid && f < s.frameEnd);
-          if (shouldShow && !s.visible) {
-            s.visible = true;
-            allCopies.forEach((c, i) => {
-              if (i !== idx) {
-                c.style.display = 'none';
-                scenes[i].visible = false;
-              }
-            });
-            heroContent.style.display = 'none';
-            heroVisible = false;
-            s.copy.style.display = 'flex';
-            if (!s.animated) {
-              s.animated = true;
-              if (s.isCenter) {
-                gsap.to(s.copy, { opacity: 1, y: 0, visibility: 'visible', duration: 0.5, ease: 'power2.out' });
+        const storiaRect = storiaSection.getBoundingClientRect();
+        if (!copyLocked && storiaRect.top > window.innerHeight) {
+          scenes.forEach((s, idx) => {
+            const shouldShow = (f >= s.frameMid && f < s.frameEnd);
+            if (shouldShow && !s.visible) {
+              s.visible = true;
+              allCopies.forEach((c, i) => {
+                if (i !== idx) {
+                  gsap.set(c, { opacity: 0, display: 'none' });
+                  scenes[i].visible = false;
+                }
+              });
+              heroContent.style.display = 'none';
+              heroVisible = false;
+              s.copy.style.display = 'flex';
+              if (!s.animated) {
+                s.animated = true;
+                if (s.isCenter) {
+                  gsap.to(s.copy, { opacity: 1, y: 0, visibility: 'visible', duration: 0.5, ease: 'power2.out' });
+                } else {
+                  gsap.to(s.copy, { opacity: 1, x: 0, y: 0, visibility: 'visible', duration: 0.5, ease: 'power2.out' });
+                }
               } else {
-                gsap.to(s.copy, { opacity: 1, x: 0, y: 0, visibility: 'visible', duration: 0.5, ease: 'power2.out' });
+                gsap.to(s.copy, { opacity: 1, duration: 0.3 });
               }
-            } else {
-              gsap.to(s.copy, { opacity: 1, duration: 0.3 });
+            } else if (!shouldShow && s.visible) {
+              s.visible = false;
+              gsap.to(s.copy, { opacity: 0, duration: 0.3, onComplete: () => { s.copy.style.display = 'none'; } });
             }
-          } else if (!shouldShow && s.visible) {
-            s.visible = false;
-            gsap.to(s.copy, { opacity: 0, duration: 0.3, onComplete: () => { s.copy.style.display = 'none'; } });
-          }
-        });
+          });
+        }
       },
+
       onLeave: () => {
         allCopies.forEach((c, i) => {
           c.style.display = 'none';
@@ -201,10 +206,26 @@
         heroContent.style.display = 'none';
         heroVisible = false;
       },
+
       onEnterBack: () => {
         drawFrame(currentFrame);
       }
     });
+
+    /* NASCONDI COPY quando storia entra */
+    ScrollTrigger.create({
+      trigger: storiaSection,
+      start: 'top bottom',
+      onEnter: () => {
+        allCopies.forEach((c, i) => {
+          c.style.display = 'none';
+          c.style.opacity = '0';
+          scenes[i].visible = false;
+        });
+        heroContent.style.display = 'none';
+      }
+    });
+
 
     /* --- SCROLL TRIGGER 2: video sfondo dalla storia alla CTA --- */
     var bgVideo = document.getElementById('bgVideo');
