@@ -1,0 +1,209 @@
+/* ========== SHOP PAGE ========== */
+
+/* SHOP HERO */
+.shop-hero {
+    padding: 160px 0 80px;
+    text-align: center;
+    background: linear-gradient(180deg, var(--black) 0%, var(--green) 100%);
+    position: relative;
+}
+
+.shop-hero__inner {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.shop-hero__sub {
+    font-size: 1.05rem;
+    color: var(--cream-dim);
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* SHOP GRID */
+.shop-grid {
+    background: var(--black);
+    padding: 80px 0 100px;
+}
+
+.shop-grid__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+/* SHOP CARD */
+.shop-card {
+    display: block;
+    background: rgba(26, 42, 26, .3);
+    border: 1px solid rgba(200, 169, 110, .1);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: all .4s var(--ease);
+    text-decoration: none;
+    color: inherit;
+}
+
+.shop-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .4);
+}
+
+.shop-card__img {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--black);
+}
+
+.shop-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .6s var(--ease);
+}
+
+.shop-card:hover .shop-card__img img {
+    transform: scale(1.05);
+}
+
+.shop-card__badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-size: .65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 4px 12px;
+    border-radius: 2px;
+    font-weight: 400;
+}
+
+.shop-card__body {
+    padding: 24px;
+}
+
+.shop-card__name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--cream);
+    margin-bottom: 6px;
+    line-height: 1.2;
+}
+
+.shop-card__cultivar {
+    font-size: .8rem;
+    color: var(--gold);
+    font-style: italic;
+    margin-bottom: 12px;
+}
+
+.shop-card__formats {
+    font-size: .75rem;
+    color: var(--cream-dim);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.shop-card__price {
+    font-size: .95rem;
+    color: var(--cream-dim);
+    margin-bottom: 16px;
+}
+
+.shop-card__price strong {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--gold);
+}
+
+.shop-card__cta {
+    display: inline-block;
+    font-size: .8rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    transition: color .3s;
+}
+
+.shop-card:hover .shop-card__cta {
+    color: var(--gold-light);
+}
+
+/* BANNER SPEDIZIONE */
+.shop-banner {
+    background: rgba(26, 42, 26, .5);
+    border-top: 1px solid rgba(200, 169, 110, .1);
+    border-bottom: 1px solid rgba(200, 169, 110, .1);
+    padding: 48px 0;
+}
+
+.shop-banner__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+}
+
+.shop-banner__item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.shop-banner__icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.shop-banner__item strong {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--cream);
+    display: block;
+    margin-bottom: 2px;
+}
+
+.shop-banner__item p {
+    font-size: .8rem;
+    color: var(--cream-dim);
+    line-height: 1.4;
+}
+
+/* RESPONSIVE SHOP */
+@media (max-width: 1024px) {
+    .shop-grid__inner {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .shop-banner__inner {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .shop-grid__inner {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+    }
+
+    .shop-banner__inner {
+        grid-template-columns: 1fr;
+    }
+
+    .shop-hero {
+        padding: 130px 0 60px;
+    }
+}

@@ -47,26 +47,28 @@
                     src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu"
                     class="nav__logo-img"></a>
             <ul class="nav__links">
-                <li><a href="#prodotti">Prodotti</a></li>
-                <li><a href="#storia">La Nostra Storia</a></li>
-                <li><a href="#frangitura">Frangitura</a></li>
-                <li><a href="#territorio">Territorio</a></li>
-                <li><a href="#faq">FAQ</a></li>
-                <li><a href="#contatti" class="nav__cta">Contatti</a></li>
+                <li><a href="/storia">La Nostra Storia</a></li>
+                <li><a href="/frangitura">Frangitura</a></li>
+                <li><a href="/territorio">Territorio</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="#contatti">Contatti</a></li>
+                <li><a href="/shop" class="nav__cta">Shop</a></li>
             </ul>
             <button class="nav__burger" id="navBurger" aria-label="Menu"
                 aria-expanded="false"><span></span><span></span><span></span></button>
         </div>
     </nav>
     <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-        <ul>
-            <li><a href="#prodotti">Prodotti</a></li>
-            <li><a href="#storia">La Nostra Storia</a></li>
-            <li><a href="#frangitura">Frangitura</a></li>
-            <li><a href="#territorio">Territorio</a></li>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="#contatti">Contatti</a></li>
-        </ul>
+        <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+            <ul>
+                <li><a href="/storia">La Nostra Storia</a></li>
+                <li><a href="/frangitura">Frangitura</a></li>
+                <li><a href="/territorio">Territorio</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="#contatti">Contatti</a></li>
+                <li><a href="/shop">Shop</a></li>
+            </ul>
+        </div>
     </div>
 
     <!-- ========== HERO (frame 1-120) ========== -->
@@ -105,7 +107,7 @@
                     Frangitura a freddo entro 24 ore dalla raccolta, ciclo continuo a due fasi. Un olio che racconta la
                     Sardegna in ogni goccia.</p>
                 <p class="prodotti__formats">Disponibile in 0.25L · 0.50L · 0.75L</p>
-                <a href="/prodotti/evo-puro" class="btn btn--gold btn--sm">Scopri EVO Puro</a>
+                <a href="/shop/evo-puro" class="btn btn--gold btn--sm">Scopri EVO Puro</a>
             </div>
         </div>
 
@@ -119,7 +121,7 @@
                     Ideale su bruschette, pasta aglio olio, pizza e grigliate. Il calore della Sardegna in un
                     condimento.</p>
                 <p class="prodotti__formats">Disponibile in 0.25L</p>
-                <a href="/prodotti/olio-peperoncino" class="btn btn--gold btn--sm">Scopri Olio al Peperoncino</a>
+                <a href="/shop/olio-peperoncino" class="btn btn--gold btn--sm">Scopri Olio al Peperoncino</a>
             </div>
         </div>
 
@@ -132,7 +134,7 @@
                 <p class="prodotti__desc">Freschezza verde e aromatica che trasforma insalate, caprese, pesce alla
                     griglia e bruschette. L'essenza del Mediterraneo catturata nel nostro extravergine.</p>
                 <p class="prodotti__formats">Disponibile in 0.25L</p>
-                <a href="/prodotti/olio-basilico" class="btn btn--gold btn--sm">Scopri Olio al Basilico</a>
+                <a href="/shop/olio-basilico" class="btn btn--gold btn--sm">Scopri Olio al Basilico</a>
             </div>
         </div>
 
@@ -145,7 +147,7 @@
                 <p class="prodotti__desc">Agrumato, luminoso e delicato. Sublime su crostacei, tartare di pesce, verdure
                     al vapore e dolci. Un raggio di sole liquido che esalta ogni piatto.</p>
                 <p class="prodotti__formats">Disponibile in 0.25L</p>
-                <a href="/prodotti/olio-limone" class="btn btn--gold btn--sm">Scopri Olio al Limone</a>
+                <a href="/shop/olio-limone" class="btn btn--gold btn--sm">Scopri Olio al Limone</a>
             </div>
         </div>
 
@@ -159,7 +161,7 @@
                     preservando polifenoli e aromi più a lungo. Ideale per famiglie, ristoratori e chi usa l'olio ogni
                     giorno.</p>
                 <p class="prodotti__formats">Disponibile in 3L · 5L</p>
-                <a href="/prodotti/latte" class="btn btn--gold btn--sm">Scopri le Latte</a>
+                <a href="/shop/latte" class="btn btn--gold btn--sm">Scopri le Latte</a>
             </div>
         </div>
 
@@ -171,7 +173,7 @@
                 <p class="prodotti__cultivar">Quattro oli in un'elegante confezione regalo</p>
                 <p class="prodotti__desc">EVO Puro, Peperoncino, Basilico e Limone racchiusi in un cofanetto premium. Il
                     regalo perfetto per chi ama la cucina, le feste, i compleanni o semplicemente il bello.</p>
-                <a href="/prodotti/cofanetto" class="btn btn--gold btn--sm">Scopri il Cofanetto</a>
+                <a href="/shop/cofanetto" class="btn btn--gold btn--sm">Scopri il Cofanetto</a>
             </div>
         </div>
 
@@ -1618,7 +1620,11 @@
     <footer id="contatti" class="footer">
         <div class="footer__inner">
             <div class="footer__brand">
-                <span class="footer__logo">CABRIOLU</span><span class="footer__logo-sub">dal 1890</span>
+                <a href="/" class="footer__logo" aria-label="Oleificio Cabriolu">
+                    <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu"
+                        class="footer__logo-img" width="200" height="auto" loading="lazy">
+                </a>
+
                 <p class="footer__tagline">Olio Extravergine d'Oliva Sardo — Villacidro, Sardegna</p>
                 <div class="footer__social">
                     <a href="https://www.instagram.com/oleificiocabriolu/" target="_blank" rel="noopener"
@@ -1664,7 +1670,7 @@
             <p>&copy; 2026 Oleificio Cabriolu — Tutti i diritti riservati</p>
             <div class="footer__legal"><a href="/privacy">Privacy</a><a href="/cookie">Cookie</a><a
                     href="/termini">Termini</a></div>
-            <p class="footer__credit">by <a href="https://www.digidentityagency.com" target="_blank"
+            <p class="footer__credit">by <a href="https://digidentityagency.it" target="_blank"
                     rel="noopener">DigIdentity Agency</a></p>
         </div>
     </footer>
