@@ -58,10 +58,10 @@
     gsap.registerPlugin(ScrollTrigger);
 
     /* ═══════════════════════════════════════
-       v20: versione pulita
-       - copy basato sui frame reali (v17)
-       - fix centraggio Latte (v18)
-       - NESSUN blocco postSections
+       v22: ScrollTrigger limitato a #prodotti
+       I 960 frame si mappano SOLO su hero+prodotti.
+       Le sezioni successive (storia, frangitura, ecc.)
+       iniziano DOPO la fine dell'animazione.
        ═══════════════════════════════════════ */
 
     /* --- Prepara hero --- */
@@ -131,11 +131,14 @@
       scenes.push({ copy, side, fromX, isCenter, frameStart, frameEnd, frameMid, visible: false, animated: false });
     });
 
-    /* --- MASTER ScrollTrigger: controlla frame + visibilità copy --- */
+    /* --- MASTER ScrollTrigger: SOLO hero + prodotti --- */
+    const prodottiSection = document.getElementById('prodotti');
+
     ScrollTrigger.create({
-      trigger: 'body',
+      trigger: '.hero',
       start: 'top top',
-      end: 'bottom bottom',
+      endTrigger: prodottiSection,
+      end: 'bottom top',
       onUpdate: self => {
         const f = Math.floor(self.progress * (TOTAL_FRAMES - 1));
         if (f !== currentFrame) {
@@ -189,6 +192,19 @@
             gsap.to(s.copy, { opacity: 0, duration: 0.3, onComplete: () => { s.copy.style.display = 'none'; } });
           }
         });
+      },
+      onLeave: () => {
+        /* Quando lo scroll supera la sezione prodotti, nascondi tutto */
+        allCopies.forEach((c, i) => {
+          c.style.display = 'none';
+          scenes[i].visible = false;
+        });
+        heroContent.style.display = 'none';
+        heroVisible = false;
+      },
+      onEnterBack: () => {
+        /* Rientrando nella zona prodotti, ridisegna il frame corrente */
+        drawFrame(currentFrame);
       }
     });
 
