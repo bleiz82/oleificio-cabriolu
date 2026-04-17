@@ -23,9 +23,17 @@
   function drawFrame(idx) {
     if (!frames[idx] || !frames[idx].complete) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(frames[idx], 0, 0, canvas.width, canvas.height);
+    const img = frames[idx];
+    const cW = canvas.width, cH = canvas.height;
+    const iR = img.naturalWidth / img.naturalHeight;
+    const cR = cW / cH;
+    let dW, dH, dX, dY;
+    if (cR > iR) { dW = cW; dH = cW / iR; }
+    else { dH = cH; dW = cH * iR; }
+    dX = (cW - dW) / 2;
+    dY = (cH - dH) / 2;
+    ctx.drawImage(img, dX, dY, dW, dH);
   }
-
 
   function preloadFrames() {
     const promises = [];
@@ -50,9 +58,10 @@
     gsap.registerPlugin(ScrollTrigger);
 
     /* ═══════════════════════════════════════
-       MASTER CANVAS + COPY CONTROL basato sui frame reali
-       v18: fix centraggio Latte (xPercent invece di x)
-            fix sovrapposizione Storia su Cofanetto
+       v20: versione pulita
+       - copy basato sui frame reali (v17)
+       - fix centraggio Latte (v18)
+       - NESSUN blocco postSections
        ═══════════════════════════════════════ */
 
     /* --- Prepara hero --- */
@@ -87,7 +96,6 @@
       const frameEnd = parseInt(scene.dataset.frameEnd);
       const frameMid = Math.floor((frameStart + frameEnd) / 2);
 
-      /* Per center: NON usiamo x/translateX di GSAP, il centraggio è tutto nel CSS */
       const isCenter = (side === 'center');
       const fromX = isCenter ? 0 : (side === 'right' ? 60 : -60);
 
@@ -105,7 +113,6 @@
         cssPos.push('left:auto', 'right:0', 'max-width:480px');
         cssPos.push('background:linear-gradient(to left, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%)');
       } else {
-        /* CENTER — centraggio via CSS puro, GSAP non tocca transform */
         cssPos.push('left:0', 'right:0', 'margin-left:auto', 'margin-right:auto',
           'max-width:600px', 'text-align:center', 'align-items:center');
         cssPos.push('background:radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)');
@@ -114,7 +121,6 @@
       copy.style.cssText = cssPos.join(';') + ';';
       copy.querySelectorAll('.btn').forEach(b => b.style.pointerEvents = 'auto');
 
-      /* Per center: anima solo opacity e y, NON x (per non sovrascrivere il centraggio) */
       if (isCenter) {
         gsap.set(copy, { opacity: 0, y: 30, visibility: 'hidden' });
       } else {
@@ -194,47 +200,6 @@
         scrollTrigger: { trigger: '.hero', start: 'top top', end: '25% top', scrub: true }
       }).to(heroScroll, { opacity: 0 });
     }
-
-    /* ═══════════════════════════════════════
-       SEZIONI POST-PRODOTTI — nascoste finché l'animazione non finisce
-       v18: la sezione storia (e tutto ciò che segue) resta opacity:0
-            finché il frame corrente non supera 840 (fine cofanetto)
-       ═══════════════════════════════════════ */
-    const postSections = document.querySelectorAll('.storia, .frangitura, .territorio, .recensioni, .faq, .blog, .cta-final, .footer');
-    postSections.forEach(s => { s.style.opacity = '0'; s.style.transition = 'opacity 0.6s ease'; });
-
-    ScrollTrigger.create({
-      trigger: '.storia',
-      start: 'top 90%',
-      onEnter: () => {
-        /* Mostra le sezioni solo se siamo oltre il frame 840 */
-        if (currentFrame >= 840) {
-          postSections.forEach(s => { s.style.opacity = '1'; });
-        }
-      },
-      onLeaveBack: () => {
-        postSections.forEach(s => { s.style.opacity = '0'; });
-      }
-    });
-
-    /* Aggiorna anche nel master: quando superiamo frame 840, forza visibilità */
-    const origOnUpdate = ScrollTrigger.getAll().find(st => st.trigger === document.body);
-    /* (gestito inline nel master sopra — aggiungiamo un check separato) */
-    let postVisible = false;
-    ScrollTrigger.create({
-      trigger: 'body',
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate: () => {
-        if (currentFrame >= 840 && !postVisible) {
-          postVisible = true;
-          postSections.forEach(s => { s.style.opacity = '1'; });
-        } else if (currentFrame < 840 && postVisible) {
-          postVisible = false;
-          postSections.forEach(s => { s.style.opacity = '0'; });
-        }
-      }
-    });
 
     /* NAV */
     const nav = document.getElementById('nav');
