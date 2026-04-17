@@ -1,4 +1,4 @@
-﻿
+
 @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/cormorant-garamond-v16-latin-700.woff2') format('woff2')}
 @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter-v13-latin-regular.woff2') format('woff2')}
 @font-face{font-family:'Inter';font-style:normal;font-weight:300;font-display:swap;src:url('/fonts/inter-v13-latin-300.woff2') format('woff2')}
@@ -257,4 +257,5 @@ address{font-style:normal}
 @media(prefers-reduced-motion:reduce){
 *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
+
 
