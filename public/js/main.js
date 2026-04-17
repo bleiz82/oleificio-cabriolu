@@ -23,20 +23,9 @@
   function drawFrame(idx) {
     if (!frames[idx] || !frames[idx].complete) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const img = frames[idx];
-    const cW = canvas.width, cH = canvas.height;
-    const iR = img.naturalWidth / img.naturalHeight;
-    const cR = cW / cH;
-    let dW, dH, dX, dY;
-
-    /* v19: forza sempre larghezza piena (width-priority cover) */
-    dW = cW;
-    dH = cW / iR;
-    dX = 0;
-    dY = (cH - dH) / 2;
-
-    ctx.drawImage(img, dX, dY, dW, dH);
+    ctx.drawImage(frames[idx], 0, 0, canvas.width, canvas.height);
   }
+
 
   function preloadFrames() {
     const promises = [];
