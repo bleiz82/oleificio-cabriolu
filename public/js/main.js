@@ -59,8 +59,8 @@
 
     /* ═══════════════════════════════════════
        MASTER CANVAS + COPY CONTROL basato sui frame reali
-       v17: il copy appare quando il frame raggiunge il punto medio
-            del range definito in data-frame-start / data-frame-end
+       v18: fix centraggio Latte (xPercent invece di x)
+            fix sovrapposizione Storia su Cofanetto
        ═══════════════════════════════════════ */
 
     /* --- Prepara hero --- */
@@ -76,7 +76,6 @@
     ].join(';') + ';';
     heroContent.querySelectorAll('.btn').forEach(b => b.style.pointerEvents = 'auto');
 
-    /* Hero: frame 1-120, copy appare al frame 60 */
     const HERO_SHOW = 60;
     const HERO_END = 120;
     let heroVisible = false;
@@ -92,33 +91,46 @@
     document.querySelectorAll('.prodotti__scene').forEach((scene, idx) => {
       const copy = scene.querySelector('.prodotti__copy');
       const side = scene.dataset.copySide;
-      const fromX = side === 'right' ? 60 : side === 'left' ? -60 : 0;
       const frameStart = parseInt(scene.dataset.frameStart);
       const frameEnd = parseInt(scene.dataset.frameEnd);
       const frameMid = Math.floor((frameStart + frameEnd) / 2);
+
+      /* Per center: NON usiamo x/translateX di GSAP, il centraggio è tutto nel CSS */
+      const isCenter = (side === 'center');
+      const fromX = isCenter ? 0 : (side === 'right' ? 60 : -60);
 
       let cssPos = [
         'position:fixed', 'top:0', 'height:100vh',
         'display:none',
         'flex-direction:column', 'justify-content:center',
-        'padding:0 5vw', 'z-index:5', 'pointer-events:none', 'max-width:480px'
+        'padding:0 5vw', 'z-index:5', 'pointer-events:none'
       ];
 
-      if (side === 'left') cssPos.push('left:0', 'right:auto');
-      if (side === 'right') cssPos.push('left:auto', 'right:0');
-      if (side === 'center') cssPos.push('left:50%', 'transform:translateX(-50%)', 'text-align:center', 'align-items:center', 'max-width:600px');
-
-      if (side === 'left') cssPos.push('background:linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%)');
-      else if (side === 'right') cssPos.push('background:linear-gradient(to left, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%)');
-      else cssPos.push('background:radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)');
+      if (side === 'left') {
+        cssPos.push('left:0', 'right:auto', 'max-width:480px');
+        cssPos.push('background:linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%)');
+      } else if (side === 'right') {
+        cssPos.push('left:auto', 'right:0', 'max-width:480px');
+        cssPos.push('background:linear-gradient(to left, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%)');
+      } else {
+        /* CENTER — centraggio via CSS puro, GSAP non tocca transform */
+        cssPos.push('left:0', 'right:0', 'margin-left:auto', 'margin-right:auto',
+          'max-width:600px', 'text-align:center', 'align-items:center');
+        cssPos.push('background:radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)');
+      }
 
       copy.style.cssText = cssPos.join(';') + ';';
       copy.querySelectorAll('.btn').forEach(b => b.style.pointerEvents = 'auto');
 
-      gsap.set(copy, { opacity: 0, x: fromX, y: 30, visibility: 'hidden' });
+      /* Per center: anima solo opacity e y, NON x (per non sovrascrivere il centraggio) */
+      if (isCenter) {
+        gsap.set(copy, { opacity: 0, y: 30, visibility: 'hidden' });
+      } else {
+        gsap.set(copy, { opacity: 0, x: fromX, y: 30, visibility: 'hidden' });
+      }
 
       allCopies.push(copy);
-      scenes.push({ copy, side, fromX, frameStart, frameEnd, frameMid, visible: false, animated: false });
+      scenes.push({ copy, side, fromX, isCenter, frameStart, frameEnd, frameMid, visible: false, animated: false });
     });
 
     /* --- MASTER ScrollTrigger: controlla frame + visibilità copy --- */
@@ -133,7 +145,7 @@
           drawFrame(currentFrame);
         }
 
-        /* --- HERO copy: visibile da frame HERO_SHOW a frame HERO_END --- */
+        /* --- HERO copy --- */
         const shouldShowHero = (f >= HERO_SHOW && f < HERO_END);
         if (shouldShowHero && !heroVisible) {
           heroVisible = true;
@@ -150,12 +162,11 @@
           gsap.to(heroContent, { opacity: 0, duration: 0.3, onComplete: () => { heroContent.style.display = 'none'; } });
         }
 
-        /* --- PRODOTTI copy: visibile da frameMid a frameEnd --- */
+        /* --- PRODOTTI copy --- */
         scenes.forEach((s, idx) => {
           const shouldShow = (f >= s.frameMid && f < s.frameEnd);
           if (shouldShow && !s.visible) {
             s.visible = true;
-            /* Nascondi tutti gli altri */
             allCopies.forEach((c, i) => {
               if (i !== idx) {
                 c.style.display = 'none';
@@ -167,7 +178,11 @@
             s.copy.style.display = 'flex';
             if (!s.animated) {
               s.animated = true;
-              gsap.to(s.copy, { opacity: 1, x: 0, y: 0, visibility: 'visible', duration: 0.5, ease: 'power2.out' });
+              if (s.isCenter) {
+                gsap.to(s.copy, { opacity: 1, y: 0, visibility: 'visible', duration: 0.5, ease: 'power2.out' });
+              } else {
+                gsap.to(s.copy, { opacity: 1, x: 0, y: 0, visibility: 'visible', duration: 0.5, ease: 'power2.out' });
+              }
             } else {
               gsap.to(s.copy, { opacity: 1, duration: 0.3 });
             }
@@ -187,6 +202,47 @@
         scrollTrigger: { trigger: '.hero', start: 'top top', end: '25% top', scrub: true }
       }).to(heroScroll, { opacity: 0 });
     }
+
+    /* ═══════════════════════════════════════
+       SEZIONI POST-PRODOTTI — nascoste finché l'animazione non finisce
+       v18: la sezione storia (e tutto ciò che segue) resta opacity:0
+            finché il frame corrente non supera 840 (fine cofanetto)
+       ═══════════════════════════════════════ */
+    const postSections = document.querySelectorAll('.storia, .frangitura, .territorio, .recensioni, .faq, .blog, .cta-final, .footer');
+    postSections.forEach(s => { s.style.opacity = '0'; s.style.transition = 'opacity 0.6s ease'; });
+
+    ScrollTrigger.create({
+      trigger: '.storia',
+      start: 'top 90%',
+      onEnter: () => {
+        /* Mostra le sezioni solo se siamo oltre il frame 840 */
+        if (currentFrame >= 840) {
+          postSections.forEach(s => { s.style.opacity = '1'; });
+        }
+      },
+      onLeaveBack: () => {
+        postSections.forEach(s => { s.style.opacity = '0'; });
+      }
+    });
+
+    /* Aggiorna anche nel master: quando superiamo frame 840, forza visibilità */
+    const origOnUpdate = ScrollTrigger.getAll().find(st => st.trigger === document.body);
+    /* (gestito inline nel master sopra — aggiungiamo un check separato) */
+    let postVisible = false;
+    ScrollTrigger.create({
+      trigger: 'body',
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: () => {
+        if (currentFrame >= 840 && !postVisible) {
+          postVisible = true;
+          postSections.forEach(s => { s.style.opacity = '1'; });
+        } else if (currentFrame < 840 && postVisible) {
+          postVisible = false;
+          postSections.forEach(s => { s.style.opacity = '0'; });
+        }
+      }
+    });
 
     /* NAV */
     const nav = document.getElementById('nav');
