@@ -58,10 +58,9 @@
     gsap.registerPlugin(ScrollTrigger);
 
     /* ═══════════════════════════════════════
-       v22: ScrollTrigger limitato a #prodotti
-       I 960 frame si mappano SOLO su hero+prodotti.
-       Le sezioni successive (storia, frangitura, ecc.)
-       iniziano DOPO la fine dell'animazione.
+       v24:
+       - Frame 1-840 su hero+prodotti (invariato da v22)
+       - Video sfondo scroll dalla storia al footer
        ═══════════════════════════════════════ */
 
     /* --- Prepara hero --- */
@@ -88,6 +87,9 @@
     /* --- Prepara prodotti --- */
     const scenes = [];
     const allCopies = [];
+    const prodottiSection = document.getElementById('prodotti');
+    const storiaSection = document.getElementById('storia');
+    const footerEl = document.getElementById('contatti');
 
     document.querySelectorAll('.prodotti__scene').forEach((scene, idx) => {
       const copy = scene.querySelector('.prodotti__copy');
@@ -131,9 +133,7 @@
       scenes.push({ copy, side, fromX, isCenter, frameStart, frameEnd, frameMid, visible: false, animated: false });
     });
 
-    /* --- MASTER ScrollTrigger: SOLO hero + prodotti --- */
-    const prodottiSection = document.getElementById('prodotti');
-
+    /* --- SCROLL TRIGGER 1: frame 1-840 su hero+prodotti (INVARIATO v22) --- */
     ScrollTrigger.create({
       trigger: '.hero',
       start: 'top top',
@@ -146,7 +146,7 @@
           drawFrame(currentFrame);
         }
 
-        /* --- HERO copy --- */
+        /* HERO copy */
         const shouldShowHero = (f >= HERO_SHOW && f < HERO_END);
         if (shouldShowHero && !heroVisible) {
           heroVisible = true;
@@ -163,7 +163,7 @@
           gsap.to(heroContent, { opacity: 0, duration: 0.3, onComplete: () => { heroContent.style.display = 'none'; } });
         }
 
-        /* --- PRODOTTI copy --- */
+        /* PRODOTTI copy */
         scenes.forEach((s, idx) => {
           const shouldShow = (f >= s.frameMid && f < s.frameEnd);
           if (shouldShow && !s.visible) {
@@ -194,7 +194,6 @@
         });
       },
       onLeave: () => {
-        /* Quando lo scroll supera la sezione prodotti, nascondi tutto */
         allCopies.forEach((c, i) => {
           c.style.display = 'none';
           scenes[i].visible = false;
@@ -203,13 +202,33 @@
         heroVisible = false;
       },
       onEnterBack: () => {
-        /* Rientrando nella zona prodotti, ridisegna il frame corrente */
         drawFrame(currentFrame);
       }
     });
 
+    /* --- SCROLL TRIGGER 2: video sfondo dalla storia al footer --- */
+    const bgVideo = document.getElementById('bgVideo');
+    if (bgVideo && storiaSection && footerEl) {
+      bgVideo.pause();
+      ScrollTrigger.create({
+        trigger: storiaSection,
+        start: 'top bottom',
+        endTrigger: footerEl,
+        end: 'bottom bottom',
+        onUpdate: function (self) {
+          if (bgVideo.duration) {
+            bgVideo.currentTime = self.progress * bgVideo.duration;
+          }
+        },
+        onEnter: function () { bgVideo.classList.add('bg-video--active'); },
+        onLeave: function () { bgVideo.classList.remove('bg-video--active'); },
+        onEnterBack: function () { bgVideo.classList.add('bg-video--active'); },
+        onLeaveBack: function () { bgVideo.classList.remove('bg-video--active'); }
+      });
+    }
+
     /* Scroll indicator */
-    const heroScroll = document.querySelector('.hero__scroll');
+    var heroScroll = document.querySelector('.hero__scroll');
     if (heroScroll) {
       gsap.set(heroScroll, { opacity: 1 });
       gsap.timeline({
@@ -218,16 +237,16 @@
     }
 
     /* NAV */
-    const nav = document.getElementById('nav');
+    var nav = document.getElementById('nav');
     ScrollTrigger.create({
       start: 80,
-      onUpdate: self => {
+      onUpdate: function (self) {
         nav.classList.toggle('nav--scrolled', self.direction === 1 || window.scrollY > 80);
       }
     });
 
     /* GENERIC .ani */
-    document.querySelectorAll('.ani').forEach(el => {
+    document.querySelectorAll('.ani').forEach(function (el) {
       gsap.to(el, {
         opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
         scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' }
@@ -235,7 +254,7 @@
     });
 
     /* STORIA LINE */
-    const storiaFill = document.querySelector('.storia__line-fill');
+    var storiaFill = document.querySelector('.storia__line-fill');
     if (storiaFill) {
       gsap.to(storiaFill, {
         height: '100%', ease: 'none',
@@ -244,8 +263,8 @@
     }
 
     /* STORIA CARDS */
-    document.querySelectorAll('.storia__item').forEach(item => {
-      const fromX = item.classList.contains('storia__item--reverse') ? 80 : -80;
+    document.querySelectorAll('.storia__item').forEach(function (item) {
+      var fromX = item.classList.contains('storia__item--reverse') ? 80 : -80;
       gsap.from(item.querySelector('.storia__card'), {
         x: fromX, opacity: 0, duration: 1, ease: 'power3.out',
         scrollTrigger: { trigger: item, start: 'top 80%', toggleActions: 'play none none reverse' }
@@ -257,7 +276,7 @@
     });
 
     /* FRANGITURA */
-    const frangImg = document.querySelector('.frangitura__bg img');
+    var frangImg = document.querySelector('.frangitura__bg img');
     if (frangImg) {
       gsap.to(frangImg, {
         yPercent: -15,
@@ -266,14 +285,14 @@
     }
 
     /* TERRITORIO COUNTERS */
-    document.querySelectorAll('.territorio__counter').forEach(counter => {
-      const numEl = counter.querySelector('.territorio__number');
-      const target = parseInt(counter.dataset.target);
-      const suffix = counter.dataset.suffix || '';
-      const isStatic = counter.dataset.static === 'true';
+    document.querySelectorAll('.territorio__counter').forEach(function (counter) {
+      var numEl = counter.querySelector('.territorio__number');
+      var target = parseInt(counter.dataset.target);
+      var suffix = counter.dataset.suffix || '';
+      var isStatic = counter.dataset.static === 'true';
       ScrollTrigger.create({
         trigger: counter, start: 'top 85%',
-        onEnter: () => {
+        onEnter: function () {
           if (isStatic) { numEl.textContent = target; return; }
           gsap.to({ val: 0 }, {
             val: target, duration: 2, ease: 'power2.out',
@@ -285,7 +304,7 @@
     });
 
     /* RECENSIONI BARS */
-    document.querySelectorAll('.recensioni__bar-fill').forEach(bar => {
+    document.querySelectorAll('.recensioni__bar-fill').forEach(function (bar) {
       gsap.to(bar, {
         width: bar.dataset.width + '%', duration: 1.2, ease: 'power2.out',
         scrollTrigger: { trigger: bar, start: 'top 90%', once: true }
@@ -307,18 +326,18 @@
   } /* end initGSAP */
 
   function initBurger() {
-    const burger = document.getElementById('navBurger');
-    const menu = document.getElementById('mobileMenu');
+    var burger = document.getElementById('navBurger');
+    var menu = document.getElementById('mobileMenu');
     if (!burger || !menu) return;
-    burger.addEventListener('click', () => {
-      const isOpen = menu.classList.toggle('mobile-menu--open');
+    burger.addEventListener('click', function () {
+      var isOpen = menu.classList.toggle('mobile-menu--open');
       burger.classList.toggle('nav__burger--open');
       burger.setAttribute('aria-expanded', isOpen);
       menu.setAttribute('aria-hidden', !isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
     });
-    menu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
         menu.classList.remove('mobile-menu--open');
         burger.classList.remove('nav__burger--open');
         burger.setAttribute('aria-expanded', 'false');
@@ -329,40 +348,48 @@
   }
 
   function initCookie() {
-    const banner = document.getElementById('cookieBanner');
+    var banner = document.getElementById('cookieBanner');
     if (!banner || localStorage.getItem('cb-consent')) return;
-    setTimeout(() => banner.classList.add('cookie-banner--visible'), 2000);
-    document.getElementById('cookieAccept')?.addEventListener('click', () => {
-      localStorage.setItem('cb-consent', 'accepted');
-      banner.classList.remove('cookie-banner--visible');
-    });
-    document.getElementById('cookieReject')?.addEventListener('click', () => {
-      localStorage.setItem('cb-consent', 'rejected');
-      banner.classList.remove('cookie-banner--visible');
-    });
+    setTimeout(function () { banner.classList.add('cookie-banner--visible'); }, 2000);
+    var acceptBtn = document.getElementById('cookieAccept');
+    var rejectBtn = document.getElementById('cookieReject');
+    if (acceptBtn) {
+      acceptBtn.addEventListener('click', function () {
+        localStorage.setItem('cb-consent', 'accepted');
+        banner.classList.remove('cookie-banner--visible');
+      });
+    }
+    if (rejectBtn) {
+      rejectBtn.addEventListener('click', function () {
+        localStorage.setItem('cb-consent', 'rejected');
+        banner.classList.remove('cookie-banner--visible');
+      });
+    }
   }
 
   function initChatbot() {
-    const fab = document.getElementById('chatbotFab');
-    const panel = document.getElementById('chatbotPanel');
-    const close = document.getElementById('chatbotClose');
+    var fab = document.getElementById('chatbotFab');
+    var panel = document.getElementById('chatbotPanel');
+    var close = document.getElementById('chatbotClose');
     if (!fab || !panel) return;
-    fab.addEventListener('click', () => {
-      const open = panel.classList.toggle('chatbot-panel--open');
+    fab.addEventListener('click', function () {
+      var open = panel.classList.toggle('chatbot-panel--open');
       panel.setAttribute('aria-hidden', !open);
     });
-    close?.addEventListener('click', () => {
-      panel.classList.remove('chatbot-panel--open');
-      panel.setAttribute('aria-hidden', 'true');
-    });
+    if (close) {
+      close.addEventListener('click', function () {
+        panel.classList.remove('chatbot-panel--open');
+        panel.setAttribute('aria-hidden', 'true');
+      });
+    }
   }
 
   function initSmooth() {
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const id = a.getAttribute('href');
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var id = a.getAttribute('href');
         if (id === '#') return;
-        const target = document.querySelector(id);
+        var target = document.querySelector(id);
         if (!target) return;
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -371,10 +398,10 @@
   }
 
   function initFAQ() {
-    document.querySelectorAll('.faq__item').forEach(item => {
-      item.addEventListener('toggle', () => {
+    document.querySelectorAll('.faq__item').forEach(function (item) {
+      item.addEventListener('toggle', function () {
         if (item.open) {
-          document.querySelectorAll('.faq__item').forEach(other => {
+          document.querySelectorAll('.faq__item').forEach(function (other) {
             if (other !== item) other.removeAttribute('open');
           });
         }
@@ -384,7 +411,7 @@
 
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
-  preloadFrames().then(() => {
+  preloadFrames().then(function () {
     console.log('✅ Tutti i ' + TOTAL_FRAMES + ' frame caricati');
     drawFrame(0);
     initGSAP();
