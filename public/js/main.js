@@ -140,7 +140,7 @@
       endTrigger: prodottiSection,
       end: 'bottom top',
       onUpdate: self => {
-        const f = Math.floor(self.progress * (TOTAL_FRAMES - 1));
+        const f = Math.floor(self.progress * 839);
         if (f !== currentFrame) {
           currentFrame = f;
           drawFrame(currentFrame);
@@ -206,18 +206,27 @@
       }
     });
 
-    /* --- SCROLL TRIGGER 2: video sfondo dalla storia al footer --- */
-    const bgVideo = document.getElementById('bgVideo');
-    if (bgVideo && storiaSection && footerEl) {
+    /* --- SCROLL TRIGGER 2: video sfondo dalla storia alla CTA --- */
+    var bgVideo = document.getElementById('bgVideo');
+    var ctaSection = document.getElementById('cta-final');
+    if (bgVideo && storiaSection && ctaSection) {
       bgVideo.pause();
+      var targetTime = 0;
+      function updateVideo() {
+        if (Math.abs(bgVideo.currentTime - targetTime) > 0.05) {
+          bgVideo.currentTime += (targetTime - bgVideo.currentTime) * 0.3;
+        }
+        requestAnimationFrame(updateVideo);
+      }
+      requestAnimationFrame(updateVideo);
       ScrollTrigger.create({
         trigger: storiaSection,
         start: 'top bottom',
-        endTrigger: footerEl,
-        end: 'bottom bottom',
+        endTrigger: ctaSection,
+        end: 'bottom top',
         onUpdate: function (self) {
           if (bgVideo.duration) {
-            bgVideo.currentTime = self.progress * bgVideo.duration;
+            targetTime = self.progress * bgVideo.duration;
           }
         },
         onEnter: function () { bgVideo.classList.add('bg-video--active'); },
