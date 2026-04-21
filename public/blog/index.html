@@ -64,7 +64,7 @@
             overflow-x: hidden;
         }
 
-        /* ── HERO BLOG ── */
+        /* ── HERO ── */
         .blog-hero {
             position: relative;
             min-height: 60vh;
@@ -124,7 +124,7 @@
             max-width: 520px;
         }
 
-        /* ── FILTRI CATEGORIA ── */
+        /* ── FILTRI ── */
         .blog-filters {
             position: sticky;
             top: 0;
@@ -172,7 +172,7 @@
             color: #000;
         }
 
-        /* ── GRIGLIA ARTICOLI ── */
+        /* ── LAYOUT PRINCIPALE ── */
         .blog-main {
             max-width: 1200px;
             margin: 80px auto;
@@ -191,7 +191,7 @@
             margin-bottom: 24px;
         }
 
-        /* CARD IN EVIDENZA */
+        /* ── CARD IN EVIDENZA ── */
         .blog-card--featured {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -211,11 +211,14 @@
         }
 
         .blog-card--featured .blog-card__img {
-            aspect-ratio: 4/3;
+            position: relative;
             overflow: hidden;
+            min-height: 360px;
         }
 
         .blog-card--featured .blog-card__img img {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -233,7 +236,7 @@
             justify-content: center;
         }
 
-        /* CARD STANDARD */
+        /* ── CARD STANDARD ── */
         .blog-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -258,16 +261,22 @@
         }
 
         .blog-card__img {
+            position: relative;
             width: 100%;
-            aspect-ratio: 16/9;
+            padding-top: 56.25%;
+            /* 16:9 */
             overflow: hidden;
             flex-shrink: 0;
+            background: #111;
         }
 
         .blog-card__img img {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
             transition: transform .5s;
         }
 
@@ -275,6 +284,7 @@
             transform: scale(1.04);
         }
 
+        /* ── BODY CARD ── */
         .blog-card__body {
             padding: 28px 28px 32px;
             display: flex;
@@ -349,7 +359,7 @@
             gap: 12px;
         }
 
-        /* ── SEZIONE NEWSLETTER ── */
+        /* ── NEWSLETTER ── */
         .blog-newsletter {
             background: linear-gradient(135deg, #0d0d0d 0%, #111008 100%);
             border: 1px solid rgba(200, 169, 110, .15);
@@ -444,7 +454,7 @@
             color: rgba(255, 255, 255, .4);
         }
 
-        /* ── TOPICS SIDEBAR ── */
+        /* ── TOPICS ── */
         .blog-topics {
             max-width: 1200px;
             margin: 0 auto 80px;
@@ -552,7 +562,7 @@
             }
         }
 
-        /* ── ANIMAZIONI SCROLL ── */
+        /* ── ANIMAZIONI ── */
         .ani {
             opacity: 0;
             transform: translateY(28px);
@@ -581,7 +591,7 @@
             }
 
             .blog-card--featured .blog-card__img {
-                aspect-ratio: 16/9;
+                min-height: 260px;
             }
 
             .blog-card--featured .blog-card__body {
@@ -695,11 +705,8 @@
             <a href="/blog/polifenoli-olio-extravergine" class="blog-card blog-card--featured ani" data-cat="salute"
                 aria-label="Leggi l'articolo: Polifenoli nell'Olio Extravergine">
                 <div class="blog-card__img">
-                    <picture>
-                        <source srcset="/img/blog/polifenoli-evo.avif" type="image/avif">
-                        <img src="/img/blog/polifenoli-evo.webp"
-                            alt="Campione di olio extravergine con colore verde intenso" loading="lazy">
-                    </picture>
+                    <img src="/img/blog/polifenoli-evo.webp"
+                        alt="Campione di olio extravergine con colore verde intenso" loading="lazy">
                 </div>
                 <div class="blog-card__body">
                     <span class="blog-card__cat">Salute & Polifenoli</span>
@@ -707,8 +714,7 @@
                         Cabriolu ne ha così tanti</h2>
                     <p class="blog-card__excerpt">Oltre 350 mg/kg di polifenoli. Non è solo un numero su una scheda
                         tecnica — è la differenza tra un olio che ti fa bene davvero e uno che sa solo di grasso. Ti
-                        spieghiamo tutto: dalla biochimica al perché le olive Bosana di Villacidro sono eccezionali.
-                    </p>
+                        spieghiamo tutto: dalla biochimica al perché le olive Bosana di Villacidro sono eccezionali.</p>
                     <div class="blog-card__meta">
                         <span>Mattia Cabriolu</span>
                         <span class="blog-card__meta-dot"></span>
@@ -725,15 +731,10 @@
         <section aria-label="Tutti gli articoli">
             <div class="blog-grid">
 
-                <!-- ARTICOLO 1 -->
-                <a href="/blog/frangitura-freddo-guida" class="blog-card ani" data-cat="frangitura"
-                    aria-label="Leggi: Guida alla Frangitura a Freddo">
+                <a href="/blog/frangitura-freddo-guida" class="blog-card ani" data-cat="frangitura">
                     <div class="blog-card__img">
-                        <picture>
-                            <source srcset="/img/blog/frangitura-freddo.avif" type="image/avif">
-                            <img src="/img/blog/frangitura-freddo.webp"
-                                alt="Olive nel frangitore durante la molitura a freddo" loading="lazy">
-                        </picture>
+                        <img src="/img/blog/frangitura-freddo.webp"
+                            alt="Olive nel frangitore durante la molitura a freddo" loading="lazy">
                     </div>
                     <div class="blog-card__body">
                         <span class="blog-card__cat">Frangitura</span>
@@ -742,81 +743,58 @@
                         <p class="blog-card__excerpt">Dal momento in cui le olive entrano nel frantoio a quando l'olio
                             finisce in bottiglia: ogni passaggio del ciclo continuo a due fasi spiegato passo passo.</p>
                         <div class="blog-card__meta">
-                            <span>Mattia Cabriolu</span>
-                            <span class="blog-card__meta-dot"></span>
-                            <span>9 min</span>
-                            <span class="blog-card__meta-dot"></span>
+                            <span>Mattia Cabriolu</span><span class="blog-card__meta-dot"></span>
+                            <span>9 min</span><span class="blog-card__meta-dot"></span>
                             <span>Feb 2025</span>
                         </div>
                         <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
-                <!-- ARTICOLO 2 -->
-                <a href="/blog/cultivar-bosana-sardegna" class="blog-card ani" data-cat="cultivar"
-                    aria-label="Leggi: Bosana, la regina delle olive sarde">
+                <a href="/blog/cultivar-bosana-sardegna" class="blog-card ani" data-cat="cultivar">
                     <div class="blog-card__img">
-                        <picture>
-                            <source srcset="/img/blog/cultivar-bosana.avif" type="image/avif">
-                            <img src="/img/blog/cultivar-bosana.webp" alt="Olive Bosana sui rami prima della raccolta"
-                                loading="lazy">
-                        </picture>
+                        <img src="/img/blog/cultivar-bosana.webp" alt="Olive Bosana sui rami prima della raccolta"
+                            loading="lazy">
                     </div>
                     <div class="blog-card__body">
                         <span class="blog-card__cat">Cultivar & Territorio</span>
                         <h2 class="blog-card__title">Bosana: la cultivar sarda che produce l'olio più ricco di
                             polifenoli d'Italia</h2>
-                        <p class="blog-card__excerpt">Autoctona della Sardegna settentrionale, adattata al
-                            microclima di Villacidro. Ecco perché la Bosana regala oli straordinari e irripetibili
-                            altrove.</p>
+                        <p class="blog-card__excerpt">Autoctona della Sardegna settentrionale, adattata al microclima di
+                            Villacidro. Ecco perché la Bosana regala oli straordinari e irripetibili altrove.</p>
                         <div class="blog-card__meta">
-                            <span>Jessica Cabriolu</span>
-                            <span class="blog-card__meta-dot"></span>
-                            <span>7 min</span>
-                            <span class="blog-card__meta-dot"></span>
+                            <span>Jessica Cabriolu</span><span class="blog-card__meta-dot"></span>
+                            <span>7 min</span><span class="blog-card__meta-dot"></span>
                             <span>Gen 2025</span>
                         </div>
                         <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
-                <!-- ARTICOLO 3 -->
-                <a href="/blog/ricetta-bruschetta-evo-puro" class="blog-card ani" data-cat="ricette"
-                    aria-label="Leggi: Bruschetta con EVO Puro Cabriolu">
+                <a href="/blog/ricetta-bruschetta-evo-puro" class="blog-card ani" data-cat="ricette">
                     <div class="blog-card__img">
-                        <picture>
-                            <source srcset="/img/blog/bruschetta-evo.avif" type="image/avif">
-                            <img src="/img/blog/bruschetta-evo.webp"
-                                alt="Bruschetta con pane sardo e olio extravergine Cabriolu" loading="lazy">
-                        </picture>
+                        <img src="/img/blog/bruschetta-evo.webp"
+                            alt="Bruschetta con pane sardo e olio extravergine Cabriolu" loading="lazy">
                     </div>
                     <div class="blog-card__body">
                         <span class="blog-card__cat">Ricette</span>
-                        <h2 class="blog-card__title">Bruschetta con EVO Puro: la ricetta di Jessica che fa
-                            innamorare dell'olio sardo</h2>
+                        <h2 class="blog-card__title">Bruschetta con EVO Puro: la ricetta di Jessica che fa innamorare
+                            dell'olio sardo</h2>
                         <p class="blog-card__excerpt">Pane carasau tostato, pomodori camone di Sardegna, aglio fresco e
-                            un filo generoso di Extravergine Puro. Cinque minuti, un risultato che non si dimentica.
-                        </p>
+                            un filo generoso di Extravergine Puro. Cinque minuti, un risultato che non si dimentica.</p>
                         <div class="blog-card__meta">
-                            <span>Jessica Cabriolu</span>
-                            <span class="blog-card__meta-dot"></span>
-                            <span>4 min</span>
-                            <span class="blog-card__meta-dot"></span>
+                            <span>Jessica Cabriolu</span><span class="blog-card__meta-dot"></span>
+                            <span>4 min</span><span class="blog-card__meta-dot"></span>
                             <span>Dic 2024</span>
                         </div>
                         <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
-                <!-- ARTICOLO 4 -->
-                <a href="/blog/come-riconoscere-olio-extravergine-qualita" class="blog-card ani" data-cat="guide"
-                    aria-label="Leggi: Come riconoscere un olio EVO di qualità">
+                <a href="/blog/come-riconoscere-olio-extravergine-qualita" class="blog-card ani" data-cat="guide">
                     <div class="blog-card__img">
-                        <picture>
-                            <source srcset="/img/blog/degustazione-olio.avif" type="image/avif">
-                            <img src="/img/blog/degustazione-olio.webp"
-                                alt="Assaggio professionale di olio extravergine d'oliva" loading="lazy">
-                        </picture>
+                        <img src="/img/blog/degustazione-olio.webp"
+                            alt="Assaggio professionale di olio extravergine d'oliva" loading="lazy">
                     </div>
                     <div class="blog-card__body">
                         <span class="blog-card__cat">Guide all'Acquisto</span>
@@ -825,52 +803,38 @@
                         <p class="blog-card__excerpt">Colore, profumo, acidità, polifenoli, data di raccolta: la guida
                             pratica per scegliere davvero bene al supermercato, online e al frantoio.</p>
                         <div class="blog-card__meta">
-                            <span>Mattia Cabriolu</span>
-                            <span class="blog-card__meta-dot"></span>
-                            <span>8 min</span>
-                            <span class="blog-card__meta-dot"></span>
+                            <span>Mattia Cabriolu</span><span class="blog-card__meta-dot"></span>
+                            <span>8 min</span><span class="blog-card__meta-dot"></span>
                             <span>Nov 2024</span>
                         </div>
                         <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
-                <!-- ARTICOLO 5 -->
-                <a href="/blog/olio-aromatizzato-co-molitura" class="blog-card ani" data-cat="frangitura"
-                    aria-label="Leggi: Co-molitura degli oli aromatizzati">
+                <a href="/blog/olio-aromatizzato-co-molitura" class="blog-card ani" data-cat="frangitura">
                     <div class="blog-card__img">
-                        <picture>
-                            <source srcset="/img/blog/co-molitura-aromi.avif" type="image/avif">
-                            <img src="/img/blog/co-molitura-aromi.webp"
-                                alt="Peperoncino fresco e basilico prima della co-molitura" loading="lazy">
-                        </picture>
+                        <img src="/img/blog/co-molitura-aromi.webp"
+                            alt="Peperoncino fresco e basilico prima della co-molitura" loading="lazy">
                     </div>
                     <div class="blog-card__body">
                         <span class="blog-card__cat">Frangitura</span>
-                        <h2 class="blog-card__title">Co-molitura: perché i nostri oli aromatizzati sono diversi da
-                            tutti gli altri</h2>
+                        <h2 class="blog-card__title">Co-molitura: perché i nostri oli aromatizzati sono diversi da tutti
+                            gli altri</h2>
                         <p class="blog-card__excerpt">Peperoncino, basilico e limone freschi moliti insieme alle olive
                             nel frantoio. Non è un'infusione: è un'altra cosa. Scopri il processo e perché conta.</p>
                         <div class="blog-card__meta">
-                            <span>Mattia Cabriolu</span>
-                            <span class="blog-card__meta-dot"></span>
-                            <span>6 min</span>
-                            <span class="blog-card__meta-dot"></span>
+                            <span>Mattia Cabriolu</span><span class="blog-card__meta-dot"></span>
+                            <span>6 min</span><span class="blog-card__meta-dot"></span>
                             <span>Ott 2024</span>
                         </div>
                         <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
-                <!-- ARTICOLO 6 -->
-                <a href="/blog/monte-linas-uliveti-villacidro" class="blog-card ani" data-cat="cultivar"
-                    aria-label="Leggi: Gli uliveti ai piedi del Monte Linas">
+                <a href="/blog/monte-linas-uliveti-villacidro" class="blog-card ani" data-cat="cultivar">
                     <div class="blog-card__img">
-                        <picture>
-                            <source srcset="/img/blog/monte-linas-uliveti.avif" type="image/avif">
-                            <img src="/img/blog/monte-linas-uliveti.webp"
-                                alt="Uliveti ai piedi del Monte Linas, Villacidro, Sardegna" loading="lazy">
-                        </picture>
+                        <img src="/img/blog/monte-linas-uliveti.webp"
+                            alt="Uliveti ai piedi del Monte Linas, Villacidro, Sardegna" loading="lazy">
                     </div>
                     <div class="blog-card__body">
                         <span class="blog-card__cat">Cultivar & Territorio</span>
@@ -880,52 +844,38 @@
                             sole l'anno. Tutto quello che il territorio di Villacidro trasferisce in ogni bottiglia di
                             Cabriolu.</p>
                         <div class="blog-card__meta">
-                            <span>Jessica Cabriolu</span>
-                            <span class="blog-card__meta-dot"></span>
-                            <span>6 min</span>
-                            <span class="blog-card__meta-dot"></span>
+                            <span>Jessica Cabriolu</span><span class="blog-card__meta-dot"></span>
+                            <span>6 min</span><span class="blog-card__meta-dot"></span>
                             <span>Set 2024</span>
                         </div>
                         <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
-                <!-- ARTICOLO 7 -->
-                <a href="/blog/olio-extravergine-fa-bene-salute" class="blog-card ani" data-cat="salute"
-                    aria-label="Leggi: L'olio EVO fa bene alla salute">
+                <a href="/blog/olio-extravergine-fa-bene-salute" class="blog-card ani" data-cat="salute">
                     <div class="blog-card__img">
-                        <picture>
-                            <source srcset="/img/blog/salute-evo.avif" type="image/avif">
-                            <img src="/img/blog/salute-evo.webp" alt="Bottiglia di olio extravergine con olive fresche"
-                                loading="lazy">
-                        </picture>
+                        <img src="/img/blog/salute-evo.webp" alt="Bottiglia di olio extravergine con olive fresche"
+                            loading="lazy">
                     </div>
                     <div class="blog-card__body">
                         <span class="blog-card__cat">Salute & Polifenoli</span>
-                        <h2 class="blog-card__title">L'olio extravergine d'oliva fa davvero bene alla salute? La
-                            scienza risponde</h2>
+                        <h2 class="blog-card__title">L'olio extravergine d'oliva fa davvero bene alla salute? La scienza
+                            risponde</h2>
                         <p class="blog-card__excerpt">Dieta mediterranea, oleocantale, squalene, vitamina E. Cosa dice
                             davvero la ricerca scientifica sull'EVO e perché la qualità fa tutta la differenza.</p>
                         <div class="blog-card__meta">
-                            <span>Jessica Cabriolu</span>
-                            <span class="blog-card__meta-dot"></span>
-                            <span>10 min</span>
-                            <span class="blog-card__meta-dot"></span>
+                            <span>Jessica Cabriolu</span><span class="blog-card__meta-dot"></span>
+                            <span>10 min</span><span class="blog-card__meta-dot"></span>
                             <span>Ago 2024</span>
                         </div>
                         <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
-                <!-- ARTICOLO 8 -->
-                <a href="/blog/ricetta-pasta-aglio-olio-peperoncino" class="blog-card ani" data-cat="ricette"
-                    aria-label="Leggi: Pasta aglio, olio e peperoncino con olio Cabriolu">
+                <a href="/blog/ricetta-pasta-aglio-olio-peperoncino" class="blog-card ani" data-cat="ricette">
                     <div class="blog-card__img">
-                        <picture>
-                            <source srcset="/img/blog/pasta-aglio-olio.avif" type="image/avif">
-                            <img src="/img/blog/pasta-aglio-olio.webp"
-                                alt="Pasta aglio olio e peperoncino con olio aromatizzato Cabriolu" loading="lazy">
-                        </picture>
+                        <img src="/img/blog/pasta-aglio-olio.webp"
+                            alt="Pasta aglio olio e peperoncino con olio aromatizzato Cabriolu" loading="lazy">
                     </div>
                     <div class="blog-card__body">
                         <span class="blog-card__cat">Ricette</span>
@@ -935,26 +885,18 @@
                             co-molito. La piccantezza integrata nell'olio cambia completamente l'equilibrio del piatto.
                         </p>
                         <div class="blog-card__meta">
-                            <span>Jessica Cabriolu</span>
-                            <span class="blog-card__meta-dot"></span>
-                            <span>5 min</span>
-                            <span class="blog-card__meta-dot"></span>
+                            <span>Jessica Cabriolu</span><span class="blog-card__meta-dot"></span>
+                            <span>5 min</span><span class="blog-card__meta-dot"></span>
                             <span>Lug 2024</span>
                         </div>
                         <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
-                <!-- ARTICOLO 9 -->
-                <a href="/blog/conservare-olio-extravergine" class="blog-card ani" data-cat="guide"
-                    aria-label="Leggi: Come conservare l'olio extravergine">
+                <a href="/blog/conservare-olio-extravergine" class="blog-card ani" data-cat="guide">
                     <div class="blog-card__img">
-                        <picture>
-                            <source srcset="/img/blog/conservare-olio.avif" type="image/avif">
-                            <img src="/img/blog/conservare-olio.webp"
-                                alt="Bottiglie di olio extravergine in vetro scuro conservate correttamente"
-                                loading="lazy">
-                        </picture>
+                        <img src="/img/blog/conservare-olio.webp"
+                            alt="Bottiglie di olio extravergine in vetro scuro conservate correttamente" loading="lazy">
                     </div>
                     <div class="blog-card__body">
                         <span class="blog-card__cat">Guide all'Acquisto</span>
@@ -964,10 +906,8 @@
                             regole pratiche per conservarlo correttamente a casa e usarlo al meglio fino all'ultima
                             goccia.</p>
                         <div class="blog-card__meta">
-                            <span>Mattia Cabriolu</span>
-                            <span class="blog-card__meta-dot"></span>
-                            <span>5 min</span>
-                            <span class="blog-card__meta-dot"></span>
+                            <span>Mattia Cabriolu</span><span class="blog-card__meta-dot"></span>
+                            <span>5 min</span><span class="blog-card__meta-dot"></span>
                             <span>Giu 2024</span>
                         </div>
                         <span class="blog-card__read-more">Leggi →</span>
@@ -976,15 +916,14 @@
 
             </div>
         </section>
-
     </main>
 
     <!-- NEWSLETTER -->
     <section class="blog-newsletter ani" aria-label="Iscriviti alla newsletter">
         <p class="blog-newsletter__overtitle">Non perdere nulla</p>
         <h2 class="blog-newsletter__title">Ricevi i nuovi articoli direttamente in inbox.</h2>
-        <p class="blog-newsletter__desc">Un'email al mese: approfondimenti, ricette stagionali e novità dal frantoio
-            di Villacidro. Zero spam, discrizione in un click.</p>
+        <p class="blog-newsletter__desc">Un'email al mese: approfondimenti, ricette stagionali e novità dal frantoio di
+            Villacidro. Zero spam, disiscrizione in un click.</p>
         <form class="blog-newsletter__form" id="newsletterForm" novalidate>
             <input type="email" class="blog-newsletter__input" id="newsletterEmail" placeholder="la-tua@email.it"
                 autocomplete="email" required aria-label="Il tuo indirizzo email">
@@ -1098,8 +1037,8 @@
                 <p>Sardegna, Italia</p>
                 <p style="margin-top:12px"><a href="tel:+390709316xx">+39 070 9316XX</a></p>
                 <p><a href="mailto:info@oleificiocabriolu.it">info@oleificiocabriolu.it</a></p>
-                <p style="margin-top:12px;font-size:.8rem;color:rgba(250,246,240,.35)">Lun–Sab: 8:00–13:00 /
-                    15:00–18:00</p>
+                <p style="margin-top:12px;font-size:.8rem;color:rgba(250,246,240,.35)">Lun–Sab: 8:00–13:00 / 15:00–18:00
+                </p>
             </div>
         </div>
         <div class="footer__bottom">
@@ -1146,14 +1085,11 @@
         (function () {
             'use strict';
 
-            /* ── NAV SCROLL ── */
             var nav = document.getElementById('nav');
             window.addEventListener('scroll', function () {
-                if (window.scrollY > 80) nav.classList.add('scrolled');
-                else nav.classList.remove('scrolled');
+                nav.classList.toggle('scrolled', window.scrollY > 80);
             }, { passive: true });
 
-            /* ── BURGER MENU ── */
             var burger = document.getElementById('navBurger');
             var menu = document.getElementById('mobileMenu');
             burger.addEventListener('click', function () {
@@ -1171,7 +1107,6 @@
                 });
             });
 
-            /* ── ANIMAZIONI SCROLL (IntersectionObserver) ── */
             var observer = new IntersectionObserver(function (entries) {
                 entries.forEach(function (entry) {
                     if (entry.isIntersecting) {
@@ -1180,33 +1115,21 @@
                     }
                 });
             }, { threshold: 0.12 });
+            document.querySelectorAll('.ani').forEach(function (el) { observer.observe(el); });
 
-            document.querySelectorAll('.ani').forEach(function (el) {
-                observer.observe(el);
-            });
-
-            /* ── FILTRI CATEGORIA ── */
             var filterBtns = document.querySelectorAll('.blog-filter-btn');
             var cards = document.querySelectorAll('.blog-grid .blog-card, .blog-card--featured');
-
             filterBtns.forEach(function (btn) {
                 btn.addEventListener('click', function () {
                     filterBtns.forEach(function (b) { b.classList.remove('active'); });
                     btn.classList.add('active');
-
                     var filter = btn.getAttribute('data-filter');
                     cards.forEach(function (card) {
-                        if (filter === 'tutti' || card.getAttribute('data-cat') === filter) {
-                            card.style.display = '';
-                            card.style.opacity = '1';
-                        } else {
-                            card.style.display = 'none';
-                        }
+                        card.style.display = (filter === 'tutti' || card.getAttribute('data-cat') === filter) ? '' : 'none';
                     });
                 });
             });
 
-            /* ── NEWSLETTER FORM ── */
             var form = document.getElementById('newsletterForm');
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
@@ -1217,17 +1140,11 @@
                 }
                 var btn = form.querySelector('.blog-newsletter__btn');
                 btn.textContent = '✓ Iscritto!';
-                btn.style.background = '#4ecb71';
-                btn.style.color = '#000';
+                btn.style.cssText = 'background:#4ecb71;color:#000';
                 form.querySelector('input').value = '';
-                setTimeout(function () {
-                    btn.textContent = 'Iscriviti';
-                    btn.style.background = '';
-                    btn.style.color = '';
-                }, 3500);
+                setTimeout(function () { btn.textContent = 'Iscriviti'; btn.style.cssText = ''; }, 3500);
             });
 
-            /* ── CHATBOT ── */
             var fab = document.getElementById('chatbotFab');
             var panel = document.getElementById('chatbotPanel');
             var closeBtn = document.getElementById('chatbotClose');
@@ -1255,7 +1172,7 @@
                 setTimeout(function () {
                     var reply = document.createElement('p');
                     reply.style.cssText = 'font-size:.82rem;margin:8px 0;color:rgba(255,255,255,.65)';
-                    reply.textContent = 'Grazie per la tua domanda! Un membro del team Cabriolu ti risponderà al più presto. Nel frattempo esplora il nostro blog 🫒';
+                    reply.textContent = 'Grazie! Un membro del team Cabriolu ti risponderà al più presto 🫒';
                     body.appendChild(reply);
                     body.scrollTop = body.scrollHeight;
                 }, 900);
@@ -1263,9 +1180,7 @@
             }
 
             sendBtn.addEventListener('click', sendMessage);
-            input.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') sendMessage();
-            });
+            input.addEventListener('keydown', function (e) { if (e.key === 'Enter') sendMessage(); });
 
         })();
     </script>
