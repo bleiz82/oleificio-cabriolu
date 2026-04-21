@@ -918,6 +918,7 @@ address {
     font-style: italic;
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden
 }
@@ -1546,5 +1547,45 @@ address {
     *::after {
         animation-duration: .01ms !important;
         transition-duration: .01ms !important
+    }
+}
+
+/* ── WATERMARK SCORREVOLE ── */
+.watermark-wrap {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 9998;
+    white-space: nowrap;
+}
+
+.watermark-track {
+    display: inline-flex;
+    gap: 8vw;
+    animation: wmScroll 20s linear infinite;
+}
+
+.watermark-track span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22vw;
+    font-weight: 700;
+    color: rgba(201, 168, 76, 0.04);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    user-select: none;
+    text-transform: uppercase;
+}
+
+@keyframes wmScroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
     }
 }

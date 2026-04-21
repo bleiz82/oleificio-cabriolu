@@ -143,7 +143,7 @@
             </a>
 
             <!-- LATTE -->
-            <a href="/shop/latte" class="shop-card">
+            <a href="/shop/evo-puro#acquista" class="shop-card">
                 <div class="shop-card__img">
                     <picture>
                         <source srcset="/img/prodotti/latta-5l.avif" type="image/avif">
@@ -287,6 +287,37 @@
                 burger.classList.contains('nav__burger--open') ? 'true' : 'false');
         });
     </script>
+    <!-- WATERMARK -->
+    <div class="watermark-wrap">
+        <div class="watermark-track">
+            <span>I NOSTRI OLI</span>
+            <span>I NOSTRI OLI</span>
+            <span>I NOSTRI OLI</span>
+            <span>I NOSTRI OLI</span>
+        </div>
+    </div>
+
+    <!-- CHATBOT FAB -->
+    <button class="chatbot-fab" id="chatbotFab" aria-label="Assistente virtuale">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
+        </svg>
+    </button>
+    <div class="chatbot-panel" id="chatbotPanel" aria-hidden="true">
+        <div class="chatbot-panel__header">
+            <span>Assistente Cabriolu</span>
+            <button id="chatbotClose">✕</button>
+        </div>
+        <div class="chatbot-panel__body" id="chatbotBody">
+            <p class="chatbot-panel__welcome">Ciao! Chiedimi tutto sui nostri oli, spedizioni, o prenota una visita al
+                frantoio.</p>
+        </div>
+        <div class="chatbot-panel__input">
+            <input type="text" id="chatbotInput" placeholder="Scrivi un messaggio..." aria-label="Messaggio">
+            <button id="chatbotSend">→</button>
+        </div>
+    </div>
+    <script src="/js/common.js"></script>
 
 </body>
 
