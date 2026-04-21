@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Il Territorio — Oleificio Cabriolu, Villacidro</title>
+    <meta name="description"
+        content="Villacidro, Monte Linas, Medio Campidano: il territorio straordinario che dà carattere unico all'olio extravergine Cabriolu dal 1890.">
+    <link rel="canonical" href="https://www.oleificiocabriolu.it/territorio">
+    <link rel="preload" href="/fonts/cormorant-garamond-v16-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/inter-v13-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* ── CANVAS SCROLL ── */
+        #terr-canvas-wrap {
+            position: relative;
+            height: 500vh;
+        }
+
+        #terr-canvas-sticky {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background: var(--black);
+        }
+
+        #tc {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .tc-text {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 5vw;
+            max-width: 560px;
+            z-index: 6;
+            pointer-events: none;
+        }
+
+        .tc-text.right {
+            left: auto;
+            right: 0;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .tc-text.center {
+            max-width: 720px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            align-items: center;
+            text-align: center;
+        }
+
+        .tc-text.left {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.45) 65%, transparent 100%);
+        }
+
+        .tc-text.right {
+            background: linear-gradient(to left, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.45) 65%, transparent 100%);
+        }
+
+        .tc-text.center {
+            background: radial-gradient(ellipse 85% 70% at 50% 50%, rgba(0, 0, 0, 0.78) 0%, transparent 100%);
+        }
+
+        .tc-text.active {
+            display: flex;
+            animation: tcFadeIn 0.5s ease forwards;
+        }
+
+        @keyframes tcFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .tc-text__eyebrow {
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .tc-text__num {
+            font-family: var(--font-display);
+            font-size: clamp(5rem, 12vw, 9rem);
+            font-weight: 700;
+            color: rgba(200, 169, 110, 0.07);
+            line-height: 1;
+            margin-bottom: -16px;
+        }
+
+        .tc-text__title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            font-weight: 700;
+            color: var(--cream);
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .tc-text__title span {
+            color: var(--gold);
+        }
+
+        .tc-text__desc {
+            font-size: clamp(0.88rem, 1.3vw, 1rem);
+            color: rgba(250, 246, 240, 0.65);
+            line-height: 1.78;
+        }
+
+        .tc-text__badge {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 6px 14px;
+            border: 1px solid rgba(200, 169, 110, 0.4);
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        /* ── SEZIONI ── */
+        .terr-section {
+            background: var(--black);
+            padding: 120px 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .terr-section--dark {
+            background: #080808;
+        }
+
+        .terr-section__inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .terr-section__header {
+            text-align: center;
+            margin-bottom: 72px;
+        }
+
+        .terr-section__header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--cream);
+            margin-bottom: 16px;
+        }
+
+        .terr-section__header p {
+            color: var(--cream-dim);
+            font-size: 1rem;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* NUMERI */
+        .terr-numeri {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+
+        .terr-num {
+            padding: 32px 16px;
+            border: 1px solid rgba(200, 169, 110, 0.08);
+            border-radius: 6px;
+            transition: border-color 0.3s;
+        }
+
+        .terr-num:hover {
+            border-color: rgba(200, 169, 110, 0.3);
+        }
+
+        .terr-num__val {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 3.8rem);
+            font-weight: 700;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .terr-num__label {
+            font-size: 0.82rem;
+            color: var(--cream-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.5;
+        }
+
+        /* CARATTERISTICHE */
+        .terr-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .terr-feat {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(200, 169, 110, 0.1);
+            border-radius: 6px;
+            padding: 40px 32px;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s, transform 0.6s, border-color 0.3s;
+        }
+
+        .terr-feat.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .terr-feat:hover {
+            border-color: rgba(200, 169, 110, 0.3);
+        }
+
+        .terr-feat__num {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 700;
+            color: rgba(200, 169, 110, 0.1);
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .terr-feat__title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .terr-feat__text {
+            color: var(--cream-dim);
+            font-size: 0.9rem;
+            line-height: 1.75;
+        }
+
+        /* CULTIVAR */
+        .terr-cultivar {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .terr-cult {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(200, 169, 110, 0.1);
+            border-radius: 6px;
+            padding: 48px 40px;
+            opacity: 0;
+            transform: translateX(-24px);
+            transition: opacity 0.7s, transform 0.7s, border-color 0.3s;
+        }
+
+        .terr-cult:last-child {
+            transform: translateX(24px);
+        }
+
+        .terr-cult.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .terr-cult:hover {
+            border-color: rgba(200, 169, 110, 0.3);
+        }
+
+        .terr-cult__tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 3px 10px;
+            margin-bottom: 16px;
+        }
+
+        .terr-cult__name {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--cream);
+            margin-bottom: 12px;
+        }
+
+        .terr-cult__text {
+            color: var(--cream-dim);
+            font-size: 0.92rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .terr-cult__specs {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .terr-cult__spec {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(200, 169, 110, 0.07);
+            font-size: 0.85rem;
+        }
+
+        .terr-cult__spec span:first-child {
+            color: var(--cream-dim);
+        }
+
+        .terr-cult__spec span:last-child {
+            color: var(--gold);
+        }
+
+        /* MAPPA TESTO */
+        .terr-map {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(200, 169, 110, 0.1);
+            border-radius: 6px;
+            padding: 48px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .terr-map h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--cream);
+            margin-bottom: 16px;
+        }
+
+        .terr-map p {
+            color: var(--cream-dim);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .terr-map__coords {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+        }
+
+        /* CTA */
+        .terr-cta {
+            padding: 100px 24px;
+            text-align: center;
+            background: var(--black);
+            position: relative;
+            z-index: 2;
+        }
+
+        .terr-cta h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        .terr-cta p {
+            color: var(--cream-dim);
+            font-size: 1rem;
+            margin-bottom: 40px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .terr-cta__btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* WATERMARK */
+        .watermark-wrap {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+        }
+
+        .watermark-track {
+            display: inline-flex;
+            gap: 8vw;
+            animation: wmScroll 24s linear infinite;
+        }
+
+        .watermark-track span {
+            font-family: var(--font-display);
+            font-size: 22vw;
+            font-weight: 700;
+            color: rgba(200, 169, 110, 0.03);
+            line-height: 1;
+            letter-spacing: -0.04em;
+            user-select: none;
+            text-transform: uppercase;
+        }
+
+        @keyframes wmScroll {
+            0% {
+                transform: translateX(0)
+            }
+
+            100% {
+                transform: translateX(-50%)
+            }
+        }
+
+        @media(max-width:900px) {
+            .terr-numeri {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .terr-features {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .terr-cultivar {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width:600px) {
+            .terr-features {
+                grid-template-columns: 1fr;
+            }
+
+            .terr-numeri {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .terr-map {
+                padding: 28px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/storia">La Nostra Storia</a></li>
+                <li><a href="/frangitura">Frangitura</a></li>
+                <li><a href="/territorio">Territorio</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/contatti">Contatti</a></li>
+                <li><a href="/shop">Shop</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- NAV -->
+    <nav class="nav nav--scrolled" id="nav">
+        <div class="nav__inner">
+            <a href="/" class="nav__logo">
+                <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu" class="nav__logo-img"
+                    width="160" height="auto">
+            </a>
+            <ul class="nav__links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/storia">La Nostra Storia</a></li>
+                <li><a href="/frangitura">Frangitura</a></li>
+                <li><a href="/territorio">Territorio</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/contatti">Contatti</a></li>
+                <li><a href="/shop" class="nav__cta">Shop</a></li>
+            </ul>
+            <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- CANVAS SCROLL -->
+    <div id="terr-canvas-wrap">
+        <div id="terr-canvas-sticky">
+            <canvas id="tc"></canvas>
+
+            <!-- Testo 0: intro -->
+            <div class="tc-text center" id="tcText0">
+                <p class="tc-text__eyebrow">Villacidro · Monte Linas · Medio Campidano</p>
+                <div class="tc-text__num">00</div>
+                <h2 class="tc-text__title">Una terra che<br><span>si sente nell'olio</span></h2>
+                <p class="tc-text__desc">Il terroir non è un concetto astratto. È argilla rossa, altitudine, vento
+                    maestrale e olive che crescono lentamente. Tutto questo finisce nella bottiglia.</p>
+            </div>
+
+            <!-- Testo 1 -->
+            <div class="tc-text left" id="tcText1">
+                <p class="tc-text__eyebrow">Villacidro · 39°N · Sardegna</p>
+                <div class="tc-text__num">01</div>
+                <h2 class="tc-text__title">Villacidro,<br><span>cuore del Campidano</span></h2>
+                <p class="tc-text__desc">A 39° di latitudine nord, nel Medio Campidano sardo. Villacidro è una delle
+                    città più verdi della Sardegna, circondata da boschi di lecci, oliveti secolari e il massiccio del
+                    Monte Linas.</p>
+                <span class="tc-text__badge">39°27'N 8°44'E · 170 m s.l.m.</span>
+            </div>
+
+            <!-- Testo 2 -->
+            <div class="tc-text right" id="tcText2">
+                <p class="tc-text__eyebrow">Monte Linas · 1236 m</p>
+                <div class="tc-text__num">02</div>
+                <h2 class="tc-text__title">Monte Linas,<br><span>la nostra montagna</span></h2>
+                <p class="tc-text__desc">Il massiccio del Monte Linas crea un microclima unico: inverni freschi, estati
+                    calde e secche, escursioni termiche che rallentano la maturazione delle olive e concentrano i
+                    polifenoli.</p>
+                <span class="tc-text__badge">Granito paleozoico · Microclima unico</span>
+            </div>
+
+            <!-- Testo 3 -->
+            <div class="tc-text left" id="tcText3">
+                <p class="tc-text__eyebrow">Il suolo · Argilla e calcare</p>
+                <div class="tc-text__num">03</div>
+                <h2 class="tc-text__title">Terra rossa<br><span>argillo-calcarea</span></h2>
+                <p class="tc-text__desc">I nostri oliveti crescono su suoli argilloso-calcarei di origine paleozoica.
+                    Questa composizione mineralogica trattiene l'acqua in estate e drena il surplus invernale — stress
+                    idrico controllato che intensifica gli aromi dell'olio.</p>
+                <span class="tc-text__badge">Argilla · Calcare · Granito</span>
+            </div>
+
+            <!-- Testo 4 -->
+            <div class="tc-text center" id="tcText4">
+                <p class="tc-text__eyebrow">Le cultivar autoctone</p>
+                <div class="tc-text__num">04</div>
+                <h2 class="tc-text__title"><span>Bosana</span> e Nera<br>di Villacidro</h2>
+                <p class="tc-text__desc">Due cultivar autoctone sarde che non crescono praticamente da nessun'altra
+                    parte. La Bosana dà struttura e polifenoli. La Nera di Villacidro aggiunge complessità aromatica e
+                    fruttato. Insieme sono irripetibili.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NUMERI DEL TERRITORIO -->
+    <section class="terr-section">
+        <div class="terr-section__inner">
+            <div class="terr-section__header">
+                <h2>Il territorio in numeri</h2>
+                <p>Dati che raccontano perché questo angolo di Sardegna produce un olio che non puoi trovare altrove.
+                </p>
+            </div>
+            <div class="terr-numeri">
+                <div class="terr-num">
+                    <span class="terr-num__val" data-target="170" data-suffix=" m">0 m</span>
+                    <span class="terr-num__label">Altitudine media degli oliveti</span>
+                </div>
+                <div class="terr-num">
+                    <span class="terr-num__val" data-target="1236" data-suffix=" m">0 m</span>
+                    <span class="terr-num__label">Altezza Monte Linas — il nostro schermo naturale</span>
+                </div>
+                <div class="terr-num">
+                    <span class="terr-num__val" data-target="130" data-suffix="+ anni">0 anni</span>
+                    <span class="terr-num__label">Età media degli ulivi centenari Cabriolu</span>
+                </div>
+                <div class="terr-num">
+                    <span class="terr-num__val" data-target="350" data-suffix="+ mg/kg">0</span>
+                    <span class="terr-num__label">Polifenoli totali — grazie al microclima del Linas</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CARATTERISTICHE DEL TERROIR -->
+    <section class="terr-section terr-section--dark">
+        <div class="terr-section__inner">
+            <div class="terr-section__header">
+                <h2>Perché questo terroir è unico</h2>
+                <p>Tre elementi che si combinano in modo irripetibile e che si ritrovano direttamente nell'olio.</p>
+            </div>
+            <div class="terr-features">
+                <div class="terr-feat">
+                    <div class="terr-feat__num">01</div>
+                    <h3 class="terr-feat__title">Microclima mediterraneo estremo</h3>
+                    <p class="terr-feat__text">Estati calde e siccitose, inverni miti con qualche gelata. Le escursioni
+                        termiche tra giorno e notte durante la maturazione delle olive (settembre–novembre) rallentano
+                        il processo e permettono l'accumulo di polifenoli e aromi terziari che negli oli di pianura non
+                        esistono.</p>
+                </div>
+                <div class="terr-feat">
+                    <div class="terr-feat__num">02</div>
+                    <h3 class="terr-feat__title">Suolo paleozoico argillo-calcareo</h3>
+                    <p class="terr-feat__text">Il substrato geologico di Villacidro risale al Paleozoico: rocce
+                        granitiche e metamorfiche ricoperti da suoli argilloso-calcarei profondi. Questo suolo trattiene
+                        l'umidità in estate e regola lo stress idrico — una condizione che gli agronomi chiamano "stress
+                        produttivo controllato" e che esalta la qualità dell'olio.</p>
+                </div>
+                <div class="terr-feat">
+                    <div class="terr-feat__num">03</div>
+                    <h3 class="terr-feat__title">Ulivi centenari non irrigati</h3>
+                    <p class="terr-feat__text">I nostri ulivi più antichi hanno oltre 200 anni. Non sono irrigati
+                        artificialmente: le loro radici profonde raggiungono le falde acquifere naturali del Monte
+                        Linas. Questo sistema radicale profondo permette all'albero di gestire autonomamente lo stress
+                        idrico estivo, producendo olive più piccole, più concentrate, più ricche di olio di qualità.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CULTIVAR -->
+    <section class="terr-section">
+        <div class="terr-section__inner">
+            <div class="terr-section__header">
+                <h2>Le nostre cultivar</h2>
+                <p>Due varietà autoctone sarde, quasi introvabili fuori dall'isola. La loro combinazione è il segreto
+                    del nostro olio.</p>
+            </div>
+            <div class="terr-cultivar">
+                <div class="terr-cult">
+                    <span class="terr-cult__tag">Cultivar principale</span>
+                    <h3 class="terr-cult__name">Bosana</h3>
+                    <p class="terr-cult__text">La regina delle olive sarde. Diffusa principalmente nel Sassarese e nel
+                        Campidano, la Bosana è nota per l'altissimo contenuto di polifenoli e per il profilo aromatico
+                        complesso: carciofo crudo, mandorla amara, erba fresca con un finale piccante persistente. Dà
+                        struttura e carattere all'olio Cabriolu.</p>
+                    <div class="terr-cult__specs">
+                        <div class="terr-cult__spec"><span>Resa in olio</span><span>18–22%</span></div>
+                        <div class="terr-cult__spec"><span>Polifenoli</span><span>> 350 mg/kg</span></div>
+                        <div class="terr-cult__spec"><span>Acidità</span><span>
+                                < 0,3%</span>
+                        </div>
+                        <div class="terr-cult__spec"><span>Raccolta</span><span>Ottobre – Novembre</span></div>
+                        <div class="terr-cult__spec"><span>Note aromatiche</span><span>Carciofo, mandorla, erba</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="terr-cult">
+                    <span class="terr-cult__tag">Cultivar autoctona rara</span>
+                    <h3 class="terr-cult__name">Nera di Villacidro</h3>
+                    <p class="terr-cult__text">Una cultivar quasi sconosciuta fuori dal territorio di Villacidro. La
+                        Nera di Villacidro è una varietà antica, a rischio di estinzione, che i Cabriolu coltivano e
+                        preservano da generazioni. Contribuisce all'olio con note fruttate intense, una dolcezza
+                        vegetale avvolgente e una complessità aromatica che la Bosana da sola non potrebbe dare.</p>
+                    <div class="terr-cult__specs">
+                        <div class="terr-cult__spec"><span>Diffusione</span><span>Solo Villacidro</span></div>
+                        <div class="terr-cult__spec"><span>Stato</span><span>Cultivar a rischio</span></div>
+                        <div class="terr-cult__spec"><span>Raccolta</span><span>Novembre – Dicembre</span></div>
+                        <div class="terr-cult__spec"><span>Note aromatiche</span><span>Fruttato, dolce, floreale</span>
+                        </div>
+                        <div class="terr-cult__spec"><span>Contributo</span><span>Complessità e rotondità</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DOVE SIAMO -->
+    <section class="terr-section terr-section--dark">
+        <div class="terr-section__inner">
+            <div class="terr-section__header">
+                <h2>Dove siamo</h2>
+                <p>Vieni a trovarci — o ordina online e portiamo Villacidro a casa tua.</p>
+            </div>
+            <div class="terr-map">
+                <h3>Oleificio Cabriolu</h3>
+                <p>Via Umberto I — 09039 Villacidro (SU)<br>Medio Campidano, Sardegna, Italia</p>
+                <p>Ai piedi del Monte Linas, a 45 minuti da Cagliari, nel cuore verde della Sardegna centro-meridionale.
+                </p>
+                <div class="terr-map__coords">39°27'N · 8°44'E · 170 m s.l.m.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="terr-cta">
+        <h2>Il territorio è nella bottiglia</h2>
+        <p>Ogni goccia di olio Cabriolu porta con sé questo territorio straordinario. Assaggialo.</p>
+        <div class="terr-cta__btns">
+            <a href="/shop/evo-puro" class="btn btn--gold btn--lg">Acquista EVO Puro</a>
+            <a href="/contatti" class="btn btn--outline btn--lg">Visita il frantoio</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer__inner">
+            <div class="footer__brand">
+                <a href="/" class="footer__logo">CABRIOLU</a>
+                <span class="footer__logo-sub">Oleificio · Dal 1890</span>
+                <p class="footer__tagline">Olio extravergine d'oliva artigianale, non filtrato, dal cuore della
+                    Sardegna.</p>
+                <div class="footer__social">
+                    <a href="https://www.instagram.com/oleificio.cabriolu/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/oleificiocabriolu/" target="_blank" rel="noopener"
+                        aria-label="Facebook">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer__nav">
+                <h4>Navigazione</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/storia">La Nostra Storia</a></li>
+                    <li><a href="/frangitura">Frangitura</a></li>
+                    <li><a href="/territorio">Territorio</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/shop">Shop</a></li>
+                </ul>
+            </div>
+            <div class="footer__nav">
+                <h4>Prodotti</h4>
+                <ul>
+                    <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+                    <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+                    <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+                    <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+                    <li><a href="/shop/evo-puro">Latte Professionali</a></li>
+                    <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+                </ul>
+            </div>
+            <div class="footer__contact">
+                <h4>Contatti</h4>
+                <p>Oleificio Cabriolu snc</p>
+                <p>Via Umberto I, Villacidro (SU)</p>
+                <p>Sardegna, Italia</p>
+                <p style="margin-top:12px"><a href="tel:+390709316xx">+39 070 9316XX</a></p>
+                <p><a href="mailto:info@oleificiocabriolu.it">info@oleificiocabriolu.it</a></p>
+                <p style="margin-top:12px;font-size:.8rem;color:rgba(250,246,240,.35)">Lun–Sab: 8:00–13:00 / 15:00–18:00
+                </p>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>© 2026 Oleificio Cabriolu snc — P.IVA 01234567890</p>
+            <div class="footer__legal">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/cookie">Cookie Policy</a>
+            </div>
+            <p class="footer__credit">Sito realizzato da <a href="https://digidentityagency.it" target="_blank"
+                    rel="noopener">DigIdentity Agency</a></p>
+        </div>
+    </footer>
+
+    <!-- WATERMARK -->
+    <div class="watermark-wrap">
+        <div class="watermark-track">
+            <span>TERRITORIO - </span><span>TERRITORIO - </span><span>TERRITORIO - </span><span>TERRITORIO - </span>
+        </div>
+    </div>
+
+    <!-- CHATBOT FAB -->
+    <button class="chatbot-fab" id="chatbotFab" aria-label="Assistente virtuale">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
+        </svg>
+    </button>
+    <div class="chatbot-panel" id="chatbotPanel" aria-hidden="true">
+        <div class="chatbot-panel__header">
+            <span>Assistente Cabriolu</span>
+            <button id="chatbotClose">✕</button>
+        </div>
+        <div class="chatbot-panel__body" id="chatbotBody">
+            <p class="chatbot-panel__welcome">Ciao! Chiedimi tutto sui nostri oli, spedizioni, o prenota una visita al
+                frantoio.</p>
+        </div>
+        <div class="chatbot-panel__input">
+            <input type="text" id="chatbotInput" placeholder="Scrivi un messaggio..." aria-label="Messaggio">
+            <button id="chatbotSend">→</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            /* ── CANVAS (840 frame desktop) ── */
+            const TOTAL = 840;
+            const IS_MOB = window.innerWidth < 768;
+            const FOLDER = IS_MOB ? '/img/frames/mobile/frame_' : '/img/frames/desktop/frame_';
+            const EXT = '.webp';
+            const canvas = document.getElementById('tc');
+            const ctx = canvas.getContext('2d');
+            const frames = [];
+            let cur = 0;
+
+            function pad(n) { return String(n).padStart(4, '0'); }
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                draw(cur);
+            }
+
+            function draw(idx) {
+                const img = frames[idx];
+                if (!img || !img.complete || !img.naturalWidth) return;
+                const cW = canvas.width, cH = canvas.height;
+                const iR = img.naturalWidth / img.naturalHeight, cR = cW / cH;
+                let dW, dH, dX, dY;
+                if (cR > iR) { dW = cW; dH = cW / iR; }
+                else { dH = cH; dW = cH * iR; }
+                dX = (cW - dW) / 2; dY = (cH - dH) / 2;
+                ctx.clearRect(0, 0, cW, cH);
+                ctx.drawImage(img, dX, dY, dW, dH);
+            }
+
+            function preload() {
+                const first = new Image();
+                first.onload = () => { frames[0] = first; draw(0); };
+                first.src = FOLDER + '0001' + EXT;
+                for (let i = 1; i <= TOTAL; i++) {
+                    const img = new Image();
+                    img.src = FOLDER + pad(i) + EXT;
+                    frames[i - 1] = img;
+                }
+            }
+
+            /* ── SCROLL TEXTS ── */
+            const texts = [
+                document.getElementById('tcText0'),
+                document.getElementById('tcText1'),
+                document.getElementById('tcText2'),
+                document.getElementById('tcText3'),
+                document.getElementById('tcText4'),
+            ];
+            const ranges = [
+                { start: 0, end: 140 },
+                { start: 140, end: 310 },
+                { start: 310, end: 490 },
+                { start: 490, end: 660 },
+                { start: 660, end: 840 },
+            ];
+
+            function updateTexts(f) {
+                texts.forEach((t, i) => {
+                    if (!t) return;
+                    const active = f >= ranges[i].start && f < ranges[i].end;
+                    if (active && !t.classList.contains('active')) t.classList.add('active');
+                    else if (!active && t.classList.contains('active')) t.classList.remove('active');
+                });
+            }
+
+            /* ── GSAP ── */
+            function initScroll() {
+                gsap.registerPlugin(ScrollTrigger);
+
+                const wrap = document.getElementById('terr-canvas-wrap');
+                ScrollTrigger.create({
+                    trigger: wrap,
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    onUpdate: self => {
+                        const f = Math.min(TOTAL - 1, Math.floor(self.progress * (TOTAL - 1)));
+                        if (f !== cur) { cur = f; draw(cur); updateTexts(cur); }
+                    }
+                });
+
+                /* NAV */
+                ScrollTrigger.create({
+                    start: 80,
+                    onUpdate: () => { document.getElementById('nav').classList.toggle('nav--scrolled', window.scrollY > 80); }
+                });
+
+                /* Numeri counter */
+                document.querySelectorAll('.terr-num__val').forEach(el => {
+                    const target = parseInt(el.dataset.target);
+                    const suffix = el.dataset.suffix || '';
+                    ScrollTrigger.create({
+                        trigger: el, start: 'top 85%', once: true,
+                        onEnter: () => {
+                            gsap.to({ val: 0 }, {
+                                val: target, duration: 2, ease: 'power2.out',
+                                onUpdate: function () { el.textContent = Math.floor(this.targets()[0].val) + suffix; }
+                            });
+                        }
+                    });
+                });
+
+                /* Features */
+                document.querySelectorAll('.terr-feat,.terr-cult').forEach(el => {
+                    gsap.to(el, {
+                        opacity: 1, y: 0, x: 0, duration: 0.7, ease: 'power2.out',
+                        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' }
+                    });
+                });
+
+                /* Blog cards */
+                gsap.from('.terr-map', {
+                    y: 30, opacity: 0, duration: 0.6, ease: 'power2.out',
+                    scrollTrigger: { trigger: '.terr-map', start: 'top 80%' }
+                });
+            }
+
+            /* ── BURGER ── */
+            function initBurger() {
+                const burger = document.getElementById('navBurger');
+                const menu = document.getElementById('mobileMenu');
+                if (!burger || !menu) return;
+                burger.addEventListener('click', function () {
+                    const open = menu.classList.toggle('mobile-menu--open');
+                    burger.classList.toggle('nav__burger--open');
+                    burger.setAttribute('aria-expanded', open);
+                    menu.setAttribute('aria-hidden', !open);
+                    document.body.style.overflow = open ? 'hidden' : '';
+                });
+                menu.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => {
+                        menu.classList.remove('mobile-menu--open');
+                        burger.classList.remove('nav__burger--open');
+                        burger.setAttribute('aria-expanded', 'false');
+                        menu.setAttribute('aria-hidden', 'true');
+                        document.body.style.overflow = '';
+                    });
+                });
+            }
+
+            /* ── CHATBOT ── */
+            function initChatbot() {
+                const fab = document.getElementById('chatbotFab');
+                const panel = document.getElementById('chatbotPanel');
+                const close = document.getElementById('chatbotClose');
+                const input = document.getElementById('chatbotInput');
+                const send = document.getElementById('chatbotSend');
+                const body = document.getElementById('chatbotBody');
+                if (!fab || !panel) return;
+                fab.addEventListener('click', () => {
+                    const open = panel.classList.toggle('chatbot-panel--open');
+                    panel.setAttribute('aria-hidden', !open);
+                });
+                close && close.addEventListener('click', () => {
+                    panel.classList.remove('chatbot-panel--open');
+                    panel.setAttribute('aria-hidden', 'true');
+                });
+                function sendMsg() {
+                    const msg = input.value.trim(); if (!msg) return;
+                    const u = document.createElement('p');
+                    u.style.cssText = 'color:#fff;margin-top:12px;font-size:.85rem';
+                    u.textContent = '> ' + msg; body.appendChild(u);
+                    const b = document.createElement('p');
+                    b.style.cssText = 'margin-top:8px;color:rgba(255,255,255,.55);font-size:.85rem';
+                    b.textContent = 'Grazie! Scrivici a info@oleificiocabriolu.it';
+                    body.appendChild(b);
+                    input.value = ''; body.scrollTop = body.scrollHeight;
+                }
+                send.addEventListener('click', sendMsg);
+                input.addEventListener('keydown', e => { if (e.key === 'Enter') sendMsg(); });
+            }
+
+            /* ── INIT ── */
+            window.addEventListener('resize', resize);
+            resize();
+            preload();
+            window.addEventListener('load', initScroll);
+            initBurger();
+            initChatbot();
+            updateTexts(0);
+
+        })();
+    </script>
+</body>
+
+</html>

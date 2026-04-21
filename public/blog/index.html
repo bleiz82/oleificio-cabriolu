@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Blog — Oleificio Cabriolu | Olio EVO, Territorio e Cucina Sarda</title>
+    <meta name="description"
+        content="Approfondimenti sull'olio extravergine d'oliva sardo: frangitura, cultivar, ricette e curiosità dal frantoio di Villacidro dal 1890.">
+    <link rel="canonical" href="https://www.oleificiocabriolu.it/blog">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Blog — Oleificio Cabriolu">
+    <meta property="og:description"
+        content="Approfondimenti sull'olio extravergine sardo: frangitura, cultivar, ricette e curiosità dal frantoio di Villacidro.">
+    <meta property="og:image" content="https://www.oleificiocabriolu.it/img/blog/og-blog.jpg">
+    <meta property="og:url" content="https://www.oleificiocabriolu.it/blog">
+    <meta property="og:locale" content="it_IT">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#0A0A0A">
+    <link rel="preload" href="/fonts/cormorant-garamond-v16-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/inter-v13-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "Blog Oleificio Cabriolu",
+        "url": "https://www.oleificiocabriolu.it/blog",
+        "description": "Approfondimenti sull'olio extravergine d'oliva sardo, frangitura, cultivar, ricette e curiosità.",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Oleificio Cabriolu",
+            "url": "https://www.oleificiocabriolu.it",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.oleificiocabriolu.it/img/oleificio_cabriolu_logo_500-403051a0.webp"
+            }
+        }
+    }
+    </script>
+
+    <style>
+        :root {
+            --gold: #c8a96e;
+            --dark: #000;
+            --cream: #faf6f0;
+            --serif: 'Cormorant Garamond', Georgia, serif;
+            --sans: 'Inter', system-ui, sans-serif;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: var(--sans);
+            overflow-x: hidden;
+        }
+
+        /* ── HERO BLOG ── */
+        .blog-hero {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 5vw 80px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .blog-hero__bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .blog-hero__bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .35;
+        }
+
+        .blog-hero__overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, .92) 0%, rgba(0, 0, 0, .4) 60%, rgba(0, 0, 0, .1) 100%);
+            z-index: 1;
+        }
+
+        .blog-hero__content {
+            position: relative;
+            z-index: 2;
+            max-width: 860px;
+        }
+
+        .blog-hero__overtitle {
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+            margin-bottom: 16px;
+        }
+
+        .blog-hero__title {
+            font-family: var(--serif);
+            font-size: clamp(2.8rem, 6vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            margin-bottom: 20px;
+        }
+
+        .blog-hero__desc {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, .65);
+            max-width: 520px;
+        }
+
+        /* ── FILTRI CATEGORIA ── */
+        .blog-filters {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, .92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            padding: 0 5vw;
+        }
+
+        .blog-filters__inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 14px 0;
+        }
+
+        .blog-filters__inner::-webkit-scrollbar {
+            display: none;
+        }
+
+        .blog-filter-btn {
+            flex-shrink: 0;
+            padding: 7px 18px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, .12);
+            color: rgba(255, 255, 255, .55);
+            font-family: var(--sans);
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all .25s;
+            white-space: nowrap;
+        }
+
+        .blog-filter-btn:hover,
+        .blog-filter-btn.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #000;
+        }
+
+        /* ── GRIGLIA ARTICOLI ── */
+        .blog-main {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 5vw;
+        }
+
+        .blog-featured {
+            margin-bottom: 80px;
+        }
+
+        .blog-featured__label {
+            font-size: .65rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+            margin-bottom: 24px;
+        }
+
+        /* CARD IN EVIDENZA */
+        .blog-card--featured {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 10px;
+            overflow: hidden;
+            text-decoration: none;
+            color: #fff;
+            transition: border-color .3s, transform .3s;
+        }
+
+        .blog-card--featured:hover {
+            border-color: var(--gold);
+            transform: translateY(-4px);
+        }
+
+        .blog-card--featured .blog-card__img {
+            aspect-ratio: 4/3;
+            overflow: hidden;
+        }
+
+        .blog-card--featured .blog-card__img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .5s;
+        }
+
+        .blog-card--featured:hover .blog-card__img img {
+            transform: scale(1.04);
+        }
+
+        .blog-card--featured .blog-card__body {
+            padding: 48px 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* CARD STANDARD */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .blog-card {
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 8px;
+            overflow: hidden;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            transition: border-color .3s, transform .3s;
+        }
+
+        .blog-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-4px);
+        }
+
+        .blog-card__img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .blog-card__img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .5s;
+        }
+
+        .blog-card:hover .blog-card__img img {
+            transform: scale(1.04);
+        }
+
+        .blog-card__body {
+            padding: 28px 28px 32px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .blog-card__cat {
+            display: inline-block;
+            font-size: .6rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            border: 1px solid rgba(200, 169, 110, .35);
+            padding: 4px 10px;
+            border-radius: 2px;
+            margin-bottom: 14px;
+            align-self: flex-start;
+        }
+
+        .blog-card__title {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .blog-card--featured .blog-card__title {
+            font-size: 1.9rem;
+            margin-bottom: 16px;
+        }
+
+        .blog-card__excerpt {
+            font-size: .84rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, .55);
+            margin-bottom: 24px;
+            flex: 1;
+        }
+
+        .blog-card__meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: .72rem;
+            color: rgba(255, 255, 255, .3);
+        }
+
+        .blog-card__meta-dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .2);
+            flex-shrink: 0;
+        }
+
+        .blog-card__read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: .78rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gold);
+            margin-top: 20px;
+            transition: gap .25s;
+        }
+
+        .blog-card:hover .blog-card__read-more,
+        .blog-card--featured:hover .blog-card__read-more {
+            gap: 12px;
+        }
+
+        /* ── SEZIONE NEWSLETTER ── */
+        .blog-newsletter {
+            background: linear-gradient(135deg, #0d0d0d 0%, #111008 100%);
+            border: 1px solid rgba(200, 169, 110, .15);
+            border-radius: 12px;
+            padding: 70px 5vw;
+            margin: 80px auto;
+            max-width: 1200px;
+            text-align: center;
+        }
+
+        .blog-newsletter__overtitle {
+            font-size: .65rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+            margin-bottom: 16px;
+        }
+
+        .blog-newsletter__title {
+            font-family: var(--serif);
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .blog-newsletter__desc {
+            font-size: .9rem;
+            color: rgba(255, 255, 255, .55);
+            margin-bottom: 36px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .blog-newsletter__form {
+            display: flex;
+            gap: 10px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .blog-newsletter__input {
+            flex: 1;
+            height: 48px;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 4px;
+            color: #fff;
+            font-family: var(--sans);
+            font-size: .88rem;
+            padding: 0 18px;
+            outline: none;
+            transition: border-color .3s;
+        }
+
+        .blog-newsletter__input::placeholder {
+            color: rgba(255, 255, 255, .3);
+        }
+
+        .blog-newsletter__input:focus {
+            border-color: var(--gold);
+        }
+
+        .blog-newsletter__btn {
+            height: 48px;
+            padding: 0 28px;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-family: var(--sans);
+            font-size: .82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background .3s;
+        }
+
+        .blog-newsletter__btn:hover {
+            background: #b8963e;
+        }
+
+        .blog-newsletter__privacy {
+            font-size: .7rem;
+            color: rgba(255, 255, 255, .25);
+            margin-top: 14px;
+        }
+
+        .blog-newsletter__privacy a {
+            color: rgba(255, 255, 255, .4);
+        }
+
+        /* ── TOPICS SIDEBAR ── */
+        .blog-topics {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 5vw;
+        }
+
+        .blog-topics__title {
+            font-family: var(--serif);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 28px;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        .blog-topics__title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .blog-topics__grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .blog-topic-card {
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 8px;
+            padding: 28px 24px;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: border-color .3s, transform .3s;
+        }
+
+        .blog-topic-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        .blog-topic-card__icon {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        .blog-topic-card__name {
+            font-family: var(--serif);
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .blog-topic-card__count {
+            font-size: .72rem;
+            color: rgba(255, 255, 255, .35);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ── WATERMARK ── */
+        .watermark-wrap {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 9997;
+            white-space: nowrap;
+        }
+
+        .watermark-track {
+            display: inline-flex;
+            gap: 8vw;
+            animation: wmScroll 28s linear infinite;
+        }
+
+        .watermark-track span {
+            font-family: var(--serif);
+            font-size: 22vw;
+            font-weight: 700;
+            color: rgba(200, 169, 110, .03);
+            line-height: 1;
+            letter-spacing: -.04em;
+            user-select: none;
+            text-transform: uppercase;
+        }
+
+        @keyframes wmScroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ── ANIMAZIONI SCROLL ── */
+        .ani {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+
+        .ani.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .blog-topics__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blog-card--featured {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-card--featured .blog-card__img {
+                aspect-ratio: 16/9;
+            }
+
+            .blog-card--featured .blog-card__body {
+                padding: 28px 24px 32px;
+            }
+
+            .blog-card--featured .blog-card__title {
+                font-size: 1.5rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-topics__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .blog-newsletter__form {
+                flex-direction: column;
+            }
+
+            .blog-newsletter__btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .blog-topics__grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/storia">La Nostra Storia</a></li>
+                <li><a href="/frangitura">Frangitura</a></li>
+                <li><a href="/territorio">Territorio</a></li>
+                <li><a href="/blog" aria-current="page">Blog</a></li>
+                <li><a href="/contatti">Contatti</a></li>
+                <li><a href="/shop">Shop</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- NAV -->
+    <nav id="nav" class="nav">
+        <div class="nav__inner">
+            <a href="/" class="nav__logo" aria-label="Oleificio Cabriolu">
+                <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu"
+                    class="nav__logo-img">
+            </a>
+            <ul class="nav__links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/storia">La Nostra Storia</a></li>
+                <li><a href="/frangitura">Frangitura</a></li>
+                <li><a href="/territorio">Territorio</a></li>
+                <li><a href="/blog" aria-current="page">Blog</a></li>
+                <li><a href="/contatti">Contatti</a></li>
+                <li><a href="/shop" class="nav__cta">Shop</a></li>
+            </ul>
+            <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO BLOG -->
+    <header class="blog-hero">
+        <div class="blog-hero__bg">
+            <picture>
+                <source srcset="/img/blog/blog-hero.avif" type="image/avif">
+                <img src="/img/blog/blog-hero.webp" alt="Olive e olio extravergine Cabriolu" loading="eager">
+            </picture>
+        </div>
+        <div class="blog-hero__overlay"></div>
+        <div class="blog-hero__content">
+            <p class="blog-hero__overtitle">Dal Frantoio di Villacidro</p>
+            <h1 class="blog-hero__title">Storie di Olio,<br>Terra e Sapori.</h1>
+            <p class="blog-hero__desc">Approfondimenti sulla frangitura a freddo, le cultivar sarde, le ricette della
+                tradizione e tutto ciò che rende l'olio extravergine Cabriolu unico dal 1890.</p>
+        </div>
+    </header>
+
+    <!-- FILTRI CATEGORIA -->
+    <div class="blog-filters" role="navigation" aria-label="Filtra articoli per categoria">
+        <div class="blog-filters__inner">
+            <button class="blog-filter-btn active" data-filter="tutti">Tutti</button>
+            <button class="blog-filter-btn" data-filter="frangitura">Frangitura</button>
+            <button class="blog-filter-btn" data-filter="cultivar">Cultivar & Territorio</button>
+            <button class="blog-filter-btn" data-filter="salute">Salute & Polifenoli</button>
+            <button class="blog-filter-btn" data-filter="ricette">Ricette</button>
+            <button class="blog-filter-btn" data-filter="guide">Guide all'Acquisto</button>
+            <button class="blog-filter-btn" data-filter="curiosita">Curiosità</button>
+        </div>
+    </div>
+
+    <!-- CONTENUTO PRINCIPALE -->
+    <main class="blog-main" id="main-content">
+
+        <!-- ARTICOLO IN EVIDENZA -->
+        <section class="blog-featured" aria-label="Articolo in evidenza">
+            <p class="blog-featured__label">In Evidenza</p>
+            <a href="/blog/polifenoli-olio-extravergine" class="blog-card blog-card--featured ani" data-cat="salute"
+                aria-label="Leggi l'articolo: Polifenoli nell'Olio Extravergine">
+                <div class="blog-card__img">
+                    <picture>
+                        <source srcset="/img/blog/polifenoli-evo.avif" type="image/avif">
+                        <img src="/img/blog/polifenoli-evo.webp"
+                            alt="Campione di olio extravergine con colore verde intenso" loading="lazy">
+                    </picture>
+                </div>
+                <div class="blog-card__body">
+                    <span class="blog-card__cat">Salute & Polifenoli</span>
+                    <h2 class="blog-card__title">Polifenoli nell'Olio EVO: cosa sono, a cosa servono e perché il
+                        Cabriolu ne ha così tanti</h2>
+                    <p class="blog-card__excerpt">Oltre 350 mg/kg di polifenoli. Non è solo un numero su una scheda
+                        tecnica — è la differenza tra un olio che ti fa bene davvero e uno che sa solo di grasso. Ti
+                        spieghiamo tutto: dalla biochimica al perché le olive Bosana di Villacidro sono eccezionali.
+                    </p>
+                    <div class="blog-card__meta">
+                        <span>Mattia Cabriolu</span>
+                        <span class="blog-card__meta-dot"></span>
+                        <span>12 minuti di lettura</span>
+                        <span class="blog-card__meta-dot"></span>
+                        <span>Marzo 2025</span>
+                    </div>
+                    <span class="blog-card__read-more">Leggi l'articolo →</span>
+                </div>
+            </a>
+        </section>
+
+        <!-- GRIGLIA ARTICOLI -->
+        <section aria-label="Tutti gli articoli">
+            <div class="blog-grid">
+
+                <!-- ARTICOLO 1 -->
+                <a href="/blog/frangitura-freddo-guida" class="blog-card ani" data-cat="frangitura"
+                    aria-label="Leggi: Guida alla Frangitura a Freddo">
+                    <div class="blog-card__img">
+                        <picture>
+                            <source srcset="/img/blog/frangitura-freddo.avif" type="image/avif">
+                            <img src="/img/blog/frangitura-freddo.webp"
+                                alt="Olive nel frangitore durante la molitura a freddo" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="blog-card__body">
+                        <span class="blog-card__cat">Frangitura</span>
+                        <h2 class="blog-card__title">Guida completa alla frangitura a freddo: come funziona e perché
+                            cambia tutto</h2>
+                        <p class="blog-card__excerpt">Dal momento in cui le olive entrano nel frantoio a quando l'olio
+                            finisce in bottiglia: ogni passaggio del ciclo continuo a due fasi spiegato passo passo.</p>
+                        <div class="blog-card__meta">
+                            <span>Mattia Cabriolu</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>9 min</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>Feb 2025</span>
+                        </div>
+                        <span class="blog-card__read-more">Leggi →</span>
+                    </div>
+                </a>
+
+                <!-- ARTICOLO 2 -->
+                <a href="/blog/cultivar-bosana-sardegna" class="blog-card ani" data-cat="cultivar"
+                    aria-label="Leggi: Bosana, la regina delle olive sarde">
+                    <div class="blog-card__img">
+                        <picture>
+                            <source srcset="/img/blog/cultivar-bosana.avif" type="image/avif">
+                            <img src="/img/blog/cultivar-bosana.webp" alt="Olive Bosana sui rami prima della raccolta"
+                                loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="blog-card__body">
+                        <span class="blog-card__cat">Cultivar & Territorio</span>
+                        <h2 class="blog-card__title">Bosana: la cultivar sarda che produce l'olio più ricco di
+                            polifenoli d'Italia</h2>
+                        <p class="blog-card__excerpt">Autoctona della Sardegna settentrionale, adattata al
+                            microclima di Villacidro. Ecco perché la Bosana regala oli straordinari e irripetibili
+                            altrove.</p>
+                        <div class="blog-card__meta">
+                            <span>Jessica Cabriolu</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>7 min</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>Gen 2025</span>
+                        </div>
+                        <span class="blog-card__read-more">Leggi →</span>
+                    </div>
+                </a>
+
+                <!-- ARTICOLO 3 -->
+                <a href="/blog/ricetta-bruschetta-evo-puro" class="blog-card ani" data-cat="ricette"
+                    aria-label="Leggi: Bruschetta con EVO Puro Cabriolu">
+                    <div class="blog-card__img">
+                        <picture>
+                            <source srcset="/img/blog/bruschetta-evo.avif" type="image/avif">
+                            <img src="/img/blog/bruschetta-evo.webp"
+                                alt="Bruschetta con pane sardo e olio extravergine Cabriolu" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="blog-card__body">
+                        <span class="blog-card__cat">Ricette</span>
+                        <h2 class="blog-card__title">Bruschetta con EVO Puro: la ricetta di Jessica che fa
+                            innamorare dell'olio sardo</h2>
+                        <p class="blog-card__excerpt">Pane carasau tostato, pomodori camone di Sardegna, aglio fresco e
+                            un filo generoso di Extravergine Puro. Cinque minuti, un risultato che non si dimentica.
+                        </p>
+                        <div class="blog-card__meta">
+                            <span>Jessica Cabriolu</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>4 min</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>Dic 2024</span>
+                        </div>
+                        <span class="blog-card__read-more">Leggi →</span>
+                    </div>
+                </a>
+
+                <!-- ARTICOLO 4 -->
+                <a href="/blog/come-riconoscere-olio-extravergine-qualita" class="blog-card ani" data-cat="guide"
+                    aria-label="Leggi: Come riconoscere un olio EVO di qualità">
+                    <div class="blog-card__img">
+                        <picture>
+                            <source srcset="/img/blog/degustazione-olio.avif" type="image/avif">
+                            <img src="/img/blog/degustazione-olio.webp"
+                                alt="Assaggio professionale di olio extravergine d'oliva" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="blog-card__body">
+                        <span class="blog-card__cat">Guide all'Acquisto</span>
+                        <h2 class="blog-card__title">Come riconoscere un olio extravergine di qualità (e non farti
+                            fregare)</h2>
+                        <p class="blog-card__excerpt">Colore, profumo, acidità, polifenoli, data di raccolta: la guida
+                            pratica per scegliere davvero bene al supermercato, online e al frantoio.</p>
+                        <div class="blog-card__meta">
+                            <span>Mattia Cabriolu</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>8 min</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>Nov 2024</span>
+                        </div>
+                        <span class="blog-card__read-more">Leggi →</span>
+                    </div>
+                </a>
+
+                <!-- ARTICOLO 5 -->
+                <a href="/blog/olio-aromatizzato-co-molitura" class="blog-card ani" data-cat="frangitura"
+                    aria-label="Leggi: Co-molitura degli oli aromatizzati">
+                    <div class="blog-card__img">
+                        <picture>
+                            <source srcset="/img/blog/co-molitura-aromi.avif" type="image/avif">
+                            <img src="/img/blog/co-molitura-aromi.webp"
+                                alt="Peperoncino fresco e basilico prima della co-molitura" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="blog-card__body">
+                        <span class="blog-card__cat">Frangitura</span>
+                        <h2 class="blog-card__title">Co-molitura: perché i nostri oli aromatizzati sono diversi da
+                            tutti gli altri</h2>
+                        <p class="blog-card__excerpt">Peperoncino, basilico e limone freschi moliti insieme alle olive
+                            nel frantoio. Non è un'infusione: è un'altra cosa. Scopri il processo e perché conta.</p>
+                        <div class="blog-card__meta">
+                            <span>Mattia Cabriolu</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>6 min</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>Ott 2024</span>
+                        </div>
+                        <span class="blog-card__read-more">Leggi →</span>
+                    </div>
+                </a>
+
+                <!-- ARTICOLO 6 -->
+                <a href="/blog/monte-linas-uliveti-villacidro" class="blog-card ani" data-cat="cultivar"
+                    aria-label="Leggi: Gli uliveti ai piedi del Monte Linas">
+                    <div class="blog-card__img">
+                        <picture>
+                            <source srcset="/img/blog/monte-linas-uliveti.avif" type="image/avif">
+                            <img src="/img/blog/monte-linas-uliveti.webp"
+                                alt="Uliveti ai piedi del Monte Linas, Villacidro, Sardegna" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="blog-card__body">
+                        <span class="blog-card__cat">Cultivar & Territorio</span>
+                        <h2 class="blog-card__title">Monte Linas e gli uliveti di Villacidro: il terroir che fa la
+                            differenza</h2>
+                        <p class="blog-card__excerpt">Altitudine, escursione termica, suolo granitico e 300 giorni di
+                            sole l'anno. Tutto quello che il territorio di Villacidro trasferisce in ogni bottiglia di
+                            Cabriolu.</p>
+                        <div class="blog-card__meta">
+                            <span>Jessica Cabriolu</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>6 min</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>Set 2024</span>
+                        </div>
+                        <span class="blog-card__read-more">Leggi →</span>
+                    </div>
+                </a>
+
+                <!-- ARTICOLO 7 -->
+                <a href="/blog/olio-extravergine-fa-bene-salute" class="blog-card ani" data-cat="salute"
+                    aria-label="Leggi: L'olio EVO fa bene alla salute">
+                    <div class="blog-card__img">
+                        <picture>
+                            <source srcset="/img/blog/salute-evo.avif" type="image/avif">
+                            <img src="/img/blog/salute-evo.webp" alt="Bottiglia di olio extravergine con olive fresche"
+                                loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="blog-card__body">
+                        <span class="blog-card__cat">Salute & Polifenoli</span>
+                        <h2 class="blog-card__title">L'olio extravergine d'oliva fa davvero bene alla salute? La
+                            scienza risponde</h2>
+                        <p class="blog-card__excerpt">Dieta mediterranea, oleocantale, squalene, vitamina E. Cosa dice
+                            davvero la ricerca scientifica sull'EVO e perché la qualità fa tutta la differenza.</p>
+                        <div class="blog-card__meta">
+                            <span>Jessica Cabriolu</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>10 min</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>Ago 2024</span>
+                        </div>
+                        <span class="blog-card__read-more">Leggi →</span>
+                    </div>
+                </a>
+
+                <!-- ARTICOLO 8 -->
+                <a href="/blog/ricetta-pasta-aglio-olio-peperoncino" class="blog-card ani" data-cat="ricette"
+                    aria-label="Leggi: Pasta aglio, olio e peperoncino con olio Cabriolu">
+                    <div class="blog-card__img">
+                        <picture>
+                            <source srcset="/img/blog/pasta-aglio-olio.avif" type="image/avif">
+                            <img src="/img/blog/pasta-aglio-olio.webp"
+                                alt="Pasta aglio olio e peperoncino con olio aromatizzato Cabriolu" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="blog-card__body">
+                        <span class="blog-card__cat">Ricette</span>
+                        <h2 class="blog-card__title">Pasta aglio, olio e peperoncino: la versione Cabriolu con l'olio
+                            aromatizzato</h2>
+                        <p class="blog-card__excerpt">Un classico che diventa straordinario con l'Olio al Peperoncino
+                            co-molito. La piccantezza integrata nell'olio cambia completamente l'equilibrio del piatto.
+                        </p>
+                        <div class="blog-card__meta">
+                            <span>Jessica Cabriolu</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>5 min</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>Lug 2024</span>
+                        </div>
+                        <span class="blog-card__read-more">Leggi →</span>
+                    </div>
+                </a>
+
+                <!-- ARTICOLO 9 -->
+                <a href="/blog/conservare-olio-extravergine" class="blog-card ani" data-cat="guide"
+                    aria-label="Leggi: Come conservare l'olio extravergine">
+                    <div class="blog-card__img">
+                        <picture>
+                            <source srcset="/img/blog/conservare-olio.avif" type="image/avif">
+                            <img src="/img/blog/conservare-olio.webp"
+                                alt="Bottiglie di olio extravergine in vetro scuro conservate correttamente"
+                                loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="blog-card__body">
+                        <span class="blog-card__cat">Guide all'Acquisto</span>
+                        <h2 class="blog-card__title">Come conservare l'olio extravergine per non perdere profumi e
+                            polifenoli</h2>
+                        <p class="blog-card__excerpt">Luce, calore e ossigeno sono i nemici dell'olio EVO. Ecco le
+                            regole pratiche per conservarlo correttamente a casa e usarlo al meglio fino all'ultima
+                            goccia.</p>
+                        <div class="blog-card__meta">
+                            <span>Mattia Cabriolu</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>5 min</span>
+                            <span class="blog-card__meta-dot"></span>
+                            <span>Giu 2024</span>
+                        </div>
+                        <span class="blog-card__read-more">Leggi →</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- NEWSLETTER -->
+    <section class="blog-newsletter ani" aria-label="Iscriviti alla newsletter">
+        <p class="blog-newsletter__overtitle">Non perdere nulla</p>
+        <h2 class="blog-newsletter__title">Ricevi i nuovi articoli direttamente in inbox.</h2>
+        <p class="blog-newsletter__desc">Un'email al mese: approfondimenti, ricette stagionali e novità dal frantoio
+            di Villacidro. Zero spam, discrizione in un click.</p>
+        <form class="blog-newsletter__form" id="newsletterForm" novalidate>
+            <input type="email" class="blog-newsletter__input" id="newsletterEmail" placeholder="la-tua@email.it"
+                autocomplete="email" required aria-label="Il tuo indirizzo email">
+            <button type="submit" class="blog-newsletter__btn">Iscriviti</button>
+        </form>
+        <p class="blog-newsletter__privacy">Nessuno spam. <a href="/privacy">Privacy Policy</a>. Disiscrizione in un
+            click.</p>
+    </section>
+
+    <!-- ARGOMENTI -->
+    <section class="blog-topics" aria-label="Argomenti del blog">
+        <h2 class="blog-topics__title">Esplora per Argomento</h2>
+        <div class="blog-topics__grid">
+            <a href="/blog/categoria/frangitura" class="blog-topic-card ani">
+                <span class="blog-topic-card__icon">⚙️</span>
+                <p class="blog-topic-card__name">Frangitura</p>
+                <p class="blog-topic-card__count">4 articoli</p>
+            </a>
+            <a href="/blog/categoria/cultivar" class="blog-topic-card ani">
+                <span class="blog-topic-card__icon">🌿</span>
+                <p class="blog-topic-card__name">Cultivar & Territorio</p>
+                <p class="blog-topic-card__count">3 articoli</p>
+            </a>
+            <a href="/blog/categoria/salute" class="blog-topic-card ani">
+                <span class="blog-topic-card__icon">🫀</span>
+                <p class="blog-topic-card__name">Salute & Polifenoli</p>
+                <p class="blog-topic-card__count">3 articoli</p>
+            </a>
+            <a href="/blog/categoria/ricette" class="blog-topic-card ani">
+                <span class="blog-topic-card__icon">🍽️</span>
+                <p class="blog-topic-card__name">Ricette</p>
+                <p class="blog-topic-card__count">4 articoli</p>
+            </a>
+            <a href="/blog/categoria/guide" class="blog-topic-card ani">
+                <span class="blog-topic-card__icon">📖</span>
+                <p class="blog-topic-card__name">Guide all'Acquisto</p>
+                <p class="blog-topic-card__count">3 articoli</p>
+            </a>
+            <a href="/blog/categoria/curiosita" class="blog-topic-card ani">
+                <span class="blog-topic-card__icon">💡</span>
+                <p class="blog-topic-card__name">Curiosità</p>
+                <p class="blog-topic-card__count">2 articoli</p>
+            </a>
+            <a href="/blog/categoria/storia" class="blog-topic-card ani">
+                <span class="blog-topic-card__icon">🕰️</span>
+                <p class="blog-topic-card__name">La Nostra Storia</p>
+                <p class="blog-topic-card__count">2 articoli</p>
+            </a>
+            <a href="/blog" class="blog-topic-card ani">
+                <span class="blog-topic-card__icon">🫒</span>
+                <p class="blog-topic-card__name">Tutti gli Articoli</p>
+                <p class="blog-topic-card__count">25 articoli</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer__inner">
+            <div class="footer__brand">
+                <a href="/" class="nav__logo">
+                    <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu"
+                        class="nav__logo-img" width="160" height="auto">
+                </a>
+                <span class="footer__logo-sub">Oleificio · Dal 1890</span>
+                <p class="footer__tagline">Olio extravergine d'oliva artigianale, non filtrato, dal cuore della
+                    Sardegna.</p>
+                <div class="footer__social">
+                    <a href="https://www.instagram.com/oleificio.cabriolu/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/oleificiocabriolu/" target="_blank" rel="noopener"
+                        aria-label="Facebook">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer__nav">
+                <h4>Navigazione</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/storia">La Nostra Storia</a></li>
+                    <li><a href="/frangitura">Frangitura</a></li>
+                    <li><a href="/territorio">Territorio</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/shop">Shop</a></li>
+                </ul>
+            </div>
+            <div class="footer__nav">
+                <h4>Prodotti</h4>
+                <ul>
+                    <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+                    <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+                    <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+                    <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+                    <li><a href="/shop/latte">Latte Professionali</a></li>
+                    <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+                </ul>
+            </div>
+            <div class="footer__contact">
+                <h4>Contatti</h4>
+                <p>Oleificio Cabriolu snc</p>
+                <p>Via Umberto I, Villacidro (SU)</p>
+                <p>Sardegna, Italia</p>
+                <p style="margin-top:12px"><a href="tel:+390709316xx">+39 070 9316XX</a></p>
+                <p><a href="mailto:info@oleificiocabriolu.it">info@oleificiocabriolu.it</a></p>
+                <p style="margin-top:12px;font-size:.8rem;color:rgba(250,246,240,.35)">Lun–Sab: 8:00–13:00 /
+                    15:00–18:00</p>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>© 2026 Oleificio Cabriolu snc — P.IVA 01234567890</p>
+            <div class="footer__legal">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/cookie">Cookie Policy</a>
+            </div>
+            <p class="footer__credit">Sito realizzato da <a href="https://digidentityagency.it" target="_blank"
+                    rel="noopener">DigIdentity Agency</a></p>
+        </div>
+    </footer>
+
+    <!-- WATERMARK -->
+    <div class="watermark-wrap">
+        <div class="watermark-track">
+            <span>BLOG - </span><span>BLOG - </span><span>BLOG - </span><span>BLOG - </span>
+            <span>BLOG - </span><span>BLOG - </span><span>BLOG - </span><span>BLOG - </span>
+        </div>
+    </div>
+
+    <!-- CHATBOT FAB -->
+    <button class="chatbot-fab" id="chatbotFab" aria-label="Assistente virtuale">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
+        </svg>
+    </button>
+    <div class="chatbot-panel" id="chatbotPanel" aria-hidden="true">
+        <div class="chatbot-panel__header">
+            <span>Assistente Cabriolu</span>
+            <button id="chatbotClose">✕</button>
+        </div>
+        <div class="chatbot-panel__body" id="chatbotBody">
+            <p class="chatbot-panel__welcome">Ciao! Chiedimi tutto sui nostri oli, spedizioni, o prenota una visita al
+                frantoio.</p>
+        </div>
+        <div class="chatbot-panel__input">
+            <input type="text" id="chatbotInput" placeholder="Scrivi un messaggio..." aria-label="Messaggio">
+            <button id="chatbotSend">→</button>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            /* ── NAV SCROLL ── */
+            var nav = document.getElementById('nav');
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 80) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            }, { passive: true });
+
+            /* ── BURGER MENU ── */
+            var burger = document.getElementById('navBurger');
+            var menu = document.getElementById('mobileMenu');
+            burger.addEventListener('click', function () {
+                var open = menu.classList.toggle('open');
+                burger.setAttribute('aria-expanded', open);
+                menu.setAttribute('aria-hidden', !open);
+                document.body.style.overflow = open ? 'hidden' : '';
+            });
+            menu.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    menu.classList.remove('open');
+                    burger.setAttribute('aria-expanded', 'false');
+                    menu.setAttribute('aria-hidden', 'true');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            /* ── ANIMAZIONI SCROLL (IntersectionObserver) ── */
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+
+            document.querySelectorAll('.ani').forEach(function (el) {
+                observer.observe(el);
+            });
+
+            /* ── FILTRI CATEGORIA ── */
+            var filterBtns = document.querySelectorAll('.blog-filter-btn');
+            var cards = document.querySelectorAll('.blog-grid .blog-card, .blog-card--featured');
+
+            filterBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    filterBtns.forEach(function (b) { b.classList.remove('active'); });
+                    btn.classList.add('active');
+
+                    var filter = btn.getAttribute('data-filter');
+                    cards.forEach(function (card) {
+                        if (filter === 'tutti' || card.getAttribute('data-cat') === filter) {
+                            card.style.display = '';
+                            card.style.opacity = '1';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            /* ── NEWSLETTER FORM ── */
+            var form = document.getElementById('newsletterForm');
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var email = document.getElementById('newsletterEmail').value.trim();
+                if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    document.getElementById('newsletterEmail').style.borderColor = '#e55';
+                    return;
+                }
+                var btn = form.querySelector('.blog-newsletter__btn');
+                btn.textContent = '✓ Iscritto!';
+                btn.style.background = '#4ecb71';
+                btn.style.color = '#000';
+                form.querySelector('input').value = '';
+                setTimeout(function () {
+                    btn.textContent = 'Iscriviti';
+                    btn.style.background = '';
+                    btn.style.color = '';
+                }, 3500);
+            });
+
+            /* ── CHATBOT ── */
+            var fab = document.getElementById('chatbotFab');
+            var panel = document.getElementById('chatbotPanel');
+            var closeBtn = document.getElementById('chatbotClose');
+            var sendBtn = document.getElementById('chatbotSend');
+            var input = document.getElementById('chatbotInput');
+            var body = document.getElementById('chatbotBody');
+
+            fab.addEventListener('click', function () {
+                var open = panel.classList.toggle('chatbot-panel--open');
+                panel.setAttribute('aria-hidden', !open);
+            });
+            closeBtn.addEventListener('click', function () {
+                panel.classList.remove('chatbot-panel--open');
+                panel.setAttribute('aria-hidden', 'true');
+            });
+
+            function sendMessage() {
+                var txt = input.value.trim();
+                if (!txt) return;
+                var msg = document.createElement('p');
+                msg.style.cssText = 'text-align:right;font-size:.82rem;margin:8px 0;color:#fff';
+                msg.textContent = txt;
+                body.appendChild(msg);
+                input.value = '';
+                setTimeout(function () {
+                    var reply = document.createElement('p');
+                    reply.style.cssText = 'font-size:.82rem;margin:8px 0;color:rgba(255,255,255,.65)';
+                    reply.textContent = 'Grazie per la tua domanda! Un membro del team Cabriolu ti risponderà al più presto. Nel frattempo esplora il nostro blog 🫒';
+                    body.appendChild(reply);
+                    body.scrollTop = body.scrollHeight;
+                }, 900);
+                body.scrollTop = body.scrollHeight;
+            }
+
+            sendBtn.addEventListener('click', sendMessage);
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') sendMessage();
+            });
+
+        })();
+    </script>
+
+</body>
+
+</html>
