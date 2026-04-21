@@ -8,6 +8,9 @@
   const IS_MOBILE = window.innerWidth < 768;
   const BASE_PATH = IS_MOBILE ? MOBILE_PATH : DESKTOP_PATH;
 
+  // ─── Frame fisicamente eliminati dalla cartella ───
+  const DELETED_FRAMES = new Set([1, 841]);
+
   const canvas = document.getElementById('bc');
   const ctx = canvas.getContext('2d');
   const frames = [];
@@ -35,19 +38,32 @@
     ctx.drawImage(img, dX, dY, dW, dH);
   }
 
+  // Restituisce il numero file reale da caricare per l'indice logico i (1-based)
+  // Se il frame è stato eliminato, usa il successivo disponibile
+  function resolveFrameFile(i) {
+    let n = i;
+    while (DELETED_FRAMES.has(n) && n <= TOTAL_FRAMES) n++;
+    return n;
+  }
+
   function preloadFrames() {
     const promises = [];
+
+    // Primo frame visibile: frame 1 è eliminato → usa frame_0002
     const first = new Image();
     first.onload = () => { frames[0] = first; drawFrame(0); };
-    first.src = BASE_PATH + '0001' + EXT;
+    first.src = BASE_PATH + String(resolveFrameFile(1)).padStart(4, '0') + EXT;
+
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
-      const idx = i - 1;
+      const idx = i - 1; // indice 0-based nell'array frames[]
       const p = new Promise(r => {
         img.onload = () => { loadedCount++; r(); };
         img.onerror = () => { loadedCount++; r(); };
       });
-      img.src = BASE_PATH + String(i).padStart(4, '0') + EXT;
+      // Se questo indice logico è un frame eliminato, punta al successivo disponibile
+      const fileNum = resolveFrameFile(i);
+      img.src = BASE_PATH + String(fileNum).padStart(4, '0') + EXT;
       frames[idx] = img;
       promises.push(p);
     }
@@ -58,9 +74,10 @@
     gsap.registerPlugin(ScrollTrigger);
 
     /* ═══════════════════════════════════════
-       v24:
+       v25:
        - Frame 1-840 su hero+prodotti (invariato da v22)
-       - Video sfondo scroll dalla storia al footer
+       - Frame 842-960 su canvas per sezione storia→CTA
+         (sostituisce bgVideo eliminato)
        ═══════════════════════════════════════ */
 
     /* --- Prepara hero --- */
@@ -226,34 +243,28 @@
       }
     });
 
+    /* --- SCROLL TRIGGER 2: frame 842-960 su canvas — storia → CTA ---
+       Sostituisce il vecchio bgVideo (eliminato dall'HTML).
+       frames[] è 0-based: frame_0842 = frames[841], frame_0960 = frames[959]  */
+    const ctaSection = document.getElementById('cta-final');
+    if (storiaSection && ctaSection) {
+      const F_START = 841;
+      const F_END = 959;
 
-    /* --- SCROLL TRIGGER 2: video sfondo dalla storia alla CTA --- */
-    var bgVideo = document.getElementById('bgVideo');
-    var ctaSection = document.getElementById('cta-final');
-    if (bgVideo && storiaSection && ctaSection) {
-      bgVideo.pause();
-      var targetTime = 0;
-      function updateVideo() {
-        if (Math.abs(bgVideo.currentTime - targetTime) > 0.05) {
-          bgVideo.currentTime += (targetTime - bgVideo.currentTime) * 0.3;
-        }
-        requestAnimationFrame(updateVideo);
-      }
-      requestAnimationFrame(updateVideo);
       ScrollTrigger.create({
         trigger: storiaSection,
         start: 'top bottom',
         endTrigger: ctaSection,
         end: 'bottom top',
-        onUpdate: function (self) {
-          if (bgVideo.duration) {
-            targetTime = self.progress * bgVideo.duration;
+        scrub: 0.5,
+
+        onUpdate: self => {
+          const f = F_START + Math.round(self.progress * (F_END - F_START));
+          if (f !== currentFrame) {
+            currentFrame = f;
+            drawFrame(currentFrame);
           }
-        },
-        onEnter: function () { bgVideo.classList.add('bg-video--active'); },
-        onLeave: function () { bgVideo.classList.remove('bg-video--active'); },
-        onEnterBack: function () { bgVideo.classList.add('bg-video--active'); },
-        onLeaveBack: function () { bgVideo.classList.remove('bg-video--active'); }
+        }
       });
     }
 
