@@ -8,9 +8,6 @@
   const IS_MOBILE = window.innerWidth < 768;
   const BASE_PATH = IS_MOBILE ? MOBILE_PATH : DESKTOP_PATH;
 
-  // ─── Frame fisicamente eliminati dalla cartella ───
-  const DELETED_FRAMES = new Set([1, 841]);
-
   const canvas = document.getElementById('bc');
   const ctx = canvas.getContext('2d');
   const frames = [];
@@ -38,32 +35,19 @@
     ctx.drawImage(img, dX, dY, dW, dH);
   }
 
-  // Restituisce il numero file reale da caricare per l'indice logico i (1-based)
-  // Se il frame è stato eliminato, usa il successivo disponibile
-  function resolveFrameFile(i) {
-    let n = i;
-    while (DELETED_FRAMES.has(n) && n <= TOTAL_FRAMES) n++;
-    return n;
-  }
-
   function preloadFrames() {
     const promises = [];
-
-    // Primo frame visibile: frame 1 è eliminato → usa frame_0002
     const first = new Image();
     first.onload = () => { frames[0] = first; drawFrame(0); };
-    first.src = BASE_PATH + String(resolveFrameFile(1)).padStart(4, '0') + EXT;
-
+    first.src = BASE_PATH + '0001' + EXT;
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
-      const idx = i - 1; // indice 0-based nell'array frames[]
+      const idx = i - 1;
       const p = new Promise(r => {
         img.onload = () => { loadedCount++; r(); };
         img.onerror = () => { loadedCount++; r(); };
       });
-      // Se questo indice logico è un frame eliminato, punta al successivo disponibile
-      const fileNum = resolveFrameFile(i);
-      img.src = BASE_PATH + String(fileNum).padStart(4, '0') + EXT;
+      img.src = BASE_PATH + String(i).padStart(4, '0') + EXT;
       frames[idx] = img;
       promises.push(p);
     }
@@ -72,13 +56,6 @@
 
   function initGSAP() {
     gsap.registerPlugin(ScrollTrigger);
-
-    /* ═══════════════════════════════════════
-       v25:
-       - Frame 1-840 su hero+prodotti (invariato da v22)
-       - Frame 842-960 su canvas per sezione storia→CTA
-         (sostituisce bgVideo eliminato)
-       ═══════════════════════════════════════ */
 
     /* --- Prepara hero --- */
     const heroContent = document.querySelector('.hero__content');
@@ -106,7 +83,7 @@
     const allCopies = [];
     const prodottiSection = document.getElementById('prodotti');
     const storiaSection = document.getElementById('storia');
-    const footerEl = document.getElementById('contatti');
+    const footerEl = document.querySelector('.footer');
 
     document.querySelectorAll('.prodotti__scene').forEach((scene, idx) => {
       const copy = scene.querySelector('.prodotti__copy');
@@ -149,16 +126,15 @@
       allCopies.push(copy);
       scenes.push({ copy, side, fromX, isCenter, frameStart, frameEnd, frameMid, visible: false, animated: false });
     });
-    let copyLocked = false;
 
-    /* --- SCROLL TRIGGER 1: frame 1-840 su hero+prodotti (INVARIATO v22) --- */
+    /* --- SCROLL TRIGGER 1: frame 1-840 su hero+prodotti --- */
     ScrollTrigger.create({
       trigger: '.hero',
       start: 'top top',
       endTrigger: prodottiSection,
       end: 'bottom top',
       onUpdate: self => {
-        const f = Math.floor(self.progress * 839);
+        const f = 1 + Math.floor(self.progress * 838);
         if (f !== currentFrame) {
           currentFrame = f;
           drawFrame(currentFrame);
@@ -183,7 +159,7 @@
 
         /* PRODOTTI copy */
         const storiaRect = storiaSection.getBoundingClientRect();
-        if (!copyLocked && storiaRect.top > window.innerHeight) {
+        if (storiaRect.top > window.innerHeight) {
           scenes.forEach((s, idx) => {
             const shouldShow = (f >= s.frameMid && f < s.frameEnd);
             if (shouldShow && !s.visible) {
@@ -214,7 +190,6 @@
           });
         }
       },
-
       onLeave: () => {
         allCopies.forEach((c, i) => {
           c.style.display = 'none';
@@ -223,7 +198,6 @@
         heroContent.style.display = 'none';
         heroVisible = false;
       },
-
       onEnterBack: () => {
         drawFrame(currentFrame);
       }
@@ -243,32 +217,29 @@
       }
     });
 
-    /* --- SCROLL TRIGGER 2: frame 842-960 su canvas — storia → CTA ---
-       Sostituisce il vecchio bgVideo (eliminato dall'HTML).
-       frames[] è 0-based: frame_0842 = frames[841], frame_0960 = frames[959]  */
-    const ctaSection = document.getElementById('cta-final');
-    if (storiaSection && ctaSection) {
-      const F_START = 841;
-      const F_END = 959;
-
+    /* --- SCROLL TRIGGER 2: frame 841-960 dalla storia al footer --- */
+    if (storiaSection && footerEl) {
       ScrollTrigger.create({
         trigger: storiaSection,
         start: 'top bottom',
-        endTrigger: ctaSection,
-        end: 'bottom top',
+        endTrigger: footerEl,
+        end: 'bottom bottom',
         scrub: 0.5,
-
-        onUpdate: self => {
-          const f = F_START + Math.round(self.progress * (F_END - F_START));
+        onUpdate: function (self) {
+          var f = 840 + Math.round(self.progress * 119);
           if (f !== currentFrame) {
             currentFrame = f;
             drawFrame(currentFrame);
           }
+        },
+        onLeaveBack: function () {
+          currentFrame = 839;
+          drawFrame(839);
         }
       });
     }
 
-    /* Scroll indicator */
+    /* --- Scroll indicator --- */
     var heroScroll = document.querySelector('.hero__scroll');
     if (heroScroll) {
       gsap.set(heroScroll, { opacity: 1 });
@@ -277,7 +248,7 @@
       }).to(heroScroll, { opacity: 0 });
     }
 
-    /* NAV */
+    /* --- NAV --- */
     var nav = document.getElementById('nav');
     ScrollTrigger.create({
       start: 80,
@@ -286,7 +257,7 @@
       }
     });
 
-    /* GENERIC .ani */
+    /* --- GENERIC .ani --- */
     document.querySelectorAll('.ani').forEach(function (el) {
       gsap.to(el, {
         opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
@@ -294,7 +265,7 @@
       });
     });
 
-    /* STORIA LINE */
+    /* --- STORIA LINE --- */
     var storiaFill = document.querySelector('.storia__line-fill');
     if (storiaFill) {
       gsap.to(storiaFill, {
@@ -303,7 +274,7 @@
       });
     }
 
-    /* STORIA CARDS */
+    /* --- STORIA CARDS --- */
     document.querySelectorAll('.storia__item').forEach(function (item) {
       var fromX = item.classList.contains('storia__item--reverse') ? 80 : -80;
       gsap.from(item.querySelector('.storia__card'), {
@@ -316,7 +287,7 @@
       });
     });
 
-    /* FRANGITURA */
+    /* --- FRANGITURA --- */
     var frangImg = document.querySelector('.frangitura__bg img');
     if (frangImg) {
       gsap.to(frangImg, {
@@ -325,7 +296,7 @@
       });
     }
 
-    /* TERRITORIO COUNTERS */
+    /* --- TERRITORIO COUNTERS --- */
     document.querySelectorAll('.territorio__counter').forEach(function (counter) {
       var numEl = counter.querySelector('.territorio__number');
       var target = parseInt(counter.dataset.target);
@@ -344,7 +315,7 @@
       });
     });
 
-    /* RECENSIONI BARS */
+    /* --- RECENSIONI BARS --- */
     document.querySelectorAll('.recensioni__bar-fill').forEach(function (bar) {
       gsap.to(bar, {
         width: bar.dataset.width + '%', duration: 1.2, ease: 'power2.out',
@@ -352,13 +323,13 @@
       });
     });
 
-    /* RECENSIONI CARDS */
+    /* --- RECENSIONI CARDS --- */
     gsap.from('.recensioni__card', {
       y: 40, opacity: 0, rotateX: 8, stagger: 0.12, duration: 0.7, ease: 'power2.out',
       scrollTrigger: { trigger: '.recensioni__grid', start: 'top 80%', toggleActions: 'play none none reverse' }
     });
 
-    /* CTA WORDS */
+    /* --- CTA WORDS --- */
     gsap.to('.cta-final__word', {
       opacity: 1, y: 0, stagger: 0.1, duration: 0.6, ease: 'power3.out',
       scrollTrigger: { trigger: '.cta-final', start: 'top 75%', toggleActions: 'play none none reverse' }

@@ -553,15 +553,19 @@ address {
     width: 100vw;
     height: 100vh;
     object-fit: cover;
+    object-position: center center;
+    transform-origin: center center;
     z-index: 1;
     pointer-events: none;
     opacity: 0;
-    transition: opacity .3s
+    transition: opacity .3s;
 }
 
 .bg-video--active {
-    opacity: 1
+    opacity: 1;
 }
+
+
 
 .storia {
     background: rgba(26, 42, 26, .75);
