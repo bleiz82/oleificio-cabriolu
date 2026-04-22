@@ -47,7 +47,7 @@
             <li><a href="/frangitura">Frangitura</a></li>
             <li><a href="/territorio">Territorio</a></li>
             <li><a href="/blog">Blog</a></li>
-            <li><a href="#contatti">Contatti</a></li>
+            <li><a href="/contatti">Contatti</a></li>
             <li><a href="/shop">Shop</a></li>
         </ul>
     </div>
@@ -274,19 +274,6 @@
         </div>
     </footer>
 
-    <script>
-        // Nav burger toggle (semplificato per pagine interne)
-        const burger = document.getElementById('navBurger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        burger?.addEventListener('click', () => {
-            burger.classList.toggle('nav__burger--open');
-            mobileMenu.classList.toggle('mobile-menu--open');
-            mobileMenu.setAttribute('aria-hidden',
-                mobileMenu.classList.contains('mobile-menu--open') ? 'false' : 'true');
-            burger.setAttribute('aria-expanded',
-                burger.classList.contains('nav__burger--open') ? 'true' : 'false');
-        });
-    </script>
     <!-- WATERMARK -->
     <div class="watermark-wrap">
         <div class="watermark-track">

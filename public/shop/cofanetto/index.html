@@ -1023,28 +1023,6 @@
                 document.getElementById('product').scrollIntoView({ behavior: 'smooth' });
             });
 
-            /* ── BURGER ── */
-            var burger = document.getElementById('navBurger');
-            var menu = document.getElementById('mobileMenu');
-            if (burger && menu) {
-                burger.addEventListener('click', function () {
-                    var open = menu.classList.toggle('mobile-menu--open');
-                    burger.classList.toggle('nav__burger--open');
-                    burger.setAttribute('aria-expanded', open);
-                    menu.setAttribute('aria-hidden', !open);
-                    document.body.style.overflow = open ? 'hidden' : '';
-                });
-                menu.querySelectorAll('a').forEach(function (a) {
-                    a.addEventListener('click', function () {
-                        menu.classList.remove('mobile-menu--open');
-                        burger.classList.remove('nav__burger--open');
-                        burger.setAttribute('aria-expanded', 'false');
-                        menu.setAttribute('aria-hidden', 'true');
-                        document.body.style.overflow = '';
-                    });
-                });
-            }
-
             /* ── NAV SCROLL ── */
             window.addEventListener('scroll', function () {
                 document.getElementById('nav').classList.toggle('nav--scrolled', window.scrollY > 80);
@@ -1089,6 +1067,7 @@
             <span>COFANETTO - </span>
         </div>
     </div>
+    <script src="/js/common.js"></script>
 </body>
 
 </html>

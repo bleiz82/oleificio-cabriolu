@@ -971,19 +971,6 @@
                 if (allVisible) barsAnimated = true;
             }, { passive: true });
 
-            /* ── BURGER ── */
-            var burger = document.getElementById('navBurger');
-            var menu = document.getElementById('mobileMenu');
-            if (burger && menu) {
-                burger.addEventListener('click', function () {
-                    var open = menu.classList.toggle('mobile-menu--open');
-                    burger.classList.toggle('nav__burger--open');
-                    burger.setAttribute('aria-expanded', open);
-                    menu.setAttribute('aria-hidden', !open);
-                    document.body.style.overflow = open ? 'hidden' : '';
-                });
-            }
-
             /* smooth scroll CTA */
             var shopCta = document.getElementById('shopCta');
             if (shopCta) {
@@ -1098,7 +1085,6 @@
         </div>
     </div>
     <script src="/js/common.js"></script>
-
 </body>
 
 </html>
