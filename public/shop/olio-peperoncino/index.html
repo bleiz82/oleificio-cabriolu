@@ -509,26 +509,60 @@
 
 <body>
 
-    <nav id="nav" class="nav">
-        <div class="nav__inner">
-            <a href="/" class="nav__logo"><img src="/img/oleificio_cabriolu_logo_500-403051a0.webp"
-                    alt="Oleificio Cabriolu" width="110" height="40"></a>
-            <div class="nav__links">
-                <a href="/">Home</a><a href="/#storia">Storia</a><a href="/#frangitura">Frangitura</a>
-                <a href="/#territorio">Territorio</a><a href="/blog">Blog</a><a href="/#contatti">Contatti</a>
-                <a href="/shop" class="nav__links--shop">Shop</a>
-            </div>
-            <button class="nav__burger" id="navBurger" aria-label="Menu"
-                aria-expanded="false"><span></span><span></span><span></span></button>
-        </div>
-    </nav>
-    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-        <a href="/">Home</a><a href="/#storia">La Nostra Storia</a><a href="/#frangitura">Frangitura</a>
-        <a href="/#territorio">Territorio</a><a href="/blog">Blog</a><a href="/#contatti">Contatti</a>
-        <a href="/shop">Shop</a>
-    </div>
 
-    <canvas id="productCanvas" aria-hidden="true"></canvas>
+
+<!-- NAV -->
+<nav id="nav" class="nav">
+    <div class="nav__inner">
+        <a href="/" class="nav__logo" aria-label="Oleificio Cabriolu">
+            <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu" class="nav__logo-img">
+        </a>
+        <ul class="nav__links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/storia">La Nostra Storia</a></li>
+            <li><a href="/frangitura">Frangitura</a></li>
+            <li><a href="/territorio">Territorio</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/contatti">Contatti</a></li>
+            <li class="nav__dropdown">
+                <a href="/shop" class="nav__cta">Shop <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style="margin-left:4px;vertical-align:middle"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <ul class="nav__sub">
+                    <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+                    <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+                    <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+                    <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+                    <li><a href="/shop/latte">Latte Professionali</a></li>
+                    <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+                </ul>
+            </li>
+        </ul>
+        <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/storia">La Nostra Storia</a></li>
+        <li><a href="/frangitura">Frangitura</a></li>
+        <li><a href="/territorio">Territorio</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/contatti">Contatti</a></li>
+        <li><a href="/shop">Shop</a></li>
+        <li class="mobile-menu__divider"></li>
+        <li><a href="/shop/evo-puro" class="mobile-menu__sub">Extravergine Puro</a></li>
+        <li><a href="/shop/olio-peperoncino" class="mobile-menu__sub">Olio al Peperoncino</a></li>
+        <li><a href="/shop/olio-basilico" class="mobile-menu__sub">Olio al Basilico</a></li>
+        <li><a href="/shop/olio-limone" class="mobile-menu__sub">Olio al Limone</a></li>
+        <li><a href="/shop/latte" class="mobile-menu__sub">Latte Professionali</a></li>
+        <li><a href="/shop/cofanetto" class="mobile-menu__sub">Cofanetto Luxury</a></li>
+    </ul>
+</div>
+
+<canvas id="productCanvas" aria-hidden="true"></canvas>
 
     <div class="cinema">
         <p class="cinema__hint" id="scrollHint">&#8595; Scorri per esplorare &#8595;</p>
@@ -754,12 +788,6 @@
                 </div>
             </div>
         </section>
-
-        <footer class="product-footer" id="contatti">
-            <p>&copy; 2026 Oleificio Cabriolu — Tutti i diritti riservati</p>
-            <p>Sito web by <a href="https://digidentityagency.it" target="_blank" rel="noopener">DigIdentity Agency</a>
-            </p>
-        </footer>
     </div>
 
     <script>
@@ -865,19 +893,6 @@
                 });
                 if (allVisible) barsAnimated = true;
             }, { passive: true });
-
-            /* ── BURGER ── */
-            var burger = document.getElementById('navBurger');
-            var menu = document.getElementById('mobileMenu');
-            if (burger && menu) {
-                burger.addEventListener('click', function () {
-                    var open = menu.classList.toggle('mobile-menu--open');
-                    burger.classList.toggle('nav__burger--open');
-                    burger.setAttribute('aria-expanded', open);
-                    menu.setAttribute('aria-hidden', !open);
-                    document.body.style.overflow = open ? 'hidden' : '';
-                });
-            }
 
             /* ── SMOOTH SCROLL CTA ── */
             var shopCta = document.getElementById('shopCta');

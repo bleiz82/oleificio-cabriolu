@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it">
 
 <head>
@@ -10,6 +10,9 @@
     <link rel="canonical" href="https://www.oleificiocabriolu.it/storia">
     <link rel="preload" href="/fonts/CormorantGaramond-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="/css/style.css">
+    <script defer src="/js/gsap.min.js"></script>
+    <script defer src="/js/ScrollTrigger.min.js"></script>
+    <script defer src="/js/storia.js"></script>
     <style>
         :root {
             --gold: #C9A84C;
@@ -34,33 +37,44 @@
             overflow-x: hidden
         }
 
-        /* HERO */
+
+        /* ── CANVAS ── */
+        #sc {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── HERO STORIA ── */
         .storia-hero {
             position: relative;
-            height: 100vh;
+            z-index: 2;
+            min-height: 300vh;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            overflow: hidden
-        }
-
-        .storia-hero__bg {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1208 50%, #0a0a0a 100%)
-        }
-
-        .storia-hero__overlay {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at center, rgba(201, 168, 76, .08) 0%, transparent 70%)
+            align-items: center;
         }
 
         .storia-hero__content {
-            position: relative;
-            z-index: 2;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 0 24px
+            padding: 0 24px;
+            max-width: 800px;
+            margin: 0 auto;
+            z-index: 2;
         }
 
         .storia-hero__eyebrow {
@@ -72,23 +86,21 @@
             margin-bottom: 24px;
             opacity: 0;
             transform: translateY(20px);
-            animation: fadeUp .8s .2s forwards
         }
 
         .storia-hero__title {
             font-family: var(--serif);
             font-size: clamp(3rem, 8vw, 7rem);
-            font-weight: 300;
-            line-height: 1;
+            font-weight: 700;
+            line-height: 1.05;
             color: var(--cream);
             margin-bottom: 32px;
             opacity: 0;
             transform: translateY(30px);
-            animation: fadeUp .8s .4s forwards
         }
 
         .storia-hero__title span {
-            color: var(--gold)
+            color: var(--gold);
         }
 
         .storia-hero__sub {
@@ -100,40 +112,63 @@
             line-height: 1.7;
             opacity: 0;
             transform: translateY(20px);
-            animation: fadeUp .8s .6s forwards
         }
 
-        .storia-hero__year {
-            position: absolute;
-            bottom: 48px;
+        .storia-hero__scroll {
+            position: fixed;
+            bottom: 32px;
             left: 50%;
             transform: translateX(-50%);
-            font-family: var(--serif);
-            font-size: clamp(6rem, 15vw, 12rem);
-            font-weight: 700;
-            color: rgba(201, 168, 76, .04);
-            pointer-events: none;
-            user-select: none;
-            white-space: nowrap
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+            opacity: 0;
         }
 
-        @keyframes fadeUp {
-            to {
+        .storia-hero__scroll span {
+            font-size: .7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(245, 240, 232, .5);
+        }
+
+        .storia-hero__scroll-bar {
+            width: 1px;
+            height: 40px;
+            background: var(--gold);
+            animation: scrollPulse 2s ease infinite;
+        }
+
+        @keyframes scrollPulse {
+
+            0%,
+            100% {
+                opacity: .3;
+                transform: scaleY(.6);
+            }
+
+            50% {
                 opacity: 1;
-                transform: translateY(0)
+                transform: scaleY(1);
             }
         }
 
-        /* TIMELINE */
+
+        /* ── TIMELINE ── */
         .timeline {
+            position: relative;
+            z-index: 10;
+            background: var(--dark);
             padding: 120px 24px;
             max-width: 900px;
-            margin: 0 auto
+            margin: 0 auto;
         }
 
         .timeline__intro {
             text-align: center;
-            margin-bottom: 80px
+            margin-bottom: 80px;
         }
 
         .timeline__intro h2 {
@@ -141,7 +176,7 @@
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 300;
             color: var(--cream);
-            margin-bottom: 16px
+            margin-bottom: 16px;
         }
 
         .timeline__intro p {
@@ -149,12 +184,12 @@
             font-size: 1rem;
             line-height: 1.8;
             max-width: 600px;
-            margin: 0 auto
+            margin: 0 auto;
         }
 
         .timeline__line {
             position: relative;
-            padding-left: 48px
+            padding-left: 48px;
         }
 
         .timeline__line::before {
@@ -164,32 +199,42 @@
             top: 0;
             bottom: 0;
             width: 1px;
-            background: linear-gradient(to bottom, transparent, var(--gold) 10%, var(--gold) 90%, transparent)
+            background: linear-gradient(to bottom, transparent, var(--gold) 10%, var(--gold) 90%, transparent);
         }
 
         .timeline__item {
             position: relative;
-            margin-bottom: 72px;
+            margin-bottom: 80px;
             opacity: 0;
             transform: translateX(-30px);
-            transition: opacity .6s, transform .6s
+            transition: opacity .6s, transform .6s;
         }
 
         .timeline__item.visible {
             opacity: 1;
-            transform: translateX(0)
+            transform: translateX(0);
         }
 
         .timeline__item::before {
             content: '';
             position: absolute;
             left: -38px;
-            top: 6px;
+            top: 8px;
             width: 12px;
             height: 12px;
             border-radius: 50%;
             background: var(--gold);
-            box-shadow: 0 0 0 4px rgba(201, 168, 76, .15)
+            box-shadow: 0 0 0 4px rgba(201, 168, 76, .15);
+        }
+
+        .timeline__item__img {
+            width: 100%;
+            max-height: 320px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 24px;
+            opacity: .85;
+            filter: sepia(20%) contrast(1.05);
         }
 
         .timeline__year {
@@ -198,7 +243,7 @@
             font-weight: 700;
             color: var(--gold);
             line-height: 1;
-            margin-bottom: 8px
+            margin-bottom: 8px;
         }
 
         .timeline__gen {
@@ -207,7 +252,7 @@
             letter-spacing: .25em;
             text-transform: uppercase;
             color: rgba(201, 168, 76, .6);
-            margin-bottom: 16px
+            margin-bottom: 16px;
         }
 
         .timeline__title {
@@ -215,29 +260,31 @@
             font-size: 1.6rem;
             font-weight: 400;
             color: var(--cream);
-            margin-bottom: 12px
+            margin-bottom: 12px;
         }
 
         .timeline__text {
             color: rgba(245, 240, 232, .65);
             font-size: .95rem;
-            line-height: 1.8
+            line-height: 1.8;
         }
 
-        /* VALORI */
+        /* ── VALORI ── */
         .valori {
+            position: relative;
+            z-index: 10;
             background: #080808;
-            padding: 120px 24px
+            padding: 120px 24px;
         }
 
         .valori__inner {
             max-width: 1100px;
-            margin: 0 auto
+            margin: 0 auto;
         }
 
         .valori__header {
             text-align: center;
-            margin-bottom: 72px
+            margin-bottom: 72px;
         }
 
         .valori__header h2 {
@@ -245,7 +292,7 @@
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 300;
             color: var(--cream);
-            margin-bottom: 16px
+            margin-bottom: 16px;
         }
 
         .valori__header p {
@@ -253,13 +300,13 @@
             font-size: 1rem;
             line-height: 1.8;
             max-width: 600px;
-            margin: 0 auto
+            margin: 0 auto;
         }
 
         .valori__grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 40px
+            gap: 40px;
         }
 
         .valori__card {
@@ -269,17 +316,17 @@
             padding: 40px 32px;
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity .6s, transform .6s
+            transition: opacity .6s, transform .6s;
         }
 
         .valori__card.visible {
             opacity: 1;
-            transform: translateY(0)
+            transform: translateY(0);
         }
 
         .valori__card:hover {
             border-color: rgba(201, 168, 76, .3);
-            background: rgba(201, 168, 76, .03)
+            background: rgba(201, 168, 76, .03);
         }
 
         .valori__card__num {
@@ -288,27 +335,29 @@
             font-weight: 700;
             color: rgba(201, 168, 76, .15);
             line-height: 1;
-            margin-bottom: 16px
+            margin-bottom: 16px;
         }
 
         .valori__card__title {
             font-family: var(--serif);
             font-size: 1.3rem;
             color: var(--gold);
-            margin-bottom: 12px
+            margin-bottom: 12px;
         }
 
         .valori__card__text {
             color: rgba(245, 240, 232, .6);
             font-size: .9rem;
-            line-height: 1.7
+            line-height: 1.7;
         }
 
-        /* CTA */
+        /* ── CTA ── */
         .storia-cta {
+            position: relative;
+            z-index: 10;
+            background: var(--dark);
             padding: 100px 24px;
             text-align: center;
-            background: var(--dark)
         }
 
         .storia-cta h2 {
@@ -316,7 +365,7 @@
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 300;
             color: var(--cream);
-            margin-bottom: 24px
+            margin-bottom: 24px;
         }
 
         .storia-cta p {
@@ -325,7 +374,7 @@
             margin-bottom: 40px;
             max-width: 500px;
             margin-left: auto;
-            margin-right: auto
+            margin-right: auto;
         }
 
         .btn-gold {
@@ -338,15 +387,15 @@
             letter-spacing: .15em;
             text-transform: uppercase;
             text-decoration: none;
-            transition: background .3s, color .3s
+            transition: background .3s, color .3s;
         }
 
         .btn-gold:hover {
             background: var(--gold);
-            color: #000
+            color: #000;
         }
 
-        /* WATERMARK */
+        /* ── WATERMARK ── */
         .watermark-wrap {
             position: fixed;
             top: 50%;
@@ -356,13 +405,13 @@
             overflow: hidden;
             pointer-events: none;
             z-index: 0;
-            white-space: nowrap
+            white-space: nowrap;
         }
 
         .watermark-track {
             display: inline-flex;
             gap: 8vw;
-            animation: wmScroll 24s linear infinite
+            animation: wmScroll 24s linear infinite;
         }
 
         .watermark-track span {
@@ -373,7 +422,7 @@
             line-height: 1;
             letter-spacing: -.04em;
             user-select: none;
-            text-transform: uppercase
+            text-transform: uppercase;
         }
 
         @keyframes wmScroll {
@@ -386,11 +435,13 @@
             }
         }
 
-        /* FOOTER */
+        /* ── FOOTER ── */
         footer {
+            position: relative;
+            z-index: 10;
             background: #050505;
             border-top: 1px solid rgba(201, 168, 76, .1);
-            padding: 60px 24px 40px
+            padding: 60px 24px 40px;
         }
 
         .footer__inner {
@@ -398,26 +449,35 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1.5fr;
-            gap: 48px
+            gap: 48px;
         }
 
-        .footer__brand__logo img {
+        .footer__brand a img {
             height: 48px;
             width: auto;
-            margin-bottom: 16px
+            margin-bottom: 16px;
         }
 
-        .footer__brand__tagline {
-            font-family: var(--serif);
-            font-size: .9rem;
+        .footer__logo-sub {
+            display: block;
+            font-family: var(--sans);
+            font-size: .65rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: rgba(201, 168, 76, .5);
+            margin-bottom: 12px;
+        }
+
+        .footer__tagline {
             color: rgba(245, 240, 232, .4);
+            font-size: .85rem;
             line-height: 1.6;
-            margin-bottom: 20px
+            margin-bottom: 20px;
         }
 
         .footer__social {
             display: flex;
-            gap: 12px
+            gap: 12px;
         }
 
         .footer__social a {
@@ -429,59 +489,59 @@
             align-items: center;
             justify-content: center;
             color: var(--gold);
-            font-size: .8rem;
-            transition: background .3s, border-color .3s
+            transition: background .3s, border-color .3s;
         }
 
         .footer__social a:hover {
             background: var(--gold);
             border-color: var(--gold);
-            color: #000
+            color: #000;
         }
 
-        .footer__col h4 {
+        .footer__nav h4,
+        .footer__contact h4 {
             font-family: var(--sans);
             font-size: .65rem;
             letter-spacing: .25em;
             text-transform: uppercase;
             color: var(--gold);
-            margin-bottom: 20px
+            margin-bottom: 20px;
         }
 
-        .footer__col ul {
-            list-style: none
+        .footer__nav ul {
+            list-style: none;
         }
 
-        .footer__col ul li {
-            margin-bottom: 10px
+        .footer__nav ul li {
+            margin-bottom: 10px;
         }
 
-        .footer__col ul li a {
+        .footer__nav ul li a {
             color: rgba(245, 240, 232, .5);
             font-size: .85rem;
             text-decoration: none;
-            transition: color .3s
+            transition: color .3s;
         }
 
-        .footer__col ul li a:hover {
-            color: var(--cream)
+        .footer__nav ul li a:hover {
+            color: var(--cream);
         }
 
         .footer__contact p {
             color: rgba(245, 240, 232, .5);
             font-size: .85rem;
             line-height: 1.8;
-            margin-bottom: 4px
+            margin-bottom: 4px;
         }
 
         .footer__contact a {
             color: rgba(245, 240, 232, .5);
             text-decoration: none;
-            transition: color .3s
+            transition: color .3s;
         }
 
         .footer__contact a:hover {
-            color: var(--gold)
+            color: var(--gold);
         }
 
         .footer__bottom {
@@ -493,37 +553,50 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 12px
+            gap: 12px;
         }
 
         .footer__bottom p {
             color: rgba(245, 240, 232, .25);
-            font-size: .75rem
+            font-size: .75rem;
         }
 
-        .footer__bottom a {
+        .footer__legal {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer__legal a,
+        .footer__credit a {
             color: rgba(201, 168, 76, .5);
-            text-decoration: none
+            text-decoration: none;
+            font-size: .75rem;
+            transition: color .3s;
         }
 
-        .footer__bottom a:hover {
-            color: var(--gold)
+        .footer__legal a:hover,
+        .footer__credit a:hover {
+            color: var(--gold);
         }
 
-        @media(max-width:768px) {
+        @media (max-width: 768px) {
             .footer__inner {
-                grid-template-columns: 1fr 1fr
+                grid-template-columns: 1fr 1fr;
             }
 
             .footer__bottom {
                 flex-direction: column;
-                text-align: center
+                text-align: center;
+            }
+
+            .storia-hero__content {
+                bottom: 60px;
             }
         }
 
-        @media(max-width:480px) {
+        @media (max-width: 480px) {
             .footer__inner {
-                grid-template-columns: 1fr
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -531,62 +604,88 @@
 
 <body>
 
+
+
     <!-- NAV -->
-    <nav class="nav" id="nav">
-        <div class="nav__inner">
-            <a href="/" class="nav__logo">
-                <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu" width="140"
-                    height="48">
-            </a>
-            <ul class="nav__links" id="navLinks">
-                <li><a href="/">Home</a></li>
-                <li><a href="/storia" class="active">La Nostra Storia</a></li>
-                <li><a href="/frangitura">Frangitura</a></li>
-                <li><a href="/territorio">Territorio</a></li>
-                <li><a href="/blog">Blog</a></li>
-                <li><a href="/contatti">Contatti</a></li>
-                <li><a href="/shop" class="nav__cta">Shop</a></li>
-            </ul>
-            <button class="nav__burger" id="navBurger" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </nav>
-    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-        <ul>
+<nav id="nav" class="nav">
+    <div class="nav__inner">
+        <a href="/" class="nav__logo" aria-label="Oleificio Cabriolu">
+            <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu" class="nav__logo-img">
+        </a>
+        <ul class="nav__links">
             <li><a href="/">Home</a></li>
             <li><a href="/storia">La Nostra Storia</a></li>
             <li><a href="/frangitura">Frangitura</a></li>
             <li><a href="/territorio">Territorio</a></li>
             <li><a href="/blog">Blog</a></li>
             <li><a href="/contatti">Contatti</a></li>
-            <li><a href="/shop">Shop</a></li>
+            <li class="nav__dropdown">
+                <a href="/shop" class="nav__cta">Shop <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style="margin-left:4px;vertical-align:middle"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <ul class="nav__sub">
+                    <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+                    <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+                    <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+                    <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+                    <li><a href="/shop/latte">Latte Professionali</a></li>
+                    <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+                </ul>
+            </li>
         </ul>
+        <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
     </div>
+</nav>
 
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/storia">La Nostra Storia</a></li>
+        <li><a href="/frangitura">Frangitura</a></li>
+        <li><a href="/territorio">Territorio</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/contatti">Contatti</a></li>
+        <li><a href="/shop">Shop</a></li>
+        <li class="mobile-menu__divider"></li>
+        <li><a href="/shop/evo-puro" class="mobile-menu__sub">Extravergine Puro</a></li>
+        <li><a href="/shop/olio-peperoncino" class="mobile-menu__sub">Olio al Peperoncino</a></li>
+        <li><a href="/shop/olio-basilico" class="mobile-menu__sub">Olio al Basilico</a></li>
+        <li><a href="/shop/olio-limone" class="mobile-menu__sub">Olio al Limone</a></li>
+        <li><a href="/shop/latte" class="mobile-menu__sub">Latte Professionali</a></li>
+        <li><a href="/shop/cofanetto" class="mobile-menu__sub">Cofanetto Luxury</a></li>
+    </ul>
+</div>
 
-    <!-- HERO -->
-    <section class="storia-hero">
-        <div class="storia-hero__bg"></div>
-        <div class="storia-hero__overlay"></div>
+<!-- CANVAS SFONDO STORIA -->
+    <canvas id="sc" aria-hidden="true"></canvas>
+
+    <!-- HERO STORIA (scroll 300vh) -->
+    <section id="storia-hero" class="storia-hero">
         <div class="storia-hero__content">
             <p class="storia-hero__eyebrow">Dal 1890 · Villacidro · Sardegna</p>
             <h1 class="storia-hero__title">Cinque generazioni,<br><span>un solo olio</span></h1>
             <p class="storia-hero__sub">Ai piedi del Monte Linas, nella terra rossa del Medio Campidano, la famiglia
                 Cabriolu coltiva olivi con la stessa passione da oltre 130 anni.</p>
         </div>
-        <div class="storia-hero__year">1890</div>
+        <div class="storia-hero__scroll">
+            <span>Scorri per esplorare</span>
+            <div class="storia-hero__scroll-bar"></div>
+        </div>
     </section>
 
+
     <!-- TIMELINE -->
-    <section class="timeline">
+    <section id="storia-timeline" class="timeline">
         <div class="timeline__intro">
             <h2>La nostra storia</h2>
             <p>Cinque generazioni di famiglia. Ogni capitolo scritto con olio, sudore e amore per questa terra
                 straordinaria.</p>
         </div>
         <div class="timeline__line">
+
             <div class="timeline__item">
+                <img src="/img/storia/storia-1890.webp" alt="Frantoio Cabriolu 1890" class="timeline__item__img">
                 <div class="timeline__year">1890</div>
                 <div class="timeline__gen">Prima Generazione · Nonno Antoniccu</div>
                 <h3 class="timeline__title">La macina di pietra</h3>
@@ -596,6 +695,7 @@
                     vera. I vicini cominciano a portare le loro olive. La reputazione dei Cabriolu nasce così, da una
                     macina e da un sogno.</p>
             </div>
+
             <div class="timeline__item">
                 <div class="timeline__year">1923</div>
                 <div class="timeline__gen">Seconda Generazione · Zio Giuanni</div>
@@ -606,7 +706,9 @@
                     invaiatura verde, quando i polifenoli sono al massimo. Quell'intuizione cambia tutto: l'olio dei
                     Cabriolu diventa il più ricercato del Medio Campidano.</p>
             </div>
+
             <div class="timeline__item">
+                <img src="/img/storia/storia-1940.webp" alt="Oleificio Cabriolu anni 40" class="timeline__item__img">
                 <div class="timeline__year">1961</div>
                 <div class="timeline__gen">Terza Generazione · Efisio e Maria</div>
                 <h3 class="timeline__title">Gli anni del miracolo</h3>
@@ -616,17 +718,23 @@
                     dell'olio sotto azoto. I ristoranti di Cagliari iniziano ad ordinare direttamente dall'oleificio.
                     L'olio Cabriolu entra nelle cucine migliori della Sardegna.</p>
             </div>
+
             <div class="timeline__item">
+                <img src="/img/storia/storia-1970.webp" alt="Modernizzazione frantoio anni 70"
+                    class="timeline__item__img">
                 <div class="timeline__year">1998</div>
                 <div class="timeline__gen">Quarta Generazione · Marco e Lucia</div>
                 <h3 class="timeline__title">La svolta della qualità</h3>
                 <p class="timeline__text">Marco studia agraria a Sassari, Lucia economia. Insieme modernizzano
                     l'oleificio senza snaturarlo: nuovo impianto a ciclo continuo, defogliatrice in linea, abbassamento
                     della temperatura di frangitura sotto i 27°C per preservare ogni molecola aromatica. Marco introduce
-                    la linea degli oli aromatici — peperoncino, basilico, limone — moliti in cofranto con le olive al
+                    la linea degli oli aromatici — peperoncino, basilico, limone — moliti in co-franto con le olive al
                     momento della raccolta. Zero additivi, zero infusioni: solo natura.</p>
             </div>
+
             <div class="timeline__item">
+                <img src="/img/storia/storia-oggi.webp" alt="Jessica e Mattia Cabriolu oggi"
+                    class="timeline__item__img">
                 <div class="timeline__year">2019</div>
                 <div class="timeline__gen">Quinta Generazione · Jessica e Mattia</div>
                 <h3 class="timeline__title">L'olio va nel mondo</h3>
@@ -636,6 +744,7 @@
                     Australia. Il sito racconta ogni bottiglia con la stessa trasparenza che i Cabriolu hanno sempre
                     messo nel lavoro. La storia continua — e il prossimo capitolo lo stiamo scrivendo insieme a voi.</p>
             </div>
+
         </div>
     </section>
 
@@ -669,9 +778,9 @@
                 <div class="valori__card">
                     <div class="valori__card__num">04</div>
                     <h3 class="valori__card__title">Trasparenza</h3>
-                    <p class="valori__card__text">L'olio non è filtrato: decanta naturalmente. Il leggero deposito che
-                        vedete sul fondo è un segno di autenticità, non un difetto. Vi diciamo tutto quello che c'è
-                        nella bottiglia.</p>
+                    <p class="valori__card__text">L'olio non è filtrato: decanta naturalmente. Il leggero deposito sul
+                        fondo è un segno di autenticità, non un difetto. Vi diciamo tutto quello che c'è nella
+                        bottiglia.</p>
                 </div>
                 <div class="valori__card">
                     <div class="valori__card__num">05</div>
@@ -692,12 +801,12 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="footer">
+    <footer class="footer" id="contatti">
         <div class="footer__inner">
             <div class="footer__brand">
                 <a href="/">
                     <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu"
-                        style="width:160px;height:auto;display:block;">
+                        style="width:160px;height:auto;display:block;margin-bottom:12px;">
                 </a>
                 <span class="footer__logo-sub">Oleificio · Dal 1890</span>
                 <p class="footer__tagline">Olio extravergine d'oliva artigianale, non filtrato, dal cuore della
@@ -705,14 +814,14 @@
                 <div class="footer__social">
                     <a href="https://www.instagram.com/oleificio.cabriolu/" target="_blank" rel="noopener"
                         aria-label="Instagram">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                         </svg>
                     </a>
                     <a href="https://www.facebook.com/oleificiocabriolu/" target="_blank" rel="noopener"
                         aria-label="Facebook">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                         </svg>
@@ -737,7 +846,7 @@
                     <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
                     <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
                     <li><a href="/shop/olio-limone">Olio al Limone</a></li>
-                    <li><a href="/shop/evo-puro">Latte Professionali</a></li>
+                    <li><a href="/shop/latte">Latte Professionali</a></li>
                     <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
                 </ul>
             </div>
@@ -792,18 +901,141 @@
     </div>
 
     <script>
-        // NAV scroll
-        window.addEventListener('scroll', function () {
-            document.getElementById('nav').classList.toggle('nav--scrolled', window.scrollY > 80);
-        });
-        // burger
-        document.getElementById('navBurger').addEventListener('click', function () {
-            document.getElementById('navLinks').classList.toggle('open');
-        });
-        // Timeline intersection
-        var items = document.querySelectorAll('.timeline__item,.valori__card');
-        var io = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('visible') }) }, { threshold: .15 });
-        items.forEach(function (el) { io.observe(el) });
+// Timeline + valori intersection observer
+        var items = document.querySelectorAll('.timeline__item, .valori__card');
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) e.target.classList.add('visible');
+            });
+        }, { threshold: .15 });
+        items.forEach(function (el) { io.observe(el); });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            /* ── CANVAS STORIA (200 frame) ── */
+            var TOTAL = 200;
+            var FOLDER = '/img/frames/storia/frame_';
+            var EXT = '.webp';
+            var canvas = document.getElementById('sc');
+            var ctx = canvas.getContext('2d');
+            var frames = [];
+            var cur = 0;
+
+            function pad(n) { return String(n).padStart(4, '0'); }
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                draw(cur);
+            }
+
+            function draw(idx) {
+                var img = frames[idx];
+                if (!img || !img.complete || !img.naturalWidth) return;
+                var cW = canvas.width, cH = canvas.height;
+                var iR = img.naturalWidth / img.naturalHeight, cR = cW / cH;
+                var dW, dH, dX, dY;
+                if (cR > iR) { dW = cW; dH = cW / iR; }
+                else { dH = cH; dW = cH * iR; }
+                dX = (cW - dW) / 2; dY = (cH - dH) / 2;
+                ctx.clearRect(0, 0, cW, cH);
+                ctx.drawImage(img, dX, dY, dW, dH);
+            }
+
+            function preload() {
+                var first = new Image();
+                first.onload = function () { frames[0] = first; resize(); };
+                first.src = FOLDER + '0001' + EXT;
+                for (var i = 2; i <= TOTAL; i++) {
+                    var img = new Image();
+                    img.src = FOLDER + pad(i) + EXT;
+                    frames[i - 1] = img;
+                }
+            }
+
+            window.addEventListener('resize', resize);
+            preload();
+
+            /* ── GSAP ── */
+            gsap.registerPlugin(ScrollTrigger);
+
+            var hero = document.getElementById('storia-hero');
+            var content = document.querySelector('.storia-hero__content');
+            var scrollInd = document.querySelector('.storia-hero__scroll');
+
+            // Frame scrubbing sul canvas
+            ScrollTrigger.create({
+                trigger: hero,
+                start: 'top top',
+                end: 'bottom bottom',
+                onUpdate: function (self) {
+                    var f = Math.min(TOTAL - 1, Math.floor(self.progress * (TOTAL - 1)));
+                    if (f !== cur) { cur = f; draw(cur); }
+                }
+            });
+
+            // Testo fade-in all'inizio
+            var tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: hero,
+                    start: 'top top',
+                    end: '15% top',
+                    scrub: 1
+                }
+            });
+            tl.to('.storia-hero__eyebrow', { opacity: 1, y: 0, duration: .3 }, 0);
+            tl.to('.storia-hero__title', { opacity: 1, y: 0, duration: .3 }, 0.1);
+            tl.to('.storia-hero__sub', { opacity: 1, y: 0, duration: .3 }, 0.2);
+
+            // Scroll indicator — appare subito, sparisce scrollando
+            gsap.to(scrollInd, {
+                opacity: 1,
+                duration: 1,
+                delay: .5
+            });
+            gsap.to(scrollInd, {
+                opacity: 0,
+                scrollTrigger: {
+                    trigger: hero,
+                    start: '5% top',
+                    end: '10% top',
+                    scrub: true
+                }
+            });
+
+            // Testo + canvas fade-out prima che arrivi la timeline
+            gsap.to([content, canvas], {
+                opacity: 0,
+                scrollTrigger: {
+                    trigger: hero,
+                    start: '80%',
+                    end: '100%',
+                    scrub: true
+                }
+            });
+
+            // NAV scroll
+            ScrollTrigger.create({
+                start: 80,
+                onUpdate: function () {
+                    document.getElementById('nav').classList.toggle('nav--scrolled', window.scrollY > 80);
+                }
+            });
+
+            // IntersectionObserver per timeline + valori (sostituisce il vecchio)
+            var items = document.querySelectorAll('.timeline__item, .valori__card');
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) e.target.classList.add('visible');
+                });
+            }, { threshold: .15 });
+            items.forEach(function (el) { io.observe(el); });
+
+        })();
     </script>
     <script src="/js/common.js"></script>
 </body>

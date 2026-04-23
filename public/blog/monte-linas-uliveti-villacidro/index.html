@@ -514,42 +514,61 @@
 
 <body>
 
-    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/storia">La Nostra Storia</a></li>
-                <li><a href="/frangitura">Frangitura</a></li>
-                <li><a href="/territorio">Territorio</a></li>
-                <li><a href="/blog">Blog</a></li>
-                <li><a href="/contatti">Contatti</a></li>
-                <li><a href="/shop">Shop</a></li>
-            </ul>
-        </nav>
+
+
+
+    <!-- NAV -->
+<nav id="nav" class="nav">
+    <div class="nav__inner">
+        <a href="/" class="nav__logo" aria-label="Oleificio Cabriolu">
+            <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu" class="nav__logo-img">
+        </a>
+        <ul class="nav__links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/storia">La Nostra Storia</a></li>
+            <li><a href="/frangitura">Frangitura</a></li>
+            <li><a href="/territorio">Territorio</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/contatti">Contatti</a></li>
+            <li class="nav__dropdown">
+                <a href="/shop" class="nav__cta">Shop <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style="margin-left:4px;vertical-align:middle"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <ul class="nav__sub">
+                    <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+                    <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+                    <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+                    <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+                    <li><a href="/shop/latte">Latte Professionali</a></li>
+                    <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+                </ul>
+            </li>
+        </ul>
+        <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
     </div>
+</nav>
 
-    <nav id="nav" class="nav">
-        <div class="nav__inner">
-            <a href="/" class="nav__logo" aria-label="Oleificio Cabriolu">
-                <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu"
-                    class="nav__logo-img">
-            </a>
-            <ul class="nav__links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/storia">La Nostra Storia</a></li>
-                <li><a href="/frangitura">Frangitura</a></li>
-                <li><a href="/territorio">Territorio</a></li>
-                <li><a href="/blog">Blog</a></li>
-                <li><a href="/contatti">Contatti</a></li>
-                <li><a href="/shop" class="nav__cta">Shop</a></li>
-            </ul>
-            <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </nav>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/storia">La Nostra Storia</a></li>
+        <li><a href="/frangitura">Frangitura</a></li>
+        <li><a href="/territorio">Territorio</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/contatti">Contatti</a></li>
+        <li><a href="/shop">Shop</a></li>
+        <li class="mobile-menu__divider"></li>
+        <li><a href="/shop/evo-puro" class="mobile-menu__sub">Extravergine Puro</a></li>
+        <li><a href="/shop/olio-peperoncino" class="mobile-menu__sub">Olio al Peperoncino</a></li>
+        <li><a href="/shop/olio-basilico" class="mobile-menu__sub">Olio al Basilico</a></li>
+        <li><a href="/shop/olio-limone" class="mobile-menu__sub">Olio al Limone</a></li>
+        <li><a href="/shop/latte" class="mobile-menu__sub">Latte Professionali</a></li>
+        <li><a href="/shop/cofanetto" class="mobile-menu__sub">Cofanetto Luxury</a></li>
+    </ul>
+</div>
 
-    <header class="art-hero">
+<header class="art-hero">
         <div class="art-hero__bg">
             <img src="/img/blog/monte-linas-uliveti.webp"
                 alt="Uliveti di Villacidro ai piedi del Monte Linas — Sardegna" loading="eager">

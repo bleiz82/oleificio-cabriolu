@@ -1,10 +1,18 @@
 (function () {
     'use strict';
 
-    function initBurger() {
-        var burger = document.getElementById('navBurger');
-        var menu = document.getElementById('mobileMenu');
-        if (!burger || !menu) return;
+    /* -- NAV SCROLL -- */
+    var nav = document.getElementById('nav');
+    if (nav) {
+        window.addEventListener('scroll', function () {
+            nav.classList.toggle('nav--scrolled', window.scrollY > 80);
+        }, { passive: true });
+    }
+
+    /* -- BURGER + MOBILE MENU -- */
+    var burger = document.getElementById('navBurger');
+    var menu = document.getElementById('mobileMenu');
+    if (burger && menu) {
         burger.addEventListener('click', function () {
             var isOpen = menu.classList.toggle('mobile-menu--open');
             burger.classList.toggle('nav__burger--open');
@@ -23,14 +31,33 @@
         });
     }
 
-    function initChatbot() {
-        var fab = document.getElementById('chatbotFab');
-        var panel = document.getElementById('chatbotPanel');
-        var close = document.getElementById('chatbotClose');
-        var input = document.getElementById('chatbotInput');
-        var send = document.getElementById('chatbotSend');
-        var body = document.getElementById('chatbotBody');
-        if (!fab || !panel) return;
+    /* -- DROPDOWN SHOP (touch devices) -- */
+    var dropdown = document.querySelector('.nav__dropdown');
+    if (dropdown) {
+        var cta = dropdown.querySelector('.nav__cta');
+        if (cta && 'ontouchstart' in window) {
+            cta.addEventListener('click', function (e) {
+                if (!dropdown.classList.contains('nav__dropdown--open')) {
+                    e.preventDefault();
+                    dropdown.classList.add('nav__dropdown--open');
+                }
+            });
+            document.addEventListener('click', function (e) {
+                if (!dropdown.contains(e.target)) {
+                    dropdown.classList.remove('nav__dropdown--open');
+                }
+            });
+        }
+    }
+
+    /* -- CHATBOT -- */
+    var fab = document.getElementById('chatbotFab');
+    var panel = document.getElementById('chatbotPanel');
+    var close = document.getElementById('chatbotClose');
+    var input = document.getElementById('chatbotInput');
+    var send = document.getElementById('chatbotSend');
+    var body = document.getElementById('chatbotBody');
+    if (fab && panel) {
         fab.addEventListener('click', function () {
             var open = panel.classList.toggle('chatbot-panel--open');
             panel.setAttribute('aria-hidden', open ? 'false' : 'true');
@@ -59,8 +86,5 @@
         if (send) send.addEventListener('click', sendMsg);
         if (input) input.addEventListener('keydown', function (e) { if (e.key === 'Enter') sendMsg(); });
     }
-
-    initBurger();
-    initChatbot();
 
 })();
