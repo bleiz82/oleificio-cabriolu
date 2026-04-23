@@ -1,6 +1,5 @@
 ﻿node_modules/
 public/img/frames/desktop/
-public/img/frames/mobile/
 *.mp4
 *.webm
 CAMERA_starts_extreme_202604151537.mp4
