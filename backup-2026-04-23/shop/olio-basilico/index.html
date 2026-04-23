@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Olio al Basilico — Oleificio Cabriolu</title>
+    <meta name="description"
+        content="Olio Extravergine d'Oliva aromatico al Basilico fresco. Co-molitura a freddo, zero essenze artificiali. Dal 1890, Villacidro, Sardegna.">
+    <link rel="canonical" href="https://www.oleificiocabriolu.it/shop/olio-basilico">
+    <link rel="preload" href="/fonts/cormorant-garamond-v16-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/inter-v13-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/shop.css">
+    <style>
+        :root {
+            --gold: #c8a96e;
+            --dark: #000;
+            --serif: 'Cormorant Garamond', Georgia, serif;
+            --sans: 'Inter', system-ui, sans-serif
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: var(--sans);
+            overflow-x: hidden
+        }
+
+        #productCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none
+        }
+
+        .cinema {
+            position: relative;
+            z-index: 1;
+            height: 500vh
+        }
+
+        .cinema__hint {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            font-size: .8rem;
+            color: rgba(255, 255, 255, .45);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeUp 1.2s .5s both;
+            transition: opacity .5s
+        }
+
+        .cinema__hint.hidden {
+            opacity: 0;
+            pointer-events: none
+        }
+
+        .cinema__cta {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            color: var(--gold);
+            background: rgba(0, 0, 0, .6);
+            border: 1px solid var(--gold);
+            padding: 14px 40px;
+            text-decoration: none;
+            border-radius: 2px;
+            letter-spacing: 1px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .6s, background .3s
+        }
+
+        .cinema__cta.visible {
+            opacity: 1;
+            pointer-events: all
+        }
+
+        .cinema__cta:hover {
+            background: var(--gold);
+            color: #000
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0)
+            }
+        }
+
+        .product-page {
+            position: relative;
+            z-index: 2;
+            background: #000;
+            padding: 80px 0 0
+        }
+
+        .product-page__inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5vw;
+            align-items: start
+        }
+
+        .product-media {
+            position: sticky;
+            top: 40px
+        }
+
+        .product-media__main {
+            width: 100%;
+            aspect-ratio: 9/16;
+            max-height: 75vh;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .product-media__main video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px
+        }
+
+        .product-media__format-label {
+            text-align: center;
+            font-size: .78rem;
+            color: rgba(255, 255, 255, .4);
+            margin-top: 10px;
+            letter-spacing: 1px
+        }
+
+        .product-detail {
+            padding-top: 20px
+        }
+
+        .product-detail__breadcrumb {
+            font-size: .75rem;
+            color: rgba(255, 255, 255, .35);
+            margin-bottom: 16px
+        }
+
+        .product-detail__breadcrumb a {
+            color: rgba(255, 255, 255, .5);
+            text-decoration: none
+        }
+
+        .product-detail__breadcrumb a:hover {
+            color: var(--gold)
+        }
+
+        .product-detail__tag {
+            display: inline-block;
+            font-size: .65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 4px 12px;
+            border-radius: 2px;
+            margin-bottom: 14px
+        }
+
+        .product-detail__title {
+            font-family: var(--serif);
+            font-size: 2.6rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 8px
+        }
+
+        .product-detail__cultivar {
+            font-size: .85rem;
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 12px;
+            letter-spacing: .5px
+        }
+
+        .product-detail__rating {
+            font-size: .8rem;
+            color: var(--gold);
+            margin-bottom: 20px
+        }
+
+        .product-detail__desc {
+            font-size: .92rem;
+            line-height: 1.75;
+            color: rgba(255, 255, 255, .65);
+            margin-bottom: 16px
+        }
+
+        .product-formats {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 24px
+        }
+
+        .product-formats__btn {
+            padding: 10px 20px;
+            border: 1px solid rgba(255, 255, 255, .15);
+            background: transparent;
+            color: #fff;
+            font-family: var(--sans);
+            font-size: .85rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all .3s
+        }
+
+        .product-formats__btn:hover {
+            border-color: var(--gold);
+            color: var(--gold)
+        }
+
+        .product-formats__btn.active {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+            font-weight: 600
+        }
+
+        .product-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 24px
+        }
+
+        .product-detail__price {
+            font-family: var(--serif);
+            font-size: 2rem;
+            font-weight: 700
+        }
+
+        .product-detail__price-per {
+            font-size: .8rem;
+            color: rgba(255, 255, 255, .4)
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 40px
+        }
+
+        .product-qty {
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 4px
+        }
+
+        .product-qty__btn {
+            width: 42px;
+            height: 42px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color .3s
+        }
+
+        .product-qty__btn:hover {
+            color: var(--gold)
+        }
+
+        .product-qty__val {
+            width: 40px;
+            text-align: center;
+            font-size: 1rem;
+            color: #fff
+        }
+
+        .product-cart {
+            flex: 1;
+            height: 42px;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-family: var(--sans);
+            font-size: .9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background .3s
+        }
+
+        .product-cart:hover {
+            background: #b8963e
+        }
+
+        .product-section {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 5vw
+        }
+
+        .product-section__title {
+            font-family: var(--serif);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 12px
+        }
+
+        .product-section__title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--gold)
+        }
+
+        .tasting-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start
+        }
+
+        .tasting-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 16px
+        }
+
+        .tasting-bar__label {
+            font-size: .8rem;
+            color: rgba(255, 255, 255, .6);
+            margin-bottom: 4px
+        }
+
+        .tasting-bar__track {
+            height: 6px;
+            background: rgba(255, 255, 255, .08);
+            border-radius: 3px;
+            overflow: hidden
+        }
+
+        .tasting-bar__fill {
+            height: 100%;
+            background: var(--gold);
+            border-radius: 3px;
+            width: 0;
+            transition: width 1.2s ease
+        }
+
+        .tasting-text p {
+            font-size: .92rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, .65);
+            margin-bottom: 14px
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px
+        }
+
+        .spec-card {
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 6px;
+            padding: 20px
+        }
+
+        .spec-card__label {
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gold);
+            margin-bottom: 6px
+        }
+
+        .spec-card__value {
+            font-size: .95rem;
+            color: rgba(255, 255, 255, .8)
+        }
+
+        .pairing-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px
+        }
+
+        .pairing-card {
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 8px;
+            padding: 28px 20px;
+            text-align: center
+        }
+
+        .pairing-card__emoji {
+            font-size: 2.2rem;
+            margin-bottom: 10px
+        }
+
+        .pairing-card__name {
+            font-family: var(--serif);
+            font-size: 1rem;
+            margin-bottom: 4px
+        }
+
+        .pairing-card__desc {
+            font-size: .78rem;
+            color: rgba(255, 255, 255, .45)
+        }
+
+        .product-footer {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: .75rem;
+            color: rgba(255, 255, 255, .3);
+            background: #000
+        }
+
+        .product-footer a {
+            color: var(--gold);
+            text-decoration: none
+        }
+
+        @media(max-width:900px) {
+            .product-page__inner {
+                grid-template-columns: 1fr;
+                gap: 30px
+            }
+
+            .product-media {
+                position: static
+            }
+
+            .product-media__main {
+                max-height: 60vh
+            }
+
+            .tasting-grid {
+                grid-template-columns: 1fr
+            }
+
+            .specs-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .pairing-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(max-width:600px) {
+            .product-detail__title {
+                font-size: 1.8rem
+            }
+
+            .cinema__hint {
+                font-size: .7rem;
+                bottom: 40px
+            }
+
+            .specs-grid {
+                grid-template-columns: 1fr
+            }
+
+            .pairing-grid {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <!-- NAV -->
+<nav id="nav" class="nav">
+    <div class="nav__inner">
+        <a href="/" class="nav__logo" aria-label="Oleificio Cabriolu">
+            <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu" class="nav__logo-img">
+        </a>
+        <ul class="nav__links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/storia">La Nostra Storia</a></li>
+            <li><a href="/frangitura">Frangitura</a></li>
+            <li><a href="/territorio">Territorio</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/contatti">Contatti</a></li>
+            <li class="nav__dropdown">
+                <a href="/shop" class="nav__cta">Shop <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style="margin-left:4px;vertical-align:middle"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <ul class="nav__sub">
+                    <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+                    <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+                    <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+                    <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+                    <li><a href="/shop/latte">Latte Professionali</a></li>
+                    <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+                </ul>
+            </li>
+        </ul>
+        <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/storia">La Nostra Storia</a></li>
+        <li><a href="/frangitura">Frangitura</a></li>
+        <li><a href="/territorio">Territorio</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/contatti">Contatti</a></li>
+        <li><a href="/shop">Shop</a></li>
+        <li class="mobile-menu__divider"></li>
+        <li><a href="/shop/evo-puro" class="mobile-menu__sub">Extravergine Puro</a></li>
+        <li><a href="/shop/olio-peperoncino" class="mobile-menu__sub">Olio al Peperoncino</a></li>
+        <li><a href="/shop/olio-basilico" class="mobile-menu__sub">Olio al Basilico</a></li>
+        <li><a href="/shop/olio-limone" class="mobile-menu__sub">Olio al Limone</a></li>
+        <li><a href="/shop/latte" class="mobile-menu__sub">Latte Professionali</a></li>
+        <li><a href="/shop/cofanetto" class="mobile-menu__sub">Cofanetto Luxury</a></li>
+    </ul>
+</div>
+
+<canvas id="productCanvas" aria-hidden="true"></canvas>
+
+    <div class="cinema">
+        <p class="cinema__hint" id="scrollHint">&#8595; Scorri per esplorare &#8595;</p>
+        <a class="cinema__cta" id="shopCta" href="#product">Scopri e Acquista &#8595;</a>
+    </div>
+
+    <div class="product-page" id="product">
+        <div class="product-page__inner">
+
+            <div class="product-media">
+                <div class="product-media__main">
+                    <video autoplay loop muted playsinline>
+                        <source src="/video/prodotti-basilico-mobile.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <p class="product-media__format-label">Bottiglia 0.25L</p>
+            </div>
+
+            <div class="product-detail">
+                <p class="product-detail__breadcrumb"><a href="/">Home</a> / <a href="/shop">Shop</a> / Olio al Basilico
+                </p>
+                <span class="product-detail__tag">Aromatico — Freschezza Mediterranea</span>
+                <h1 class="product-detail__title">Olio al Basilico</h1>
+                <p class="product-detail__cultivar">Olio EVO Bosana · Basilico Fresco di Villacidro · Co-Molitura a
+                    Freddo</p>
+                <p class="product-detail__rating">&#9733;&#9733;&#9733;&#9733;&#9733; 4.9/5 — 97 recensioni</p>
+
+                <p class="product-detail__desc">
+                    Il profumo del Mediterraneo catturato in bottiglia. Il basilico fresco — raccolto nei campi di
+                    Villacidro
+                    nelle prime ore del mattino, quando la concentrazione di oli essenziali nelle foglie raggiunge il
+                    picco massimo —
+                    viene portato direttamente al frantoio e molito insieme alle olive Bosana ancora calde di sole.
+                    Nessuna essenza aggiunta, nessun processo chimico, nessuna infusione a posteriori: solo la
+                    co-molitura artigianale
+                    che preserva intatti tutti gli oli essenziali del basilico fresco.
+                </p>
+                <p class="product-detail__desc">
+                    Il colore è un verde brillante e profondo, con sfumature smeraldo che raccontano la clorofilla viva
+                    del basilico appena colto. Al naso è un bouquet inconfondibile: basilico genovese intenso e pulito,
+                    menta delicata, un soffio di anice e il sottofondo erbaceo dell'oliva verde appena franta.
+                    È il profumo di una cucina italiana d'estate, di un orto al tramonto, di mani che sfogliano il
+                    basilico —
+                    concentrato in un filo d'olio.
+                </p>
+                <p class="product-detail__desc">
+                    In bocca è avvolgente, quasi cremoso, con una dolcezza vegetale che ricorda il pesto appena pestato
+                    nel mortaio.
+                    L'olio di Bosana fornisce la struttura — rotonda, grassa, persistente — mentre il basilico aggiunge
+                    una freschezza vivace che alleggerisce ogni boccone. La chiusura è pulita, leggermente pepata,
+                    con un retrogusto di foglia verde e chiodi di garofano che invita al piatto successivo.
+                </p>
+                <p class="product-detail__desc">
+                    Ogni bottiglia è il risultato di una singola spremitura con basilico freschissimo, mai essiccato,
+                    mai congelato.
+                    Produzione artigianale e stagionale — disponibile fino ad esaurimento scorte della raccolta annuale.
+                </p>
+
+                <div class="product-formats" id="formats">
+                    <button class="product-formats__btn active">0.25 L</button>
+                </div>
+
+                <div class="product-price-row">
+                    <span class="product-detail__price" id="priceTag">€8,90</span>
+                    <span class="product-detail__price-per">€35,60/L</span>
+                </div>
+
+                <div class="product-actions">
+                    <div class="product-qty">
+                        <button class="product-qty__btn" id="qtyMinus">&#8722;</button>
+                        <span class="product-qty__val" id="qtyVal">1</span>
+                        <button class="product-qty__btn" id="qtyPlus">+</button>
+                    </div>
+                    <button class="product-cart" id="cartBtn">Aggiungi al Carrello</button>
+                </div>
+            </div>
+        </div>
+
+        <section class="product-section">
+            <h2 class="product-section__title">Note di Degustazione</h2>
+            <div class="tasting-grid">
+                <div class="tasting-bars">
+                    <div>
+                        <p class="tasting-bar__label">Fruttato verde (oliva)</p>
+                        <div class="tasting-bar__track">
+                            <div class="tasting-bar__fill" data-width="72"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="tasting-bar__label">Erbe aromatiche (basilico)</p>
+                        <div class="tasting-bar__track">
+                            <div class="tasting-bar__fill" data-width="95"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="tasting-bar__label">Freschezza mentolata</p>
+                        <div class="tasting-bar__track">
+                            <div class="tasting-bar__fill" data-width="82"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="tasting-bar__label">Dolcezza vegetale</p>
+                        <div class="tasting-bar__track">
+                            <div class="tasting-bar__fill" data-width="68"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="tasting-bar__label">Piccante</p>
+                        <div class="tasting-bar__track">
+                            <div class="tasting-bar__fill" data-width="25"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="tasting-bar__label">Intensità aromatica</p>
+                        <div class="tasting-bar__track">
+                            <div class="tasting-bar__fill" data-width="90"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="tasting-bar__label">Equilibrio complessivo</p>
+                        <div class="tasting-bar__track">
+                            <div class="tasting-bar__fill" data-width="93"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tasting-text">
+                    <p>Il primo impatto olfattivo è una folata di basilico fresco — nitido, verde, intenso — come
+                        sfregare
+                        una foglia tra le dita in un orto estivo. Seguono note secondarie di menta piperita, anice
+                        stellato,
+                        un delicato sentore di chiodi di garofano e cannella, tipici del basilico di qualità superiore
+                        raccolto
+                        al momento giusto. Sotto il bouquet aromatico, l'oliva Bosana emerge con le sue note di erba
+                        tagliata
+                        e mandorla verde.</p>
+                    <p>Al palato l'olio è morbido e quasi cremoso, con una dolcezza vegetale immediata che avvolge la
+                        lingua
+                        come un pesto vellutato. Il basilico si fonde perfettamente con la struttura grassa della
+                        Bosana,
+                        creando un equilibrio raro tra potenza aromatica e finezza gustativa. Il centro palato rivela
+                        sfumature
+                        di lattuga romana e sedano bianco, mentre il finale è fresco e pulito, con un leggero pizzicore
+                        di pepe bianco e un retrogusto di foglia verde e nocciola che persiste piacevolmente per oltre
+                        20 secondi.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="product-section">
+            <h2 class="product-section__title">Scheda Tecnica</h2>
+            <div class="specs-grid">
+                <div class="spec-card">
+                    <p class="spec-card__label">Base olearia</p>
+                    <p class="spec-card__value">Extravergine di oliva Bosana, Villacidro</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Ingrediente aromatico</p>
+                    <p class="spec-card__value">Basilico fresco di Villacidro, raccolto all'alba</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Metodo di produzione</p>
+                    <p class="spec-card__value">Co-molitura a freddo (olive + basilico nel frantoio)</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Temperatura di lavorazione</p>
+                    <p class="spec-card__value">&lt; 27°C costanti durante l'intero ciclo</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Additivi / essenze</p>
+                    <p class="spec-card__value">Nessuno — zero aromi artificiali o di sintesi</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Filtrazione</p>
+                    <p class="spec-card__value">Non filtrato — decantazione naturale</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Formato disponibile</p>
+                    <p class="spec-card__value">Bottiglia 0.25L in vetro scuro anti-UV</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Conservazione ideale</p>
+                    <p class="spec-card__value">14–18°C, al riparo da luce e fonti di calore</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Shelf life</p>
+                    <p class="spec-card__value">18 mesi dalla data di imbottigliamento</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Origine</p>
+                    <p class="spec-card__value">Villacidro, Medio Campidano, Sardegna, Italia</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Produzione</p>
+                    <p class="spec-card__value">Artigianale, stagionale, fino a esaurimento</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Ingredienti (etichetta)</p>
+                    <p class="spec-card__value">Olio extravergine d'oliva, basilico fresco</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="product-section">
+            <h2 class="product-section__title">Abbinamenti Consigliati</h2>
+            <div class="pairing-grid">
+                <div class="pairing-card">
+                    <p class="pairing-card__emoji">&#127837;</p>
+                    <p class="pairing-card__name">Pasta Fresca</p>
+                    <p class="pairing-card__desc">Trofie, gnocchi, ravioli, pasta al pomodoro fresco</p>
+                </div>
+                <div class="pairing-card">
+                    <p class="pairing-card__emoji">&#129367;</p>
+                    <p class="pairing-card__name">Caprese e Insalate</p>
+                    <p class="pairing-card__desc">Mozzarella di bufala, pomodori, panzanella, riso freddo</p>
+                </div>
+                <div class="pairing-card">
+                    <p class="pairing-card__emoji">&#128031;</p>
+                    <p class="pairing-card__name">Pesce Delicato</p>
+                    <p class="pairing-card__desc">Carpaccio di branzino, tartare di gamberi, pesce al forno</p>
+                </div>
+                <div class="pairing-card">
+                    <p class="pairing-card__emoji">&#127813;</p>
+                    <p class="pairing-card__name">Verdure e Sughi</p>
+                    <p class="pairing-card__desc">Melanzane, zucchine grigliate, sughi freschi, minestrone</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="product-footer" id="contatti">
+            <p>&copy; 2026 Oleificio Cabriolu — Tutti i diritti riservati</p>
+            <p>Sito web by <a href="https://digidentityagency.it" target="_blank" rel="noopener">DigIdentity Agency</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            /* ── CANVAS SCROLL (240 frame) ── */
+            var TOTAL = 240;
+            var PATH = '/img/frames/basilico-desktop/frame_';
+            var EXT = '.webp';
+            var canvas = document.getElementById('productCanvas');
+            var ctx = canvas.getContext('2d');
+            var frames = [];
+            var currentFrame = 0;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                drawFrame(currentFrame);
+            }
+
+            function drawFrame(idx) {
+                if (!frames[idx] || !frames[idx].complete) return;
+                var img = frames[idx];
+                var cW = canvas.width, cH = canvas.height;
+                var iR = img.naturalWidth / img.naturalHeight;
+                var cR = cW / cH;
+                var dW, dH, dX, dY;
+                if (cR > iR) { dW = cW; dH = cW / iR; }
+                else { dH = cH; dW = cH * iR; }
+                dX = (cW - dW) / 2;
+                dY = (cH - dH) / 2;
+                ctx.drawImage(img, dX, dY, dW, dH);
+            }
+
+            function preloadFrames() {
+                for (var i = 1; i <= TOTAL; i++) {
+                    var img = new Image();
+                    img.src = PATH + String(i).padStart(4, '0') + EXT;
+                    frames[i - 1] = img;
+                }
+                frames[0].onload = function () { drawFrame(0); };
+            }
+
+            var cinema = document.querySelector('.cinema');
+            var hint = document.getElementById('scrollHint');
+            var cta = document.getElementById('shopCta');
+            var ticking = false;
+
+            window.addEventListener('scroll', function () {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(function () {
+                    var rect = cinema.getBoundingClientRect();
+                    var scrollable = cinema.offsetHeight - window.innerHeight;
+                    var scrolled = -rect.top;
+                    var progress = Math.max(0, Math.min(scrolled / scrollable, 1));
+                    var f = Math.round(progress * (TOTAL - 1));
+                    if (f !== currentFrame) { currentFrame = f; drawFrame(f); }
+                    if (hint) { if (progress > 0.08) hint.classList.add('hidden'); else hint.classList.remove('hidden'); }
+                    if (cta) { if (progress > 0.7) cta.classList.add('visible'); else cta.classList.remove('visible'); }
+                    ticking = false;
+                });
+            }, { passive: true });
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            preloadFrames();
+
+            /* ── QTY + CART ── */
+            var price = 8.90;
+            var qty = 1;
+
+            document.getElementById('qtyMinus').addEventListener('click', function () {
+                qty = Math.max(1, qty - 1);
+                document.getElementById('qtyVal').textContent = qty;
+                document.getElementById('priceTag').textContent = '€' + (price * qty).toFixed(2).replace('.', ',');
+            });
+
+            document.getElementById('qtyPlus').addEventListener('click', function () {
+                qty++;
+                document.getElementById('qtyVal').textContent = qty;
+                document.getElementById('priceTag').textContent = '€' + (price * qty).toFixed(2).replace('.', ',');
+            });
+
+            document.getElementById('cartBtn').addEventListener('click', function () {
+                alert('Aggiunto al carrello:\n' + qty + '× Olio al Basilico 0.25L — €' + (price * qty).toFixed(2).replace('.', ','));
+            });
+
+            /* ── TASTING BARS ── */
+            var bars = document.querySelectorAll('.tasting-bar__fill');
+            var barsAnimated = false;
+            window.addEventListener('scroll', function () {
+                if (barsAnimated) return;
+                var allVisible = true;
+                bars.forEach(function (bar) {
+                    if (bar.getBoundingClientRect().top < window.innerHeight * 0.85) {
+                        bar.style.width = bar.dataset.width + '%';
+                    } else {
+                        allVisible = false;
+                    }
+                });
+                if (allVisible) barsAnimated = true;
+            }, { passive: true });
+
+            /* ── SMOOTH SCROLL CTA ── */
+            var shopCta = document.getElementById('shopCta');
+            if (shopCta) {
+                shopCta.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.getElementById('product').scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+
+        })();
+    </script>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer__inner">
+            <div class="footer__brand">
+                <a href="/" class="nav__logo">
+                    <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu"
+                        class="nav__logo-img" width="160" height="auto">
+                </a>
+                <span class="footer__logo-sub">Oleificio · Dal 1890</span>
+                <p class="footer__tagline">Olio extravergine d'oliva artigianale, non filtrato, dal cuore della
+                    Sardegna.</p>
+                <div class="footer__social">
+                    <a href="https://www.instagram.com/oleificio.cabriolu/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/oleificiocabriolu/" target="_blank" rel="noopener"
+                        aria-label="Facebook">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer__nav">
+                <h4>Navigazione</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/storia">La Nostra Storia</a></li>
+                    <li><a href="/frangitura">Frangitura</a></li>
+                    <li><a href="/territorio">Territorio</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/shop">Shop</a></li>
+                </ul>
+            </div>
+            <div class="footer__nav">
+                <h4>Prodotti</h4>
+                <ul>
+                    <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+                    <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+                    <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+                    <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+                    <li><a href="/shop/latte">Latte Professionali</a></li>
+                    <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+                </ul>
+            </div>
+            <div class="footer__contact">
+                <h4>Contatti</h4>
+                <p>Oleificio Cabriolu snc</p>
+                <p>Via Umberto I, Villacidro (SU)</p>
+                <p>Sardegna, Italia</p>
+                <p style="margin-top:12px"><a href="tel:+390709316xx">+39 070 9316XX</a></p>
+                <p><a href="mailto:info@oleificiocabriolu.it">info@oleificiocabriolu.it</a></p>
+                <p style="margin-top:12px;font-size:.8rem;color:rgba(250,246,240,.35)">Lun–Sab: 8:00–13:00 / 15:00–18:00
+                </p>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>© 2026 Oleificio Cabriolu snc — P.IVA 01234567890</p>
+            <div class="footer__legal">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/cookie">Cookie Policy</a>
+            </div>
+            <p class="footer__credit">Sito realizzato da <a href="https://digidentityagency.it" target="_blank"
+                    rel="noopener">DigIdentity Agency</a></p>
+        </div>
+    </footer>
+
+    <!-- WATERMARK -->
+    <div class="watermark-wrap">
+        <div class="watermark-track">
+            <span>BASILICO - </span>
+            <span>BASILICO - </span>
+            <span>BASILICO - </span>
+            <span>BASILICO - </span>
+        </div>
+    </div>
+
+    <!-- CHATBOT FAB -->
+    <button class="chatbot-fab" id="chatbotFab" aria-label="Assistente virtuale">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
+        </svg>
+    </button>
+    <div class="chatbot-panel" id="chatbotPanel" aria-hidden="true">
+        <div class="chatbot-panel__header">
+            <span>Assistente Cabriolu</span>
+            <button id="chatbotClose">✕</button>
+        </div>
+        <div class="chatbot-panel__body" id="chatbotBody">
+            <p class="chatbot-panel__welcome">Ciao! Chiedimi tutto sui nostri oli, spedizioni, o prenota una visita al
+                frantoio.</p>
+        </div>
+        <div class="chatbot-panel__input">
+            <input type="text" id="chatbotInput" placeholder="Scrivi un messaggio..." aria-label="Messaggio">
+            <button id="chatbotSend">→</button>
+        </div>
+    </div>
+    <script src="/js/common.js"></script>
+
+</body>
+
+</html>

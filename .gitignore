@@ -1,5 +1,3 @@
 ﻿node_modules/
-public/img/frames/desktop/
-*.mp4
-*.webm
-CAMERA_starts_extreme_202604151537.mp4
+.DS_Store
+dist/

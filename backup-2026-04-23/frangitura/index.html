@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>La Frangitura — Oleificio Cabriolu</title>
+    <meta name="description"
+        content="Dal campo al frantoio in meno di 24 ore. Scopri il processo di frangitura a freddo dell'Oleificio Cabriolu: raccolta, molitura, estrazione, conservazione.">
+    <link rel="canonical" href="https://www.oleificiocabriolu.it/frangitura">
+    <link rel="preload" href="/fonts/cormorant-garamond-v16-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/inter-v13-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* ── CANVAS SCROLL ── */
+        #frang-canvas-wrap {
+            position: relative;
+            height: 500vh;
+        }
+
+        #frang-canvas-sticky {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background: var(--black);
+        }
+
+        #fc {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Testi overlay canvas */
+        .fc-text {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 5vw;
+            max-width: 520px;
+            z-index: 6;
+            pointer-events: none;
+        }
+
+        .fc-text.right {
+            left: auto;
+            right: 0;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .fc-text.center {
+            max-width: 700px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            align-items: center;
+            text-align: center;
+        }
+
+        .fc-text.left {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.45) 65%, transparent 100%);
+        }
+
+        .fc-text.right {
+            background: linear-gradient(to left, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.45) 65%, transparent 100%);
+        }
+
+        .fc-text.center {
+            background: radial-gradient(ellipse 85% 70% at 50% 50%, rgba(0, 0, 0, 0.78) 0%, transparent 100%);
+        }
+
+        .fc-text.active {
+            display: flex;
+            animation: fcFadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fcFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fc-text__step {
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .fc-text__num {
+            font-family: var(--font-display);
+            font-size: clamp(5rem, 12vw, 9rem);
+            font-weight: 700;
+            color: rgba(200, 169, 110, 0.07);
+            line-height: 1;
+            margin-bottom: -16px;
+        }
+
+        .fc-text__title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            font-weight: 700;
+            color: var(--cream);
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .fc-text__title span {
+            color: var(--gold);
+        }
+
+        .fc-text__desc {
+            font-size: clamp(0.88rem, 1.3vw, 1rem);
+            color: rgba(250, 246, 240, 0.65);
+            line-height: 1.78;
+        }
+
+        .fc-text__badge {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 6px 14px;
+            border: 1px solid rgba(200, 169, 110, 0.4);
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        /* ── PROCESSO STEPS ── */
+        .processo {
+            background: var(--black);
+            padding: 120px 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .processo__header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .processo__header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--cream);
+            margin-bottom: 16px;
+        }
+
+        .processo__header p {
+            color: var(--cream-dim);
+            font-size: 1rem;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .processo__steps {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .processo__step {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 32px;
+            padding: 48px 0;
+            border-bottom: 1px solid rgba(200, 169, 110, 0.08);
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s, transform 0.7s;
+        }
+
+        .processo__step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .processo__step:last-child {
+            border-bottom: none;
+        }
+
+        .processo__step__num {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: rgba(200, 169, 110, 0.15);
+            line-height: 1;
+            padding-top: 4px;
+        }
+
+        .processo__step__body h3 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .processo__step__body p {
+            color: var(--cream-dim);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .processo__step__body .step-detail {
+            margin-top: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .step-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(200, 169, 110, 0.08);
+            border: 1px solid rgba(200, 169, 110, 0.2);
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            color: var(--gold);
+            border-radius: 2px;
+        }
+
+        /* ── NUMERI ── */
+        .numeri {
+            background: #080808;
+            padding: 100px 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .numeri__grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .numeri__item {
+            padding: 32px 16px;
+        }
+
+        .numeri__val {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 3.8rem);
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .numeri__label {
+            font-size: 0.85rem;
+            color: var(--cream-dim);
+            line-height: 1.5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ── QUALITÀ SECTION ── */
+        .qualita {
+            background: var(--black);
+            padding: 100px 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .qualita__inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .qualita__text h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            font-weight: 700;
+            color: var(--cream);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .qualita__text h2 span {
+            color: var(--gold);
+        }
+
+        .qualita__text p {
+            color: var(--cream-dim);
+            font-size: 0.97rem;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .qualita__list {
+            list-style: none;
+            margin-top: 24px;
+        }
+
+        .qualita__list li {
+            color: var(--cream-dim);
+            font-size: 0.92rem;
+            padding: 10px 0 10px 28px;
+            position: relative;
+            border-bottom: 1px solid rgba(200, 169, 110, 0.07);
+        }
+
+        .qualita__list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        .qualita__list li strong {
+            color: var(--cream);
+        }
+
+        .qualita__stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .qualita__stat {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(200, 169, 110, 0.12);
+            border-radius: 6px;
+            padding: 28px 24px;
+            transition: border-color 0.3s;
+        }
+
+        .qualita__stat:hover {
+            border-color: rgba(200, 169, 110, 0.35);
+        }
+
+        .qualita__stat__val {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .qualita__stat__label {
+            font-size: 0.8rem;
+            color: var(--cream-dim);
+            line-height: 1.5;
+        }
+
+        /* ── CTA ── */
+        .frang-cta {
+            padding: 100px 24px;
+            text-align: center;
+            background: #080808;
+            position: relative;
+            z-index: 2;
+        }
+
+        .frang-cta h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        .frang-cta p {
+            color: var(--cream-dim);
+            font-size: 1rem;
+            margin-bottom: 40px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .frang-cta__btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── WATERMARK ── */
+        .watermark-wrap {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+        }
+
+        .watermark-track {
+            display: inline-flex;
+            gap: 8vw;
+            animation: wmScroll 24s linear infinite;
+        }
+
+        .watermark-track span {
+            font-family: var(--font-display);
+            font-size: 22vw;
+            font-weight: 700;
+            color: rgba(200, 169, 110, 0.03);
+            line-height: 1;
+            letter-spacing: -0.04em;
+            user-select: none;
+            text-transform: uppercase;
+        }
+
+        @keyframes wmScroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @media(max-width: 768px) {
+            .numeri__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .qualita__inner {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .qualita__stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .processo__step {
+                grid-template-columns: 48px 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media(max-width: 480px) {
+            .qualita__stats {
+                grid-template-columns: 1fr;
+            }
+
+            .numeri__grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <!-- NAV -->
+<nav id="nav" class="nav">
+    <div class="nav__inner">
+        <a href="/" class="nav__logo" aria-label="Oleificio Cabriolu">
+            <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu" class="nav__logo-img">
+        </a>
+        <ul class="nav__links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/storia">La Nostra Storia</a></li>
+            <li><a href="/frangitura">Frangitura</a></li>
+            <li><a href="/territorio">Territorio</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/contatti">Contatti</a></li>
+            <li class="nav__dropdown">
+                <a href="/shop" class="nav__cta">Shop <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style="margin-left:4px;vertical-align:middle"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <ul class="nav__sub">
+                    <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+                    <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+                    <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+                    <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+                    <li><a href="/shop/latte">Latte Professionali</a></li>
+                    <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+                </ul>
+            </li>
+        </ul>
+        <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/storia">La Nostra Storia</a></li>
+        <li><a href="/frangitura">Frangitura</a></li>
+        <li><a href="/territorio">Territorio</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/contatti">Contatti</a></li>
+        <li><a href="/shop">Shop</a></li>
+        <li class="mobile-menu__divider"></li>
+        <li><a href="/shop/evo-puro" class="mobile-menu__sub">Extravergine Puro</a></li>
+        <li><a href="/shop/olio-peperoncino" class="mobile-menu__sub">Olio al Peperoncino</a></li>
+        <li><a href="/shop/olio-basilico" class="mobile-menu__sub">Olio al Basilico</a></li>
+        <li><a href="/shop/olio-limone" class="mobile-menu__sub">Olio al Limone</a></li>
+        <li><a href="/shop/latte" class="mobile-menu__sub">Latte Professionali</a></li>
+        <li><a href="/shop/cofanetto" class="mobile-menu__sub">Cofanetto Luxury</a></li>
+    </ul>
+</div>
+
+<!-- CANVAS SCROLL -->
+    <div id="frang-canvas-wrap">
+        <div id="frang-canvas-sticky">
+            <canvas id="fc"></canvas>
+
+            <!-- Testo 0: intro -->
+            <div class="fc-text center" id="fcText0">
+                <p class="fc-text__step">Il processo · Dal campo al frantoio</p>
+                <div class="fc-text__num">00</div>
+                <h2 class="fc-text__title">L'arte della<br><span>frangitura a freddo</span></h2>
+                <p class="fc-text__desc">Dall'uliveto al silos in meno di 24 ore. Ogni fase del nostro processo è
+                    studiata per preservare ogni molecola di gusto, aroma e salute dell'olio extravergine.</p>
+            </div>
+
+            <!-- Testo 1: raccolta -->
+            <div class="fc-text left" id="fcText1">
+                <p class="fc-text__step">Step 01 · Ottobre – Febbraio</p>
+                <div class="fc-text__num">01</div>
+                <h2 class="fc-text__title">La raccolta<br><span>a mano</span></h2>
+                <p class="fc-text__desc">Raccogliamo solo olive verdi, al momento della invaiatura. I polifenoli sono al
+                    massimo. La brucatura a mano evita traumi alle drupe e garantisce un olio privo di difetti.</p>
+                <span class="fc-text__badge">Solo olive verdi · Invaiatura ottimale</span>
+            </div>
+
+            <!-- Testo 2: defogliatura -->
+            <div class="fc-text right" id="fcText2">
+                <p class="fc-text__step">Step 02 · Oleificio</p>
+                <div class="fc-text__num">02</div>
+                <h2 class="fc-text__title">Defogliatura<br><span>e lavaggio</span></h2>
+                <p class="fc-text__desc">Le olive arrivano all'oleificio entro 24 ore. Una defogliatrice in linea
+                    rimuove foglie e rametti. Poi lavaggio con acqua fredda per eliminare residui di campo.</p>
+                <span class="fc-text__badge">Entro 24h dalla raccolta</span>
+            </div>
+
+            <!-- Testo 3: molitura -->
+            <div class="fc-text left" id="fcText3">
+                <p class="fc-text__step">Step 03 · Il cuore del processo</p>
+                <div class="fc-text__num">03</div>
+                <h2 class="fc-text__title">Molitura<br><span>a ciclo continuo</span></h2>
+                <p class="fc-text__desc">Frangitore a martelli, gramolatura a temperatura controllata: mai sopra i 27°C.
+                    Il ciclo continuo riduce il tempo di ossidazione al minimo assoluto. Qui nasce il nostro olio.</p>
+                <span class="fc-text__badge">
+                    < 27°C · Ciclo continuo</span>
+            </div>
+
+            <!-- Testo 4: conservazione -->
+            <div class="fc-text center" id="fcText4">
+                <p class="fc-text__step">Step 04 · Conservazione</p>
+                <div class="fc-text__num">04</div>
+                <h2 class="fc-text__title">Silos inox<br><span>sotto azoto</span></h2>
+                <p class="fc-text__desc">L'olio viene stoccato in silos di acciaio inox a temperatura costante, in
+                    atmosfera di azoto. Nessuna filtrazione. Decantazione naturale. Il deposito che vedete è
+                    autenticità.</p>
+                <span class="fc-text__badge">Azoto · Temp. costante · Non filtrato</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROCESSO DETTAGLIATO -->
+    <section class="processo">
+        <div class="processo__header">
+            <h2>Il processo passo per passo</h2>
+            <p>Ogni fase è una scelta precisa. Nessun passaggio è lasciato al caso, nessun angolo viene tagliato.</p>
+        </div>
+        <div class="processo__steps">
+            <div class="processo__step">
+                <div class="processo__step__num">01</div>
+                <div class="processo__step__body">
+                    <h3>Raccolta e selezione delle olive</h3>
+                    <p>La raccolta avviene tra ottobre e febbraio, quando le olive sono ancora verdi o appena in
+                        invaiatura. Raccogliamo a mano con rastrelli manuali e reti stese sotto gli alberi: zero
+                        meccanizzazione aggressiva, zero traumi alle drupe. Solo le olive sane vengono avviate alla
+                        frangitura. Le olive cadute a terra vengono sempre escluse.</p>
+                    <div class="step-detail">
+                        <span class="step-tag">Ottobre – Febbraio</span>
+                        <span class="step-tag">Raccolta manuale</span>
+                        <span class="step-tag">Solo olive verdi</span>
+                        <span class="step-tag">Nessuna oliva da terra</span>
+                    </div>
+                </div>
+            </div>
+            <div class="processo__step">
+                <div class="processo__step__num">02</div>
+                <div class="processo__step__body">
+                    <h3>Trasporto e arrivo in oleificio</h3>
+                    <p>Dal campo all'oleificio in cassette forate da 20kg massimo, per evitare che il peso compresso
+                        inneschi fermentazioni. Il trasporto avviene nelle ore più fresche della giornata. In oleificio
+                        le olive attendono al massimo 4–6 ore prima di entrare nella linea di lavorazione. L'obiettivo:
+                        frangitura entro 24 ore dalla raccolta, spesso entro 6.</p>
+                    <div class="step-detail">
+                        <span class="step-tag">Cassette forate 20kg</span>
+                        <span class="step-tag">Max 24h dalla raccolta</span>
+                        <span class="step-tag">Spesso entro 6h</span>
+                    </div>
+                </div>
+            </div>
+            <div class="processo__step">
+                <div class="processo__step__num">03</div>
+                <div class="processo__step__body">
+                    <h3>Defogliatura, lavaggio e pesatura</h3>
+                    <p>Appena arrivate in oleificio, le olive passano nella defogliatrice in linea: un sistema di
+                        ventilazione rimuove foglie, rametti e corpi estranei. Poi lavaggio in vasca con acqua fredda
+                        corrente. Infine pesatura precisa per registrare le partite e garantire la tracciabilità
+                        completa di ogni lotto prodotto.</p>
+                    <div class="step-detail">
+                        <span class="step-tag">Defogliatrice in linea</span>
+                        <span class="step-tag">Acqua fredda</span>
+                        <span class="step-tag">Tracciabilità totale</span>
+                    </div>
+                </div>
+            </div>
+            <div class="processo__step">
+                <div class="processo__step__num">04</div>
+                <div class="processo__step__body">
+                    <h3>Frangitura e gramolatura a freddo</h3>
+                    <p>Il cuore del processo. Il frangitore a martelli rompe le olive in modo efficiente e rapido. La
+                        pasta ottenuta passa nelle gramolatrici a temperatura controllata: mai sopra i 27°C, mai per più
+                        di 30–35 minuti. Questa fase è la più delicata: troppo caldo o troppo tempo significano perdita
+                        di aromi e di polifenoli. Noi scegliamo sempre la qualità sulla resa.</p>
+                    <div class="step-detail">
+                        <span class="step-tag">Frangitore a martelli</span>
+                        <span class="step-tag">
+                            < 27°C certificato</span>
+                                <span class="step-tag">Max 35 minuti gramolatura</span>
+                    </div>
+                </div>
+            </div>
+            <div class="processo__step">
+                <div class="processo__step__num">05</div>
+                <div class="processo__step__body">
+                    <h3>Estrazione per centrifugazione</h3>
+                    <p>La pasta gramolata viene inviata al decanter a due fasi: centrifuga che separa l'olio dalla sansa
+                        e dall'acqua di vegetazione senza aggiunta di acqua calda. Il ciclo a due fasi è più costoso in
+                        termini di resa ma preserva integralmente il profilo aromatico e il contenuto polifenolico.
+                        L'acqua che aggiungiamo, quando necessario, è sempre fredda.</p>
+                    <div class="step-detail">
+                        <span class="step-tag">Decanter 2 fasi</span>
+                        <span class="step-tag">Nessuna acqua calda</span>
+                        <span class="step-tag">Polifenoli intatti</span>
+                    </div>
+                </div>
+            </div>
+            <div class="processo__step">
+                <div class="processo__step__num">06</div>
+                <div class="processo__step__body">
+                    <h3>Stoccaggio in silos inox sotto azoto</h3>
+                    <p>L'olio appena estratto viene immediatamente trasferito in silos di acciaio inox da 500–1000L a
+                        temperatura costante (14–18°C). L'atmosfera di azoto sostituisce l'ossigeno e blocca ogni
+                        processo ossidativo. Non filtriamo l'olio: lasciamo che decanti naturalmente. Il leggerissimo
+                        deposito sul fondo è la prova dell'autenticità, non un difetto. L'olio è disponibile tutto
+                        l'anno.</p>
+                    <div class="step-detail">
+                        <span class="step-tag">Silos acciaio inox</span>
+                        <span class="step-tag">Atmosfera azoto</span>
+                        <span class="step-tag">14–18°C costanti</span>
+                        <span class="step-tag">Non filtrato</span>
+                        <span class="step-tag">Decantazione naturale</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NUMERI -->
+    <section class="numeri">
+        <div class="numeri__grid">
+            <div class="numeri__item">
+                <span class="numeri__val">
+                    < 27°C</span>
+                        <span class="numeri__label">Temperatura massima di frangitura</span>
+            </div>
+            <div class="numeri__item">
+                <span class="numeri__val">24h</span>
+                <span class="numeri__label">Tempo massimo dal campo al frantoio</span>
+            </div>
+            <div class="numeri__item">
+                <span class="numeri__val">
+                    < 0,3%</span>
+                        <span class="numeri__label">Acidità dell'EVO Puro</span>
+            </div>
+            <div class="numeri__item">
+                <span class="numeri__val">> 350</span>
+                <span class="numeri__label">mg/kg di polifenoli totali</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUALITÀ -->
+    <section class="qualita">
+        <div class="qualita__inner">
+            <div class="qualita__text ani">
+                <h2>Perché il nostro olio<br><span>è davvero diverso</span></h2>
+                <p>Non basta chiamarlo "extravergine". Esistono extravergini che sfiorano appena i requisiti di legge,
+                    con acidità all'0,8% e polifenoli minimi. Il nostro EVO Puro ha un'acidità inferiore allo 0,3% e
+                    polifenoli superiori a 350 mg/kg.</p>
+                <p>Questo non è marketing. È il risultato diretto di scelte precise: raccolta anticipata, frangitura
+                    veloce, temperature controllate, stoccaggio professionale.</p>
+                <ul class="qualita__list">
+                    <li><strong>Cultivar Bosana:</strong> la cultivar sarda per eccellenza. Note di carciofo, mandorla e
+                        erba fresca. Alta resa in polifenoli.</li>
+                    <li><strong>Nera di Villacidro:</strong> cultivar autoctona rarissima, presente solo in questa zona.
+                        Contribuisce alle note fruttate e alla complessità aromatica.</li>
+                    <li><strong>Non filtrato:</strong> la decantazione naturale preserva intatti micro-nutrienti che la
+                        filtrazione eliminerebbe.</li>
+                    <li><strong>Silos sotto azoto:</strong> l'ossigeno è il peggior nemico dell'olio. Lo escludiamo
+                        completamente durante lo stoccaggio.</li>
+                </ul>
+            </div>
+            <div class="qualita__stats ani">
+                <div class="qualita__stat">
+                    <span class="qualita__stat__val">
+                        < 0,3%</span>
+                            <span class="qualita__stat__label">Acidità libera — la legge consente fino a 0,8%</span>
+                </div>
+                <div class="qualita__stat">
+                    <span class="qualita__stat__val">> 350</span>
+                    <span class="qualita__stat__label">mg/kg Polifenoli totali — antiossidanti naturali</span>
+                </div>
+                <div class="qualita__stat">
+                    <span class="qualita__stat__val">6h</span>
+                    <span class="qualita__stat__label">Tempo medio dal campo al frantoio nella stagione</span>
+                </div>
+                <div class="qualita__stat">
+                    <span class="qualita__stat__val">27°C</span>
+                    <span class="qualita__stat__label">Temperatura massima — mai superata in 130 anni</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="frang-cta">
+        <h2>Senti la differenza</h2>
+        <p>Un olio che racconta ogni scelta che abbiamo fatto nel processo. Ordinalo e assaggialo.</p>
+        <div class="frang-cta__btns">
+            <a href="/shop/evo-puro" class="btn btn--gold btn--lg">Acquista EVO Puro</a>
+            <a href="/shop" class="btn btn--outline btn--lg">Tutti i prodotti</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer__inner">
+            <div class="footer__brand">
+                <a href="/">
+                    <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu"
+                        style="width:160px;height:auto;display:block;">
+                </a>
+                <span class="footer__logo-sub">Oleificio · Dal 1890</span>
+                <p class="footer__tagline">Olio extravergine d'oliva artigianale, non filtrato, dal cuore della
+                    Sardegna.</p>
+                <div class="footer__social">
+                    <a href="https://www.instagram.com/oleificio.cabriolu/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/oleificiocabriolu/" target="_blank" rel="noopener"
+                        aria-label="Facebook">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer__nav">
+                <h4>Navigazione</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/storia">La Nostra Storia</a></li>
+                    <li><a href="/frangitura">Frangitura</a></li>
+                    <li><a href="/territorio">Territorio</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/shop">Shop</a></li>
+                </ul>
+            </div>
+            <div class="footer__nav">
+                <h4>Prodotti</h4>
+                <ul>
+                    <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+                    <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+                    <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+                    <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+                    <li><a href="/shop/latte">Latte Professionali</a></li>
+                    <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+                </ul>
+            </div>
+            <div class="footer__contact">
+                <h4>Contatti</h4>
+                <p>Oleificio Cabriolu snc</p>
+                <p>Via Umberto I, Villacidro (SU)</p>
+                <p>Sardegna, Italia</p>
+                <p style="margin-top:12px"><a href="tel:+390709316xx">+39 070 9316XX</a></p>
+                <p><a href="mailto:info@oleificiocabriolu.it">info@oleificiocabriolu.it</a></p>
+                <p style="margin-top:12px;font-size:.8rem;color:rgba(250,246,240,.35)">Lun–Sab: 8:00–13:00 / 15:00–18:00
+                </p>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>© 2026 Oleificio Cabriolu snc — P.IVA 01234567890</p>
+            <div class="footer__legal">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/cookie">Cookie Policy</a>
+            </div>
+            <p class="footer__credit">Sito realizzato da <a href="https://digidentityagency.it" target="_blank"
+                    rel="noopener">DigIdentity Agency</a></p>
+        </div>
+    </footer>
+
+    <!-- WATERMARK -->
+    <div class="watermark-wrap">
+        <div class="watermark-track">
+            <span>FRANGITURA - </span><span>FRANGITURA - </span><span>FRANGITURA - </span><span>FRANGITURA - </span>
+        </div>
+    </div>
+
+    <!-- CHATBOT FAB -->
+    <button class="chatbot-fab" id="chatbotFab" aria-label="Assistente virtuale">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
+        </svg>
+    </button>
+    <div class="chatbot-panel" id="chatbotPanel" aria-hidden="true">
+        <div class="chatbot-panel__header">
+            <span>Assistente Cabriolu</span>
+            <button id="chatbotClose">✕</button>
+        </div>
+        <div class="chatbot-panel__body" id="chatbotBody">
+            <p class="chatbot-panel__welcome">Ciao! Chiedimi tutto sui nostri oli, spedizioni, o prenota una visita al
+                frantoio.</p>
+        </div>
+        <div class="chatbot-panel__input">
+            <input type="text" id="chatbotInput" placeholder="Scrivi un messaggio..." aria-label="Messaggio">
+            <button id="chatbotSend">→</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            /* ── CANVAS (840 frame desktop) ── */
+            const TOTAL = 840;
+            const IS_MOB = window.innerWidth < 768;
+            const FOLDER = IS_MOB ? '/img/frames/mobile/frame_' : '/img/frames/desktop/frame_';
+            const EXT = '.webp';
+            const canvas = document.getElementById('fc');
+            const ctx = canvas.getContext('2d');
+            const frames = [];
+            let cur = 0;
+
+            function pad(n) { return String(n).padStart(4, '0'); }
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                draw(cur);
+            }
+
+            function draw(idx) {
+                const img = frames[idx];
+                if (!img || !img.complete || !img.naturalWidth) return;
+                const cW = canvas.width, cH = canvas.height;
+                const iR = img.naturalWidth / img.naturalHeight, cR = cW / cH;
+                let dW, dH, dX, dY;
+                if (cR > iR) { dW = cW; dH = cW / iR; }
+                else { dH = cH; dW = cH * iR; }
+                dX = (cW - dW) / 2; dY = (cH - dH) / 2;
+                ctx.clearRect(0, 0, cW, cH);
+                ctx.drawImage(img, dX, dY, dW, dH);
+            }
+
+            function preload() {
+                const first = new Image();
+                first.onload = () => { frames[0] = first; draw(0); };
+                first.src = FOLDER + '0001' + EXT;
+                for (let i = 1; i <= TOTAL; i++) {
+                    const img = new Image();
+                    img.src = FOLDER + pad(i) + EXT;
+                    frames[i - 1] = img;
+                }
+            }
+
+            /* ── SCROLL TEXTS ── */
+            const texts = [
+                document.getElementById('fcText0'),
+                document.getElementById('fcText1'),
+                document.getElementById('fcText2'),
+                document.getElementById('fcText3'),
+                document.getElementById('fcText4'),
+            ];
+            const ranges = [
+                { start: 0, end: 140 },
+                { start: 140, end: 310 },
+                { start: 310, end: 490 },
+                { start: 490, end: 660 },
+                { start: 660, end: 840 },
+            ];
+
+            function updateTexts(f) {
+                texts.forEach((t, i) => {
+                    if (!t) return;
+                    const active = f >= ranges[i].start && f < ranges[i].end;
+                    if (active && !t.classList.contains('active')) t.classList.add('active');
+                    else if (!active && t.classList.contains('active')) t.classList.remove('active');
+                });
+            }
+
+            /* ── GSAP ── */
+            function initScroll() {
+                gsap.registerPlugin(ScrollTrigger);
+
+                const wrap = document.getElementById('frang-canvas-wrap');
+                ScrollTrigger.create({
+                    trigger: wrap,
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    onUpdate: self => {
+                        const f = Math.min(TOTAL - 1, Math.floor(self.progress * (TOTAL - 1)));
+                        if (f !== cur) { cur = f; draw(cur); updateTexts(cur); }
+                    }
+                });
+
+                /* NAV */
+                ScrollTrigger.create({
+                    start: 80,
+                    onUpdate: () => { document.getElementById('nav').classList.toggle('nav--scrolled', window.scrollY > 80); }
+                });
+
+                /* Steps */
+                document.querySelectorAll('.processo__step').forEach(el => {
+                    gsap.to(el, {
+                        opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
+                        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' }
+                    });
+                });
+
+                /* .ani */
+                document.querySelectorAll('.ani').forEach(el => {
+                    gsap.to(el, {
+                        opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+                        scrollTrigger: { trigger: el, start: 'top 80%', toggleActions: 'play none none reverse' }
+                    });
+                });
+
+                /* numeri counter */
+                document.querySelectorAll('.numeri__val').forEach(el => {
+                    ScrollTrigger.create({
+                        trigger: el, start: 'top 85%', once: true,
+                        onEnter: () => {
+                            gsap.from(el, { opacity: 0, y: 20, duration: 0.6, ease: 'power2.out' });
+                        }
+                    });
+                });
+            }
+
+            /* ── BURGER ── */
+            function initBurger() {
+                const burger = document.getElementById('navBurger');
+                const menu = document.getElementById('mobileMenu');
+                if (!burger || !menu) return;
+                burger.addEventListener('click', function () {
+                    const open = menu.classList.toggle('mobile-menu--open');
+                    burger.classList.toggle('nav__burger--open');
+                    burger.setAttribute('aria-expanded', open);
+                    menu.setAttribute('aria-hidden', !open);
+                    document.body.style.overflow = open ? 'hidden' : '';
+                });
+                menu.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => {
+                        menu.classList.remove('mobile-menu--open');
+                        burger.classList.remove('nav__burger--open');
+                        burger.setAttribute('aria-expanded', 'false');
+                        menu.setAttribute('aria-hidden', 'true');
+                        document.body.style.overflow = '';
+                    });
+                });
+            }
+
+            /* ── CHATBOT ── */
+            function initChatbot() {
+                const fab = document.getElementById('chatbotFab');
+                const panel = document.getElementById('chatbotPanel');
+                const close = document.getElementById('chatbotClose');
+                const input = document.getElementById('chatbotInput');
+                const send = document.getElementById('chatbotSend');
+                const body = document.getElementById('chatbotBody');
+                if (!fab || !panel) return;
+                fab.addEventListener('click', () => {
+                    const open = panel.classList.toggle('chatbot-panel--open');
+                    panel.setAttribute('aria-hidden', !open);
+                });
+                close && close.addEventListener('click', () => {
+                    panel.classList.remove('chatbot-panel--open');
+                    panel.setAttribute('aria-hidden', 'true');
+                });
+                function sendMsg() {
+                    const msg = input.value.trim(); if (!msg) return;
+                    const u = document.createElement('p');
+                    u.style.cssText = 'color:#fff;margin-top:12px;font-size:.85rem';
+                    u.textContent = '> ' + msg;
+                    body.appendChild(u);
+                    const b = document.createElement('p');
+                    b.style.cssText = 'margin-top:8px;color:rgba(255,255,255,.55);font-size:.85rem';
+                    b.textContent = 'Grazie! Scrivici a info@oleificiocabriolu.it';
+                    body.appendChild(b);
+                    input.value = ''; body.scrollTop = body.scrollHeight;
+                }
+                send.addEventListener('click', sendMsg);
+                input.addEventListener('keydown', e => { if (e.key === 'Enter') sendMsg(); });
+            }
+
+            /* ── INIT ── */
+            window.addEventListener('resize', resize);
+            resize();
+            preload();
+            window.addEventListener('load', initScroll);
+            initBurger();
+            initChatbot();
+            updateTexts(0);
+
+        })();
+    </script>
+</body>
+
+</html>
