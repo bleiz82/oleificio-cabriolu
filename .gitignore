@@ -1,3 +1,13 @@
-﻿node_modules/
+node_modules/
+backup-2026-04-23/
+IMMAGINI/
+public/
+_template-articolo-blog/
+fix-nav.js
+build-site.mjs
+optimize.mjs
+package.json
+package-lock.json
+index-backup.html
 .DS_Store
-dist/
+Thumbs.db
