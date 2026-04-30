@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Frangitura a Freddo · Oleificio Cabriolu Villacidro</title>
+<meta name="description" content="Il processo di frangitura a freddo dell'Oleificio Cabriolu: dalla raccolta manuale allo stoccaggio in silos inox sotto azoto.">
+<link rel="canonical" href="https://www.oleificiocabriolu.it/frangitura/">
+<link rel="preload" as="image" href="/video/frangitura-poster.jpg" fetchpriority="high">
+<link rel="stylesheet" href="/css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="/js/common.js" defer></script>
+<script src="/js/frangitura.js" defer></script>
+</head>
+<body class="page-frangitura">
+
+<nav id="nav" class="nav">
+  <div class="nav__inner">
+    <a href="/" class="nav__logo" aria-label="Oleificio Cabriolu">
+      <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu" class="nav__logo-img">
+    </a>
+    <ul class="nav__links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/storia">La Nostra Storia</a></li>
+      <li><a href="/frangitura" aria-current="page">Frangitura</a></li>
+      <li><a href="/territorio">Territorio</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/contatti">Contatti</a></li>
+      <li class="nav__dropdown">
+        <a href="/shop" class="nav__cta">Shop</a>
+        <ul class="nav__sub">
+          <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+          <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+          <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+          <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+          <li><a href="/shop/latte">Latte Professionali</a></li>
+          <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+        </ul>
+      </li>
+    </ul>
+    <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/storia">La Nostra Storia</a></li>
+    <li><a href="/frangitura">Frangitura</a></li>
+    <li><a href="/territorio">Territorio</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/contatti">Contatti</a></li>
+    <li><a href="/shop">Shop</a></li>
+  </ul>
+</div>
+
+<main id="main">
+
+<section class="frang-hero" aria-label="Il processo di frangitura a freddo">
+  <div class="frang-hero__sticky">
+    <video id="frangHeroVideo" class="frang-hero__video" poster="/video/frangitura-poster.jpg" preload="auto" muted playsinline disablepictureinpicture aria-hidden="true">
+      <source src="/video/frangitura-desktop.mp4" type="video/mp4" media="(min-width: 768px)">
+      <source src="/video/frangitura-desktop.webm" type="video/webm" media="(min-width: 768px)">
+      <source src="/video/frangitura-mobile.mp4" type="video/mp4">
+    </video>
+    <div class="frang-hero__overlay">
+      <div class="frang-hero__title-wrap">
+        <p class="frang-hero__step">Il processo · Dal campo al silos</p>
+        <h1 class="frang-hero__title">L'arte della <span>frangitura a freddo</span></h1>
+        <p class="frang-hero__desc">Dall'uliveto al silos in meno di 24 ore. Ogni fase preserva ogni molecola di gusto, aroma e salute dell'olio extravergine.</p>
+      </div>
+    </div>
+    <div class="frang-hero__scroll-hint" aria-hidden="true"><span>Scorri per esplorare</span><div class="frang-hero__scroll-bar"></div></div>
+  </div>
+</section>
+
+<section class="frang-quote">
+  <blockquote class="frang-quote__text" data-scramble><span aria-hidden="true">«</span>Il tempo è il primo ingrediente<span aria-hidden="true">»</span></blockquote>
+  <cite class="frang-quote__author">— Cinque generazioni Cabriolu, dal 1890</cite>
+</section>
+
+<section class="frang-processo" aria-labelledby="processo-title">
+  <header class="frang-processo__header">
+    <p class="frang-processo__overtitle">Sei fasi · Una filosofia</p>
+    <h2 id="processo-title" class="frang-processo__title">Il processo passo per passo</h2>
+    <p class="frang-processo__lead">Ogni fase è una scelta precisa. Dietro ogni bottiglia, 130 anni di esperienza nel cuore della Sardegna.</p>
+  </header>
+  <ol class="frang-processo__steps">
+    <li class="frang-step" id="step-01">
+      <div class="frang-step__media">
+        <picture>
+          <source media="(min-width:768px)" srcset="/img/frangitura/desktop/raccolta.avif" type="image/avif">
+          <source media="(min-width:768px)" srcset="/img/frangitura/desktop/raccolta.webp" type="image/webp">
+          <source srcset="/img/frangitura/mobile/raccolta.avif" type="image/avif">
+          <source srcset="/img/frangitura/mobile/raccolta.webp" type="image/webp">
+          <img src="/img/frangitura/mobile/raccolta.webp" alt="Raccolta olive" width="1920" height="1080" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="frang-step__body">
+        <span class="frang-step__num">01</span>
+        <h3 class="frang-step__title">Raccolta a mano</h3>
+        <p>Tra ottobre e febbraio, raccogliamo solo olive verdi o appena in invaiatura, a mano. Zero meccanizzazione aggressiva. Olive cadute a terra escluse.</p>
+        <ul class="frang-step__tags"><li>Ottobre – Febbraio</li><li>Raccolta manuale</li><li>Solo olive verdi</li></ul>
+      </div>
+    </li>
+    <li class="frang-step" id="step-02">
+      <div class="frang-step__media">
+        <picture>
+          <source media="(min-width:768px)" srcset="/img/frangitura/desktop/bosana.avif" type="image/avif">
+          <source media="(min-width:768px)" srcset="/img/frangitura/desktop/bosana.webp" type="image/webp">
+          <source srcset="/img/frangitura/mobile/bosana.avif" type="image/avif">
+          <source srcset="/img/frangitura/mobile/bosana.webp" type="image/webp">
+          <img src="/img/frangitura/mobile/bosana.webp" alt="Olive Bosana" width="1920" height="1080" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="frang-step__body">
+        <span class="frang-step__num">02</span>
+        <h3 class="frang-step__title">Trasporto in oleificio</h3>
+        <p>Cassette forate da 20 kg. Trasporto nelle ore fresche. Frangitura entro 24 ore dalla raccolta, spesso entro 6.</p>
+        <ul class="frang-step__tags"><li>Cassette forate 20 kg</li><li>Max 24h</li><li>Spesso entro 6h</li></ul>
+      </div>
+    </li>
+    <li class="frang-step" id="step-03">
+      <div class="frang-step__media">
+        <picture>
+          <source media="(min-width:768px)" srcset="/img/frangitura/desktop/lavaggio.avif" type="image/avif">
+          <source media="(min-width:768px)" srcset="/img/frangitura/desktop/lavaggio.webp" type="image/webp">
+          <source srcset="/img/frangitura/mobile/lavaggio.avif" type="image/avif">
+          <source srcset="/img/frangitura/mobile/lavaggio.webp" type="image/webp">
+          <img src="/img/frangitura/mobile/lavaggio.webp" alt="Lavaggio olive" width="1920" height="1080" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="frang-step__body">
+        <span class="frang-step__num">03</span>
+        <h3 class="frang-step__title">Defogliatura, lavaggio e pesatura</h3>
+        <p>Defogliatrice in linea, lavaggio in vasca con acqua fredda, pesatura precisa per la tracciabilità completa di ogni lotto.</p>
+        <ul class="frang-step__tags"><li>Defogliatrice in linea</li><li>Acqua fredda</li><li>Tracciabilità totale</li></ul>
+      </div>
+    </li>
+    <li class="frang-step" id="step-04">
+      <div class="frang-step__media">
+        <picture>
+          <source media="(min-width:768px)" srcset="/img/frangitura/desktop/mulino.avif" type="image/avif">
+          <source media="(min-width:768px)" srcset="/img/frangitura/desktop/mulino.webp" type="image/webp">
+          <source srcset="/img/frangitura/mobile/mulino.avif" type="image/avif">
+          <source srcset="/img/frangitura/mobile/mulino.webp" type="image/webp">
+          <img src="/img/frangitura/mobile/mulino.webp" alt="Frangitore" width="1920" height="1080" loading="lazy" decoding="async">
+        </picture>
+        <span class="frang-step__sticky-badge" aria-hidden="true">&lt; 27°C</span>
+      </div>
+      <div class="frang-step__body">
+        <span class="frang-step__num">04</span>
+        <h3 class="frang-step__title">Frangitura e gramolatura</h3>
+        <p>Il cuore del processo. Frangitore a martelli, gramolatura mai sopra i 27°C, max 35 minuti. Qualità sulla resa.</p>
+        <ul class="frang-step__tags"><li>Frangitore a martelli</li><li>&lt; 27°C</li><li>Max 35 min</li></ul>
+      </div>
+    </li>
+    <li class="frang-step" id="step-05">
+      <div class="frang-step__media">
+        <picture>
+          <source media="(min-width:768px)" srcset="/img/frangitura/desktop/estrazione.avif" type="image/avif">
+          <source media="(min-width:768px)" srcset="/img/frangitura/desktop/estrazione.webp" type="image/webp">
+          <source srcset="/img/frangitura/mobile/estrazione.avif" type="image/avif">
+          <source srcset="/img/frangitura/mobile/estrazione.webp" type="image/webp">
+          <img src="/img/frangitura/mobile/estrazione.webp" alt="Estrazione olio" width="1920" height="1080" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="frang-step__body">
+        <span class="frang-step__num">05</span>
+        <h3 class="frang-step__title">Estrazione per centrifugazione</h3>
+        <p>Decanter a due fasi senza acqua calda. Più costoso in resa, ma preserva integralmente aromi e polifenoli.</p>
+        <ul class="frang-step__tags"><li>Decanter 2 fasi</li><li>Nessuna acqua calda</li><li>Polifenoli intatti</li></ul>
+      </div>
+    </li>
+    <li class="frang-step" id="step-06">
+      <div class="frang-step__media">
+        <picture>
+          <source media="(min-width:768px)" srcset="/img/frangitura/desktop/stoccaggio.avif" type="image/avif">
+          <source media="(min-width:768px)" srcset="/img/frangitura/desktop/stoccaggio.webp" type="image/webp">
+          <source srcset="/img/frangitura/mobile/stoccaggio.avif" type="image/avif">
+          <source srcset="/img/frangitura/mobile/stoccaggio.webp" type="image/webp">
+          <img src="/img/frangitura/mobile/stoccaggio.webp" alt="Silos inox" width="1920" height="1080" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="frang-step__body">
+        <span class="frang-step__num">06</span>
+        <h3 class="frang-step__title">Stoccaggio in silos inox</h3>
+        <p>Silos inox 500–1000L a 14–18°C costanti, sotto azoto. Niente filtrazione: decantazione naturale.</p>
+        <ul class="frang-step__tags"><li>Atmosfera azoto</li><li>14–18°C</li><li>Non filtrato</li></ul>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<section class="frang-numeri">
+  <div class="frang-numeri__inner">
+    <h2 class="frang-numeri__title">I numeri della <span>nostra qualità</span></h2>
+    <ul class="frang-numeri__grid">
+      <li class="frang-numero"><div class="frang-numero__value" data-count data-value="27" data-prefix="< " data-suffix="°C">< 27°C</div><p class="frang-numero__label">Temperatura massima di gramolatura</p></li>
+      <li class="frang-numero"><div class="frang-numero__value" data-count data-value="24" data-suffix="h">24h</div><p class="frang-numero__label">Massimo dalla raccolta alla frangitura</p></li>
+      <li class="frang-numero"><div class="frang-numero__value" data-count data-value="0.3" data-prefix="< " data-suffix="%" data-decimals="1">< 0,3%</div><p class="frang-numero__label">Acidità libera media</p></li>
+      <li class="frang-numero"><div class="frang-numero__value" data-count data-value="350" data-prefix="> " data-suffix=" mg/kg">> 350</div><p class="frang-numero__label">Polifenoli totali (mg/kg)</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="frang-cta cta-conto-terzi">
+  <div class="frang-cta__inner">
+    <p class="frang-cta__overtitle">Servizio per produttori</p>
+    <h2 class="frang-cta__title">Frangitura <span>conto terzi</span></h2>
+    <p class="frang-cta__desc">Porti le tue olive, le frangiamo con la stessa cura. Disponibilità da ottobre a febbraio su appuntamento.</p>
+    <a href="/contatti" class="frang-cta__btn">Richiedi un appuntamento</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer" id="contatti">
+        <div class="footer__inner">
+            <div class="footer__brand">
+                <a href="/">
+                    <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu"
+                        style="width:160px;height:auto;display:block;margin-bottom:12px;">
+                </a>
+                <span class="footer__logo-sub">Oleificio · Dal 1890</span>
+                <p class="footer__tagline">Olio extravergine d'oliva artigianale, non filtrato, dal cuore della
+                    Sardegna.</p>
+                <div class="footer__social">
+                    <a href="https://www.instagram.com/oleificio.cabriolu/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/oleificiocabriolu/" target="_blank" rel="noopener"
+                        aria-label="Facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer__nav">
+                <h4>Navigazione</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/storia">La Nostra Storia</a></li>
+                    <li><a href="/frangitura">Frangitura</a></li>
+                    <li><a href="/territorio">Territorio</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/shop">Shop</a></li>
+                </ul>
+            </div>
+            <div class="footer__nav">
+                <h4>Prodotti</h4>
+                <ul>
+                    <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+                    <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+                    <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+                    <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+                    <li><a href="/shop/latte">Latte Professionali</a></li>
+                    <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+                </ul>
+            </div>
+            <div class="footer__contact">
+                <h4>Contatti</h4>
+                <p>Oleificio Cabriolu snc</p>
+                <p>Via Umberto I, Villacidro (SU)</p>
+                <p>Sardegna, Italia</p>
+                <p style="margin-top:12px"><a href="tel:+390709316xx">+39 070 9316XX</a></p>
+                <p><a href="mailto:info@oleificiocabriolu.it">info@oleificiocabriolu.it</a></p>
+                <p style="margin-top:12px;font-size:.8rem;color:rgba(250,246,240,.35)">Lun–Sab: 8:00–13:00 / 15:00–18:00
+                </p>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>© 2026 Oleificio Cabriolu snc — P.IVA 01234567890</p>
+            <div class="footer__legal">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/cookie">Cookie Policy</a>
+            </div>
+            <p class="footer__credit">Sito realizzato da <a href="https://digidentityagency.it" target="_blank"
+                    rel="noopener">DigIdentity Agency</a></p>
+        </div>
+    </footer>
+
+
+<div class="watermark-wrap">
+  <div class="watermark-track">
+    <span>FRANGITURA · </span><span>FRANGITURA · </span><span>FRANGITURA · </span><span>FRANGITURA · </span>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1090 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Cofanetto Luxury â€” Oleificio Cabriolu</title>
+    <meta name="description"
+        content="Cofanetto regalo con 4 bottiglie da 0.25L: Extravergine Puro, Olio al Peperoncino, Olio al Basilico, Olio al Limone. Dal 1890, Villacidro.">
+    <link rel="canonical" href="https://www.oleificiocabriolu.it/shop/cofanetto">
+    <link rel="preload" href="/fonts/cormorant-garamond-v16-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/inter-v13-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        :root {
+            --gold: #c8a96e;
+            --dark: #000;
+            --serif: 'Cormorant Garamond', Georgia, serif;
+            --sans: 'Inter', system-ui, sans-serif
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: var(--sans);
+            overflow-x: hidden
+        }
+
+        /* CANVAS */
+        #productCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none
+        }
+
+        /* CINEMA */
+        .cinema {
+            position: relative;
+            z-index: 1;
+            height: 500vh
+        }
+
+        .cinema__hint {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            font-size: .8rem;
+            color: rgba(255, 255, 255, .45);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeUp 1.2s .5s both;
+            transition: opacity .5s
+        }
+
+        .cinema__hint.hidden {
+            opacity: 0;
+            pointer-events: none
+        }
+
+        .cinema__cta {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            color: var(--gold);
+            background: rgba(0, 0, 0, .6);
+            border: 1px solid var(--gold);
+            padding: 14px 40px;
+            text-decoration: none;
+            border-radius: 2px;
+            letter-spacing: 1px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .6s, background .3s
+        }
+
+        .cinema__cta.visible {
+            opacity: 1;
+            pointer-events: all
+        }
+
+        .cinema__cta:hover {
+            background: var(--gold);
+            color: #000
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0)
+            }
+        }
+
+        .product-page {
+            position: relative;
+            z-index: 2;
+            background: #000;
+            padding: 80px 0 0
+        }
+
+        .product-page__inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5vw;
+            align-items: start
+        }
+
+        .product-media {
+            position: sticky;
+            top: 40px
+        }
+
+        .product-media__main {
+            width: 100%;
+            aspect-ratio: 9/16;
+            max-height: 75vh;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .product-media__main video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px
+        }
+
+        .product-media__format-label {
+            text-align: center;
+            font-size: .78rem;
+            color: rgba(255, 255, 255, .4);
+            margin-top: 10px;
+            letter-spacing: 1px
+        }
+
+        .product-detail {
+            padding-top: 20px
+        }
+
+        .product-detail__breadcrumb {
+            font-size: .75rem;
+            color: rgba(255, 255, 255, .35);
+            margin-bottom: 16px
+        }
+
+        .product-detail__breadcrumb a {
+            color: rgba(255, 255, 255, .5);
+            text-decoration: none
+        }
+
+        .product-detail__breadcrumb a:hover {
+            color: var(--gold)
+        }
+
+        .product-detail__tag {
+            display: inline-block;
+            font-size: .65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 4px 12px;
+            border-radius: 2px;
+            margin-bottom: 14px
+        }
+
+        .product-detail__title {
+            font-family: var(--serif);
+            font-size: 2.6rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 8px
+        }
+
+        .product-detail__cultivar {
+            font-size: .85rem;
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 12px;
+            letter-spacing: .5px
+        }
+
+        .product-detail__rating {
+            font-size: .8rem;
+            color: var(--gold);
+            margin-bottom: 20px
+        }
+
+        .product-detail__desc {
+            font-size: .92rem;
+            line-height: 1.75;
+            color: rgba(255, 255, 255, .65);
+            margin-bottom: 16px
+        }
+
+        .product-formats {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 24px
+        }
+
+        .product-formats__btn {
+            padding: 10px 20px;
+            border: 1px solid rgba(255, 255, 255, .15);
+            background: transparent;
+            color: #fff;
+            font-family: var(--sans);
+            font-size: .85rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all .3s
+        }
+
+        .product-formats__btn:hover {
+            border-color: var(--gold);
+            color: var(--gold)
+        }
+
+        .product-formats__btn.active {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+            font-weight: 600
+        }
+
+        .product-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 8px
+        }
+
+        .product-detail__price {
+            font-family: var(--serif);
+            font-size: 2rem;
+            font-weight: 700
+        }
+
+        .product-detail__price-per {
+            font-size: .8rem;
+            color: rgba(255, 255, 255, .4)
+        }
+
+        .product-detail__savings {
+            font-size: .85rem;
+            color: #4ecb71;
+            margin-bottom: 24px
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 40px
+        }
+
+        .product-qty {
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 4px
+        }
+
+        .product-qty__btn {
+            width: 42px;
+            height: 42px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color .3s
+        }
+
+        .product-qty__btn:hover {
+            color: var(--gold)
+        }
+
+        .product-qty__val {
+            width: 40px;
+            text-align: center;
+            font-size: 1rem;
+            color: #fff
+        }
+
+        .product-cart {
+            flex: 1;
+            height: 42px;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-family: var(--sans);
+            font-size: .9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background .3s
+        }
+
+        .product-cart:hover {
+            background: #b8963e
+        }
+
+        .product-section {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 5vw
+        }
+
+        .product-section__title {
+            font-family: var(--serif);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 12px
+        }
+
+        .product-section__title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--gold)
+        }
+
+        /* BOX CARDS CON FOTO REALI */
+        .box-contents {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px
+        }
+
+        .box-card {
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: border-color .3s, transform .3s
+        }
+
+        .box-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-4px)
+        }
+
+        .box-card__img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            display: block
+        }
+
+        .box-card__img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .4s
+        }
+
+        .box-card:hover .box-card__img img {
+            transform: scale(1.05)
+        }
+
+        .box-card__body {
+            padding: 20px 22px 24px
+        }
+
+        .box-card__name {
+            font-family: var(--serif);
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #fff
+        }
+
+        .box-card__desc {
+            font-size: .83rem;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, .55);
+            margin-bottom: 10px
+        }
+
+        .box-card__format {
+            font-size: .72rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px
+        }
+
+        .spec-card {
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 6px;
+            padding: 20px
+        }
+
+        .spec-card__label {
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gold);
+            margin-bottom: 6px
+        }
+
+        .spec-card__value {
+            font-size: .95rem;
+            color: rgba(255, 255, 255, .8)
+        }
+
+        .occasions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px
+        }
+
+        .occasion-card {
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 8px;
+            padding: 28px 20px;
+            text-align: center;
+            transition: border-color .3s, transform .3s
+        }
+
+        .occasion-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-4px)
+        }
+
+        .occasion-card__emoji {
+            font-size: 2.2rem;
+            margin-bottom: 10px
+        }
+
+        .occasion-card__name {
+            font-family: var(--serif);
+            font-size: 1rem;
+            margin-bottom: 4px
+        }
+
+        .occasion-card__desc {
+            font-size: .78rem;
+            color: rgba(255, 255, 255, .45)
+        }
+
+        /* WATERMARK */
+        .watermark-wrap {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 9997;
+            white-space: nowrap
+        }
+
+        .watermark-track {
+            display: inline-flex;
+            gap: 8vw;
+            animation: wmScroll 24s linear infinite
+        }
+
+        .watermark-track span {
+            font-family: var(--serif);
+            font-size: 22vw;
+            font-weight: 700;
+            color: rgba(200, 169, 110, .03);
+            line-height: 1;
+            letter-spacing: -.04em;
+            user-select: none;
+            text-transform: uppercase
+        }
+
+        @keyframes wmScroll {
+            0% {
+                transform: translateX(0)
+            }
+
+            100% {
+                transform: translateX(-50%)
+            }
+        }
+
+        @media(max-width:900px) {
+            .product-page__inner {
+                grid-template-columns: 1fr;
+                gap: 30px
+            }
+
+            .product-media {
+                position: static
+            }
+
+            .product-media__main {
+                max-height: 60vh
+            }
+
+            .box-contents {
+                grid-template-columns: 1fr
+            }
+
+            .specs-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .occasions-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(max-width:600px) {
+            .product-detail__title {
+                font-size: 1.8rem
+            }
+
+            .specs-grid {
+                grid-template-columns: 1fr
+            }
+
+            .occasions-grid {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .chatbot-panel {
+                width: calc(100vw - 32px);
+                right: 16px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <!-- NAV -->
+<nav id="nav" class="nav">
+    <div class="nav__inner">
+        <a href="/" class="nav__logo" aria-label="Oleificio Cabriolu">
+            <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu" class="nav__logo-img">
+        </a>
+        <ul class="nav__links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/storia">La Nostra Storia</a></li>
+            <li><a href="/frangitura">Frangitura</a></li>
+            <li><a href="/territorio">Territorio</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/contatti">Contatti</a></li>
+            <li class="nav__dropdown">
+                <a href="/shop" class="nav__cta">Shop <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style="margin-left:4px;vertical-align:middle"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <ul class="nav__sub">
+                    <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+                    <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+                    <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+                    <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+                    <li><a href="/shop/latte">Latte Professionali</a></li>
+                    <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+                </ul>
+            </li>
+        </ul>
+        <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/storia">La Nostra Storia</a></li>
+        <li><a href="/frangitura">Frangitura</a></li>
+        <li><a href="/territorio">Territorio</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/contatti">Contatti</a></li>
+        <li><a href="/shop">Shop</a></li>
+        <li class="mobile-menu__divider"></li>
+        <li><a href="/shop/evo-puro" class="mobile-menu__sub">Extravergine Puro</a></li>
+        <li><a href="/shop/olio-peperoncino" class="mobile-menu__sub">Olio al Peperoncino</a></li>
+        <li><a href="/shop/olio-basilico" class="mobile-menu__sub">Olio al Basilico</a></li>
+        <li><a href="/shop/olio-limone" class="mobile-menu__sub">Olio al Limone</a></li>
+        <li><a href="/shop/latte" class="mobile-menu__sub">Latte Professionali</a></li>
+        <li><a href="/shop/cofanetto" class="mobile-menu__sub">Cofanetto Luxury</a></li>
+    </ul>
+</div>
+
+<!-- CANVAS -->
+    <canvas id="productCanvas" aria-hidden="true"></canvas>
+
+    <!-- CINEMA SCROLL -->
+    <div class="cinema">
+        <p class="cinema__hint" id="scrollHint">â†“ Scorri per esplorare â†“</p>
+        <a class="cinema__cta" id="shopCta" href="#product">Scopri e Acquista â†“</a>
+    </div>
+
+    <!-- PRODOTTO -->
+    <div class="product-page" id="product">
+        <div class="product-page__inner">
+
+            <div class="product-media">
+                <div class="product-media__main">
+                    <video autoplay loop muted playsinline>
+                        <source src="/video/prodotti-cofanetto-mobile.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <p class="product-media__format-label">Cofanetto 4 Ã— 0.25L</p>
+            </div>
+
+            <div class="product-detail">
+                <p class="product-detail__breadcrumb"><a href="/">Home</a> / <a href="/shop">Shop</a> / Cofanetto Luxury
+                </p>
+                <span class="product-detail__tag">Idea Regalo â€” Edizione Limitata</span>
+                <h1 class="product-detail__title">Cofanetto Luxury</h1>
+                <p class="product-detail__cultivar">4 Bottiglie Ã— 0.25L Â· EVO Puro Â· Peperoncino Â· Basilico Â· Limone</p>
+                <p class="product-detail__rating">â˜…â˜…â˜…â˜…â˜… 5.0/5 â€” 64 recensioni</p>
+                <p class="product-detail__desc">Quattro espressioni dell'olio sardo, racchiuse in un cofanetto elegante
+                    pensato per chi vuole regalare â€” o regalarsi â€” un viaggio sensoriale completo attraverso i sapori di
+                    Villacidro. Dalla purezza cristallina dell'Extravergine Puro al fuoco avvolgente del Peperoncino,
+                    dalla freschezza mediterranea del Basilico alla luminositÃ  agrumata del Limone.</p>
+                <p class="product-detail__desc">Ogni bottiglia da 0.25L Ã¨ realizzata in vetro scuro anti-UV per
+                    proteggere l'olio dalla luce, con etichetta numerata e sigillo di garanzia Oleificio Cabriolu. Il
+                    cofanetto Ã¨ confezionato a mano in cartone rigido con finitura opaca nera e dettagli in rilievo
+                    dorato â€” un oggetto che comunica qualitÃ  e cura prima ancora di essere aperto.</p>
+                <p class="product-detail__desc">Tutti gli oli sono prodotti con co-molitura a freddo nel nostro frantoio
+                    di Villacidro, con olive Bosana e ingredienti freschi del territorio sardo. Nessun aroma
+                    artificiale, nessun conservante, nessun compromesso.</p>
+                <p class="product-detail__desc">Su richiesta includiamo un biglietto regalo personalizzato. Spedizione
+                    worldwide con imballaggio rinforzato antiurto.</p>
+
+                <div class="product-formats">
+                    <button class="product-formats__btn active">4 Ã— 0.25 L</button>
+                </div>
+
+                <div class="product-price-row">
+                    <span class="product-detail__price" id="priceTag">â‚¬34,90</span>
+                    <span class="product-detail__price-per">â‚¬34,90 / L</span>
+                </div>
+                <p class="product-detail__savings">âœ“ Risparmi â‚¬0,70 rispetto all'acquisto singolo</p>
+
+                <div class="product-actions">
+                    <div class="product-qty">
+                        <button class="product-qty__btn" id="qtyMinus">âˆ’</button>
+                        <span class="product-qty__val" id="qtyVal">1</span>
+                        <button class="product-qty__btn" id="qtyPlus">+</button>
+                    </div>
+                    <button class="product-cart" id="cartBtn">Aggiungi al Carrello</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- COSA CONTIENE -->
+        <section class="product-section">
+            <h2 class="product-section__title">Cosa Contiene</h2>
+            <div class="box-contents">
+                <div class="box-card">
+                    <div class="box-card__img">
+                        <picture>
+                            <source srcset="/img/prodotti/product-evo-puro.avif" type="image/avif">
+                            <img src="/img/prodotti/product-evo-puro.webp" alt="Extravergine Puro" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="box-card__body">
+                        <p class="box-card__name">Extravergine Puro</p>
+                        <p class="box-card__desc">Il nostro flagship. Cultivar Bosana e Nera di Villacidro, non
+                            filtrato. Note di carciofo crudo, mandorla amara e erba fresca. AciditÃ  &lt; 0,3%.
+                            Polifenoli &gt; 350 mg/kg. Frangitura entro 6 ore dalla raccolta.</p>
+                        <p class="box-card__format">â–¶ Bottiglia 0.25L â€” Val. singolo â‚¬7,90</p>
+                    </div>
+                </div>
+                <div class="box-card">
+                    <div class="box-card__img">
+                        <picture>
+                            <source srcset="/img/prodotti/product-olio-peperoncino.avif" type="image/avif">
+                            <img src="/img/prodotti/product-olio-peperoncino.webp" alt="Olio al Peperoncino"
+                                loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="box-card__body">
+                        <p class="box-card__name">Olio al Peperoncino</p>
+                        <p class="box-card__desc">Peperoncino fresco sardo molito insieme alle olive Bosana nel
+                            frantoio. Calore avvolgente e persistente senza aggressivitÃ . Colore ambrato con riflessi
+                            rubino. Perfetto su pasta, grigliata e pizza.</p>
+                        <p class="box-card__format">â–¶ Bottiglia 0.25L â€” Val. singolo â‚¬8,90</p>
+                    </div>
+                </div>
+                <div class="box-card">
+                    <div class="box-card__img">
+                        <picture>
+                            <source srcset="/img/prodotti/product-olio-basilico.avif" type="image/avif">
+                            <img src="/img/prodotti/product-olio-basilico.webp" alt="Olio al Basilico" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="box-card__body">
+                        <p class="box-card__name">Olio al Basilico</p>
+                        <p class="box-card__desc">Basilico fresco raccolto all'alba nei campi di Villacidro, molito con
+                            le olive. Profumo mediterraneo intenso e pulito, dolcezza vegetale avvolgente. Ideale su
+                            caprese, pasta fresca e verdure grigliate.</p>
+                        <p class="box-card__format">â–¶ Bottiglia 0.25L â€” Val. singolo â‚¬8,90</p>
+                    </div>
+                </div>
+                <div class="box-card">
+                    <div class="box-card__img">
+                        <picture>
+                            <source srcset="/img/prodotti/product-olio-limone.avif" type="image/avif">
+                            <img src="/img/prodotti/product-olio-limone.webp" alt="Olio al Limone" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="box-card__body">
+                        <p class="box-card__name">Olio al Limone</p>
+                        <p class="box-card__desc">Succo e polpa di limone fresco sardo moliti con le olive Bosana.
+                            Luminoso, agrumato, sorprendentemente rotondo. Straordinario su pesce crudo, insalate estive
+                            e perfino in mixology.</p>
+                        <p class="box-card__format">â–¶ Bottiglia 0.25L â€” Val. singolo â‚¬8,90</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DETTAGLI -->
+        <section class="product-section">
+            <h2 class="product-section__title">Dettagli Cofanetto</h2>
+            <div class="specs-grid">
+                <div class="spec-card">
+                    <p class="spec-card__label">Contenuto</p>
+                    <p class="spec-card__value">4 bottiglie Ã— 0.25L (1 litro totale)</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Valore singoli</p>
+                    <p class="spec-card__value">â‚¬35,60 (risparmi â‚¬0,70)</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Confezione</p>
+                    <p class="spec-card__value">Cartone rigido nero, finitura opaca, dettagli oro in rilievo</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Peso totale</p>
+                    <p class="spec-card__value">~1.8 kg (cofanetto incluso)</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Dimensioni</p>
+                    <p class="spec-card__value">30 Ã— 22 Ã— 8 cm</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Conservazione</p>
+                    <p class="spec-card__value">14â€“18Â°C, lontano da luce e calore</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Shelf life</p>
+                    <p class="spec-card__value">18 mesi dalla data di imbottigliamento</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Spedizione</p>
+                    <p class="spec-card__value">Imballaggio rinforzato antiurto, worldwide</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Personalizzazione</p>
+                    <p class="spec-card__value">Biglietto regalo personalizzato su richiesta</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Confezionamento</p>
+                    <p class="spec-card__value">Fatto a mano, edizione limitata</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Metodo produttivo</p>
+                    <p class="spec-card__value">Co-molitura a freddo, &lt; 27Â°C, ciclo continuo</p>
+                </div>
+                <div class="spec-card">
+                    <p class="spec-card__label">Origine</p>
+                    <p class="spec-card__value">Villacidro, Medio Campidano, Sardegna, Italia</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PERFETTO PER -->
+        <section class="product-section">
+            <h2 class="product-section__title">Perfetto Per</h2>
+            <div class="occasions-grid">
+                <div class="occasion-card">
+                    <p class="occasion-card__emoji">ðŸŽ„</p>
+                    <p class="occasion-card__name">Natale</p>
+                    <p class="occasion-card__desc">Il regalo gourmet sotto l'albero</p>
+                </div>
+                <div class="occasion-card">
+                    <p class="occasion-card__emoji">ðŸ’</p>
+                    <p class="occasion-card__name">Matrimoni</p>
+                    <p class="occasion-card__desc">Bomboniera elegante e originale</p>
+                </div>
+                <div class="occasion-card">
+                    <p class="occasion-card__emoji">ðŸŽ‚</p>
+                    <p class="occasion-card__name">Compleanni</p>
+                    <p class="occasion-card__desc">Per chi ama le cose buone e autentiche</p>
+                </div>
+                <div class="occasion-card">
+                    <p class="occasion-card__emoji">ðŸ </p>
+                    <p class="occasion-card__name">Casa Nuova</p>
+                    <p class="occasion-card__desc">Un benvenuto sardo di gusto e tradizione</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="contatti">
+        <div class="footer__inner">
+            <div class="footer__brand">
+                <a href="/">
+                    <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu"
+                        style="width:160px;height:auto;display:block;margin-bottom:12px;">
+                </a>
+                <span class="footer__logo-sub">Oleificio · Dal 1890</span>
+                <p class="footer__tagline">Olio extravergine d'oliva artigianale, non filtrato, dal cuore della
+                    Sardegna.</p>
+                <div class="footer__social">
+                    <a href="https://www.instagram.com/oleificio.cabriolu/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/oleificiocabriolu/" target="_blank" rel="noopener"
+                        aria-label="Facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer__nav">
+                <h4>Navigazione</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/storia">La Nostra Storia</a></li>
+                    <li><a href="/frangitura">Frangitura</a></li>
+                    <li><a href="/territorio">Territorio</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/shop">Shop</a></li>
+                </ul>
+            </div>
+            <div class="footer__nav">
+                <h4>Prodotti</h4>
+                <ul>
+                    <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+                    <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+                    <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+                    <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+                    <li><a href="/shop/latte">Latte Professionali</a></li>
+                    <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+                </ul>
+            </div>
+            <div class="footer__contact">
+                <h4>Contatti</h4>
+                <p>Oleificio Cabriolu snc</p>
+                <p>Via Umberto I, Villacidro (SU)</p>
+                <p>Sardegna, Italia</p>
+                <p style="margin-top:12px"><a href="tel:+390709316xx">+39 070 9316XX</a></p>
+                <p><a href="mailto:info@oleificiocabriolu.it">info@oleificiocabriolu.it</a></p>
+                <p style="margin-top:12px;font-size:.8rem;color:rgba(250,246,240,.35)">Lun–Sab: 8:00–13:00 / 15:00–18:00
+                </p>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>© 2026 Oleificio Cabriolu snc — P.IVA 01234567890</p>
+            <div class="footer__legal">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/cookie">Cookie Policy</a>
+            </div>
+            <p class="footer__credit">Sito realizzato da <a href="https://digidentityagency.it" target="_blank"
+                    rel="noopener">DigIdentity Agency</a></p>
+        </div>
+    </footer>
+
+
+    <!-- WATERMARK -->
+    <div class="watermark-wrap">
+        <div class="watermark-track">
+            <span>COFANETTO - </span><span>COFANETTO - </span><span>COFANETTO - </span><span>COFANETTO - </span>
+        </div>
+    </div>
+
+    <!-- CHATBOT FAB -->
+    <button class="chatbot-fab" id="chatbotFab" aria-label="Assistente virtuale">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
+        </svg>
+    </button>
+    <div class="chatbot-panel" id="chatbotPanel" aria-hidden="true">
+        <div class="chatbot-panel__header">
+            <span>Assistente Cabriolu</span>
+            <button id="chatbotClose">âœ•</button>
+        </div>
+        <div class="chatbot-panel__body" id="chatbotBody">
+            <p class="chatbot-panel__welcome">Ciao! Chiedimi tutto sui nostri oli, spedizioni, o prenota una visita al
+                frantoio.</p>
+        </div>
+        <div class="chatbot-panel__input">
+            <input type="text" id="chatbotInput" placeholder="Scrivi un messaggio..." aria-label="Messaggio">
+            <button id="chatbotSend">â†’</button>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            /* â”€â”€ CANVAS: 840 frame orizzontali (desktop) â”€â”€ */
+            var TOTAL = 192;
+            var PATH = '/img/frames/cofanetto/frame_';
+            var EXT = '.jpg';
+            var canvas = document.getElementById('productCanvas');
+            var ctx = canvas.getContext('2d');
+            var frames = [];
+            var current = 0;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                drawFrame(current);
+            }
+
+            function drawFrame(idx) {
+                if (!frames[idx] || !frames[idx].complete || !frames[idx].naturalWidth) return;
+                var img = frames[idx];
+                var cW = canvas.width, cH = canvas.height;
+                var iR = img.naturalWidth / img.naturalHeight, cR = cW / cH;
+                var dW, dH, dX, dY;
+                if (cR > iR) { dW = cW; dH = cW / iR; }
+                else { dH = cH; dW = cH * iR; }
+                dX = (cW - dW) / 2; dY = (cH - dH) / 2;
+                ctx.clearRect(0, 0, cW, cH);
+                ctx.drawImage(img, dX, dY, dW, dH);
+            }
+
+            function preload() {
+                for (var i = 1; i <= TOTAL; i++) {
+                    var img = new Image();
+                    img.src = PATH + String(i).padStart(4, '0') + EXT;
+                    frames[i - 1] = img;
+                }
+                frames[0].onload = function () { drawFrame(0); };
+            }
+
+            var cinema = document.querySelector('.cinema');
+            var hint = document.getElementById('scrollHint');
+            var cta = document.getElementById('shopCta');
+            var ticking = false;
+
+            window.addEventListener('scroll', function () {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(function () {
+                    var rect = cinema.getBoundingClientRect();
+                    var scrollable = cinema.offsetHeight - window.innerHeight;
+                    var scrolled = -rect.top;
+                    var progress = Math.max(0, Math.min(scrolled / scrollable, 1));
+                    var f = Math.round(progress * (TOTAL - 1));
+                    if (f !== current) { current = f; drawFrame(f); }
+                    if (hint) { if (progress > 0.05) hint.classList.add('hidden'); else hint.classList.remove('hidden'); }
+                    if (cta) { if (progress > 0.7) cta.classList.add('visible'); else cta.classList.remove('visible'); }
+                    ticking = false;
+                });
+            }, { passive: true });
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            preload();
+
+            /* â”€â”€ QTY + CART (localStorage) â”€â”€ */
+            var PRICE = 34.90;
+            var qty = 1;
+
+            document.getElementById('qtyMinus').addEventListener('click', function () {
+                qty = Math.max(1, qty - 1);
+                document.getElementById('qtyVal').textContent = qty;
+                document.getElementById('priceTag').textContent = 'â‚¬' + (PRICE * qty).toFixed(2).replace('.', ',');
+            });
+            document.getElementById('qtyPlus').addEventListener('click', function () {
+                qty++;
+                document.getElementById('qtyVal').textContent = qty;
+                document.getElementById('priceTag').textContent = 'â‚¬' + (PRICE * qty).toFixed(2).replace('.', ',');
+            });
+            document.getElementById('cartBtn').addEventListener('click', function () {
+                var cart = JSON.parse(localStorage.getItem('cabriolu-cart') || '[]');
+                var found = cart.find(function (i) { return i.id === 'cofanetto'; });
+                if (found) { found.qty += qty; }
+                else { cart.push({ id: 'cofanetto', name: 'Cofanetto Luxury 4Ã—0.25L', price: PRICE, qty: qty }); }
+                localStorage.setItem('cabriolu-cart', JSON.stringify(cart));
+                var btn = document.getElementById('cartBtn');
+                btn.textContent = 'âœ“ Aggiunto!';
+                btn.style.background = '#2d6a4f';
+                setTimeout(function () { btn.textContent = 'Aggiungi al Carrello'; btn.style.background = ''; }, 2000);
+            });
+
+            /* â”€â”€ SMOOTH SCROLL â”€â”€ */
+            document.getElementById('shopCta').addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('product').scrollIntoView({ behavior: 'smooth' });
+            });
+
+            /* â”€â”€ NAV SCROLL â”€â”€ */
+            window.addEventListener('scroll', function () {
+                document.getElementById('nav').classList.toggle('nav--scrolled', window.scrollY > 80);
+            }, { passive: true });
+            /* â”€â”€ CHATBOT â”€â”€ */
+            var fab = document.getElementById('chatbotFab');
+            var panel = document.getElementById('chatbotPanel');
+            var close = document.getElementById('chatbotClose');
+            var input = document.getElementById('chatbotInput');
+            var send = document.getElementById('chatbotSend');
+            var body = document.getElementById('chatbotBody');
+            fab.addEventListener('click', function () {
+                var open = panel.classList.toggle('chatbot-panel--open');
+                panel.setAttribute('aria-hidden', !open);
+            });
+            close && close.addEventListener('click', function () {
+                panel.classList.remove('chatbot-panel--open');
+                panel.setAttribute('aria-hidden', 'true');
+            });
+            function sendMsg() {
+                var msg = input.value.trim(); if (!msg) return;
+                var u = document.createElement('p');
+                u.style.cssText = 'color:#fff;margin-top:12px;font-size:.85rem';
+                u.textContent = '> ' + msg; body.appendChild(u);
+                var b = document.createElement('p');
+                b.style.cssText = 'margin-top:8px;color:rgba(255,255,255,.55);font-size:.85rem';
+                b.textContent = 'Grazie! Scrivici a info@oleificiocabriolu.it';
+                body.appendChild(b);
+                input.value = ''; body.scrollTop = body.scrollHeight;
+            }
+            send.addEventListener('click', sendMsg);
+            input.addEventListener('keydown', function (e) { if (e.key === 'Enter') sendMsg(); });
+
+        })();
+    </script>
+    <!-- WATERMARK -->
+    <div class="watermark-wrap">
+        <div class="watermark-track">
+            <span>COFANETTO - </span>
+            <span>COFANETTO - </span>
+            <span>COFANETTO - </span>
+            <span>COFANETTO - </span>
+        </div>
+    </div>
+    <script src="/js/common.js"></script>
+</body>
+
+</html>
