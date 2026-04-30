@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Contatti · Oleificio Cabriolu · Villacidro, Sardegna</title>
+    <meta name="description"
+        content="Contatta l'Oleificio Cabriolu a Villacidro, Sardegna. Visita il frantoio storico, prenota una degustazione, richiedi informazioni sui nostri oli EVO sardi.">
+    <link rel="canonical" href="https://www.oleificiocabriolu.it/contatti/">
+    <meta property="og:title" content="Contatti · Oleificio Cabriolu · Villacidro, Sardegna">
+    <meta property="og:description"
+        content="Vienici a trovare a Villacidro o scrivici. Olio EVO sardo, frangitura conto terzi, visite e degustazioni.">
+    <meta property="og:image" content="https://www.oleificiocabriolu.it/video/contatti-poster.jpg">
+    <meta name="theme-color" content="#0A0A0A">
+
+    <link rel="preload" href="/fonts/cormorant-garamond-v16-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/inter-v13-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" as="image" href="/video/contatti-poster.jpg" fetchpriority="high">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script src="/js/common.js" defer></script>
+    <script src="/js/contatti.js" defer></script>
+
+    <script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"LocalBusiness",
+  "name":"Oleificio Cabriolu",
+  "image":"https://www.oleificiocabriolu.it/video/contatti-poster.jpg",
+  "telephone":"+390709316XX",
+  "email":"info@oleificiocabriolu.it",
+  "url":"https://www.oleificiocabriolu.it",
+  "address":{
+    "@type":"PostalAddress",
+    "streetAddress":"Via Umberto I",
+    "addressLocality":"Villacidro",
+    "addressRegion":"Sud Sardegna",
+    "postalCode":"09039",
+    "addressCountry":"IT"
+  },
+  "geo":{"@type":"GeoCoordinates","latitude":39.4577,"longitude":8.7372},
+  "openingHoursSpecification":[
+    {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"08:00","closes":"13:00"},
+    {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"15:00","closes":"18:00"}
+  ]
+}
+</script>
+</head>
+
+<body class="page-contatti">
+
+    <!-- ========== NAV ========== -->
+    <nav id="nav" class="nav">
+        <div class="nav__inner">
+            <a href="/" class="nav__logo" aria-label="Oleificio Cabriolu">
+                <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu"
+                    class="nav__logo-img">
+            </a>
+            <ul class="nav__links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/storia">La Nostra Storia</a></li>
+                <li><a href="/frangitura">Frangitura</a></li>
+                <li><a href="/territorio">Territorio</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/contatti" aria-current="page">Contatti</a></li>
+                <li class="nav__dropdown">
+                    <a href="/shop" class="nav__cta">Shop</a>
+                    <ul class="nav__sub">
+                        <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+                        <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+                        <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+                        <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+                        <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <button class="nav__burger" id="navBurger" aria-label="Menu"
+                aria-expanded="false"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <main id="main">
+
+        <!-- ========== HERO VIDEO ========== -->
+        <section class="cont-hero" aria-label="Contattaci all'Oleificio Cabriolu">
+            <div class="cont-hero__sticky">
+                <video id="contHeroVideo" class="cont-hero__video" poster="/video/contatti-poster.jpg" preload="auto"
+                    muted playsinline disablepictureinpicture aria-hidden="true">
+                    <source src="/video/contatti-desktop.mp4" type="video/mp4" media="(min-width: 768px)">
+                    <source src="/video/contatti-desktop.webm" type="video/webm" media="(min-width: 768px)">
+                    <source src="/video/contatti-mobile.mp4" type="video/mp4">
+                </video>
+                <div class="cont-hero__overlay">
+                    <div class="cont-hero__title-wrap">
+                        <p class="cont-hero__overtitle">Vieni a trovarci · Villacidro</p>
+                        <h1 class="cont-hero__title">Scriveteci, <span>vi rispondiamo</span></h1>
+                        <p class="cont-hero__desc">Una visita al frantoio, una degustazione, un'informazione sui nostri
+                            oli o sulla frangitura conto terzi. Siamo qui dal 1890.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== INTRO + QUOTE ========== -->
+        <section class="cont-intro">
+            <div class="cont-intro__inner">
+                <p class="cont-intro__overtitle">Cinque generazioni · Una porta sempre aperta</p>
+                <h2 class="cont-intro__title">L'olio è una storia che si racconta di persona</h2>
+                <p class="cont-intro__lead">Per noi, ogni cliente è un ospite. Vienici a trovare nel nostro frantoio
+                    storico a Villacidro: ti facciamo vedere come nasce l'olio, ti facciamo assaggiare le nostre
+                    cultivar, ti raccontiamo la storia di una famiglia che da 130 anni vive di ulivi e Sardegna.</p>
+                <blockquote class="cont-intro__quote scramble" data-scramble>«Una stretta di mano vale più di mille
+                    email.»</blockquote>
+                <p class="cont-intro__author">— Famiglia Cabriolu, dal 1890</p>
+            </div>
+        </section>
+
+        <!-- ========== INFO CARDS (3 modi per contattarci) ========== -->
+        <section class="cont-cards" aria-labelledby="cont-cards-title">
+            <header class="cont-cards__header">
+                <p class="cont-cards__overtitle">Tre modi per raggiungerci</p>
+                <h2 id="cont-cards-title" class="cont-cards__title">Come preferisci contattarci?</h2>
+            </header>
+
+            <div class="cont-cards__grid">
+
+                <!-- 01. Vieni a trovarci -->
+                <article class="cont-card" data-card="01">
+                    <picture class="cont-card__img">
+                        <source srcset="/img/contatti/desktop/ingresso.avif" type="image/avif">
+                        <source srcset="/img/contatti/desktop/ingresso.webp" type="image/webp">
+                        <img src="/img/contatti/desktop/ingresso.webp"
+                            alt="L'ingresso del frantoio Cabriolu a Villacidro" loading="lazy" decoding="async">
+                    </picture>
+                    <div class="cont-card__body">
+                        <span class="cont-card__num">01</span>
+                        <h3 class="cont-card__title">Vieni a <em>trovarci</em></h3>
+                        <p class="cont-card__desc">Visita il frantoio storico, scopri il processo di frangitura a
+                            freddo, degusta le nostre cultivar Bosana e Nera di Villacidro direttamente da chi le
+                            coltiva.</p>
+                        <ul class="cont-card__list">
+                            <li><strong>Indirizzo</strong> Via Umberto I, Villacidro (SU)</li>
+                            <li><strong>Lun–Sab</strong> 8:00 – 13:00 / 15:00 – 18:00</li>
+                            <li><strong>Domenica</strong> Chiuso</li>
+                        </ul>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Oleificio+Cabriolu+Villacidro"
+                            target="_blank" rel="noopener" class="cont-card__btn">Apri in Google Maps →</a>
+                    </div>
+                </article>
+
+                <!-- 02. Chiamaci -->
+                <article class="cont-card" data-card="02">
+                    <picture class="cont-card__img">
+                        <source srcset="/img/contatti/desktop/scrivania.avif" type="image/avif">
+                        <source srcset="/img/contatti/desktop/scrivania.webp" type="image/webp">
+                        <img src="/img/contatti/desktop/scrivania.webp"
+                            alt="Una scrivania vintage con quaderno e calice d'olio" loading="lazy" decoding="async">
+                    </picture>
+                    <div class="cont-card__body">
+                        <span class="cont-card__num">02</span>
+                        <h3 class="cont-card__title">Chiamaci o <em>scrivici</em></h3>
+                        <p class="cont-card__desc">Per ordini, frangitura conto terzi, visite di gruppo, regali
+                            aziendali o semplici domande sui nostri oli. Ti rispondiamo in giornata.</p>
+                        <ul class="cont-card__list">
+                            <li><strong>Telefono</strong> <a href="tel:+390709316XX">+39 070 9316 XX</a></li>
+                            <li><strong>WhatsApp</strong> <a href="https://wa.me/393XXXXXXXXX" target="_blank"
+                                    rel="noopener">+39 3XX XXX XXXX</a></li>
+                            <li><strong>Email</strong> <a
+                                    href="mailto:info@oleificiocabriolu.it">info@oleificiocabriolu.it</a></li>
+                        </ul>
+                        <a href="mailto:info@oleificiocabriolu.it" class="cont-card__btn">Manda una email →</a>
+                    </div>
+                </article>
+
+                <!-- 03. Seguici -->
+                <article class="cont-card" data-card="03">
+                    <picture class="cont-card__img">
+                        <source srcset="/img/contatti/desktop/goccia.avif" type="image/avif">
+                        <source srcset="/img/contatti/desktop/goccia.webp" type="image/webp">
+                        <img src="/img/contatti/desktop/goccia.webp"
+                            alt="Goccia d'oro su sfondo nero, dettaglio dell'olio Cabriolu" loading="lazy"
+                            decoding="async">
+                    </picture>
+                    <div class="cont-card__body">
+                        <span class="cont-card__num">03</span>
+                        <h3 class="cont-card__title">Seguici <em>online</em></h3>
+                        <p class="cont-card__desc">Ricette, dietro le quinte del frantoio, novità sulla campagna
+                            olearia, momenti di vita sarda. Ogni giorno un pezzo di Cabriolu sui nostri canali.</p>
+                        <ul class="cont-card__list">
+                            <li><strong>Instagram</strong> <a href="https://www.instagram.com/oleificio.cabriolu/"
+                                    target="_blank" rel="noopener">@oleificio.cabriolu</a></li>
+                            <li><strong>Facebook</strong> <a href="https://www.facebook.com/oleificiocabriolu/"
+                                    target="_blank" rel="noopener">Oleificio Cabriolu</a></li>
+                            <li><strong>Newsletter</strong> Iscriviti dal form qui sotto</li>
+                        </ul>
+                        <a href="https://www.instagram.com/oleificio.cabriolu/" target="_blank" rel="noopener"
+                            class="cont-card__btn">Seguici su Instagram →</a>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ========== FORM ========== -->
+        <section class="cont-form" aria-labelledby="cont-form-title">
+            <div class="cont-form__bg">
+                <picture>
+                    <source srcset="/img/contatti/desktop/pattern.avif" type="image/avif">
+                    <source srcset="/img/contatti/desktop/pattern.webp" type="image/webp">
+                    <img src="/img/contatti/desktop/pattern.webp" alt="" loading="lazy" decoding="async">
+                </picture>
+            </div>
+            <div class="cont-form__inner">
+                <p class="cont-form__overtitle">Scrivici · Ti rispondiamo entro 24h</p>
+                <h2 id="cont-form-title" class="cont-form__title">Compila il modulo</h2>
+                <p class="cont-form__lead">Una richiesta di informazioni, un ordine speciale, una visita di gruppo.
+                    Raccontaci di cosa hai bisogno.</p>
+
+                <form class="cont-form__form" id="contattiForm" novalidate>
+                    <div class="cont-form__row">
+                        <label class="cont-form__field">
+                            <span>Nome e Cognome *</span>
+                            <input type="text" name="nome" required autocomplete="name" placeholder="Mario Rossi">
+                        </label>
+                        <label class="cont-form__field">
+                            <span>Email *</span>
+                            <input type="email" name="email" required autocomplete="email"
+                                placeholder="mario.rossi@email.it">
+                        </label>
+                    </div>
+                    <div class="cont-form__row">
+                        <label class="cont-form__field">
+                            <span>Telefono</span>
+                            <input type="tel" name="telefono" autocomplete="tel" placeholder="+39 070 000 0000">
+                        </label>
+                        <label class="cont-form__field">
+                            <span>Motivo del contatto *</span>
+                            <select name="motivo" required>
+                                <option value="">Seleziona…</option>
+                                <option>Informazioni sui prodotti</option>
+                                <option>Ordine / Spedizione</option>
+                                <option>Frangitura conto terzi</option>
+                                <option>Visita al frantoio</option>
+                                <option>Degustazione di gruppo</option>
+                                <option>Regali aziendali</option>
+                                <option>Stampa / Collaborazioni</option>
+                                <option>Altro</option>
+                            </select>
+                        </label>
+                    </div>
+                    <label class="cont-form__field">
+                        <span>Messaggio *</span>
+                        <textarea name="messaggio" rows="6" required
+                            placeholder="Raccontaci di cosa hai bisogno…"></textarea>
+                    </label>
+                    <label class="cont-form__check">
+                        <input type="checkbox" name="privacy" required>
+                        <span>Ho letto la <a href="/privacy" target="_blank">Privacy Policy</a> e acconsento al
+                            trattamento dei miei dati. *</span>
+                    </label>
+                    <button type="submit" class="cont-form__btn">Invia il messaggio →</button>
+                    <p class="cont-form__note" id="contFormNote" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+        </section>
+
+        <!-- ========== MAPPA + ORARI ========== -->
+        <section class="cont-mappa" aria-label="Dove siamo">
+            <div class="cont-mappa__inner">
+                <div class="cont-mappa__copy">
+                    <p class="cont-mappa__overtitle">Dove siamo</p>
+                    <h2 class="cont-mappa__title">Nel cuore di <em>Villacidro</em></h2>
+                    <p class="cont-mappa__desc">Ai piedi del Monte Linas, a 200 metri sul livello del mare, il nostro
+                        frantoio storico è facilmente raggiungibile da Cagliari (45 min) e dall'aeroporto di Elmas (40
+                        min).</p>
+                    <ul class="cont-mappa__list">
+                        <li><strong>Indirizzo</strong> Via Umberto I, 09039 Villacidro (SU), Sardegna</li>
+                        <li><strong>Telefono</strong> <a href="tel:+390709316XX">+39 070 9316 XX</a></li>
+                        <li><strong>Email</strong> <a
+                                href="mailto:info@oleificiocabriolu.it">info@oleificiocabriolu.it</a></li>
+                        <li><strong>P.IVA</strong> 01234567890</li>
+                    </ul>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Oleificio+Cabriolu+Villacidro"
+                        target="_blank" rel="noopener" class="cont-mappa__btn">Indicazioni stradali →</a>
+                </div>
+                <div class="cont-mappa__embed">
+                    <iframe title="Mappa Oleificio Cabriolu Villacidro"
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=8.730%2C39.452%2C8.745%2C39.463&layer=mapnik&marker=39.4577%2C8.7372"
+                        loading="lazy" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== CTA FINALE ========== -->
+        <section class="cont-cta">
+            <div class="cont-cta__inner">
+                <p class="cont-cta__overtitle">Non sai da dove iniziare?</p>
+                <h2 class="cont-cta__title">Prova i nostri oli</h2>
+                <p class="cont-cta__desc">Bosana, Nera di Villacidro, oli aromatici al peperoncino, basilico, limone.
+                    Tutto il territorio in una bottiglia.</p>
+                <a href="/shop" class="cont-cta__btn">Vai allo Shop →</a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer" id="contattiFooter">
+        <div class="footer__inner">
+            <div class="footer__brand">
+                <a href="/"><img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu"
+                        style="width:160px;height:auto;display:block;margin-bottom:12px;"></a>
+                <span class="footer__logo-sub">Oleificio · Dal 1890</span>
+                <p class="footer__tagline">Olio extravergine d'oliva artigianale, non filtrato, dal cuore della
+                    Sardegna.</p>
+                <div class="footer__social">
+                    <a href="https://www.instagram.com/oleificio.cabriolu/" target="_blank" rel="noopener"
+                        aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg></a>
+                    <a href="https://www.facebook.com/oleificiocabriolu/" target="_blank" rel="noopener"
+                        aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg></a>
+                </div>
+            </div>
+            <div class="footer__nav">
+                <h4>Navigazione</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/storia">La Nostra Storia</a></li>
+                    <li><a href="/frangitura">Frangitura</a></li>
+                    <li><a href="/territorio">Territorio</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/shop">Shop</a></li>
+                </ul>
+            </div>
+            <div class="footer__nav">
+                <h4>Prodotti</h4>
+                <ul>
+                    <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
+                    <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
+                    <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
+                    <li><a href="/shop/olio-limone">Olio al Limone</a></li>
+                    <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
+                </ul>
+            </div>
+            <div class="footer__contact">
+                <h4>Contatti</h4>
+                <p>Oleificio Cabriolu snc</p>
+                <p>Via Umberto I, Villacidro (SU)</p>
+                <p>Sardegna, Italia</p>
+                <p style="margin-top:12px"><a href="tel:+390709316xx">+39 070 9316XX</a></p>
+                <p><a href="mailto:info@oleificiocabriolu.it">info@oleificiocabriolu.it</a></p>
+                <p style="margin-top:12px;font-size:.8rem;color:rgba(250,246,240,.35)">Lun–Sab: 8:00–13:00 / 15:00–18:00
+                </p>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>© 2026 Oleificio Cabriolu snc — P.IVA 01234567890</p>
+            <div class="footer__legal">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/cookie">Cookie Policy</a>
+            </div>
+            <p class="footer__credit">Sito realizzato da <a href="https://digidentityagency.it" target="_blank"
+                    rel="noopener">DigIdentity Agency</a></p>
+        </div>
+    </footer>
+
+    <!-- WATERMARK -->
+    <div class="watermark-wrap" aria-hidden="true">
+        <div class="watermark-track">
+            <span>CONTATTI</span><span>CONTATTI</span><span>CONTATTI</span><span>CONTATTI</span>
+        </div>
+    </div>
+
+    <!-- CHATBOT -->
+    <button class="chatbot-fab" id="chatbotFab" aria-label="Apri chat" aria-expanded="false">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </svg>
+    </button>
+    <aside class="chatbot-panel" id="chatbotPanel" role="dialog" aria-labelledby="chatbotTitle" aria-hidden="true">
+        <header class="chatbot-panel__header">
+            <div>
+                <h3 id="chatbotTitle" class="chatbot-panel__title">Oleificio Cabriolu</h3>
+                <p class="chatbot-panel__subtitle">Come possiamo aiutarti?</p>
+            </div>
+            <button class="chatbot-panel__close" id="chatbotClose" aria-label="Chiudi chat">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </header>
+        <div class="chatbot-panel__body" id="chatbotBody">
+            <div class="chatbot-msg chatbot-msg--bot">
+                <p>Ciao! 👋 Sono qui per rispondere alle tue domande sui nostri oli, le visite al frantoio e la
+                    frangitura conto terzi.</p>
+            </div>
+            <div class="chatbot-msg chatbot-msg--bot">
+                <p>Scrivi pure qui sotto o chiamaci al <a href="tel:+390709316XX">070 9316 XX</a>.</p>
+            </div>
+        </div>
+        <form class="chatbot-panel__form" id="chatbotForm" autocomplete="off">
+            <input type="text" id="chatbotInput" class="chatbot-panel__input" placeholder="Scrivi un messaggio..."
+                aria-label="Messaggio">
+            <button type="submit" class="chatbot-panel__send" aria-label="Invia">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg>
+            </button>
+        </form>
+    </aside>
+
+</body>
+
+</html>
