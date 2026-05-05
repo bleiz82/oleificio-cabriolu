@@ -1,21 +1,17 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Blog â€” Oleificio Cabriolu | Olio EVO, Territorio e Cucina Sarda</title>
+    <title>Blog — Oleificio Cabriolu | Olio EVO, Territorio e Cucina Sarda</title>
     <meta name="description"
-        content="Approfondimenti sull'olio extravergine d'oliva sardo: frangitura, cultivar, ricette e curiositÃ  dal frantoio di Villacidro dal 1890.">
+        content="Approfondimenti sull'olio extravergine d'oliva sardo: frangitura, cultivar, ricette e curiosità dal frantoio di Villacidro dal 1890.">
     <link rel="canonical" href="https://www.oleificiocabriolu.it/blog">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Blog â€” Oleificio Cabriolu">
+    <meta property="og:title" content="Blog — Oleificio Cabriolu">
     <meta property="og:description"
-        content="Approfondimenti sull'olio extravergine sardo: frangitura, cultivar, ricette e curiositÃ  dal frantoio di Villacidro.">
-    <meta property="og:image" content="https://www.oleificiocabriolu.it/img/blog/og-blog.jpg">
-    <meta property="og:url" content="https://www.oleificiocabriolu.it/blog">
-    <meta property="og:locale" content="it_IT">
-    <meta name="twitter:card" content="summary_large_image">
+        content="Approfondimenti sull'olio extravergine sardo: frangitura, cultivar, ricette e curiosità dal frantoio di Villacidro.">
+    <meta property="og:image" content="https://www.oleificiocabriolu.it/img/hero/og-home.jpg">
     <meta name="theme-color" content="#0A0A0A">
     <link rel="preload" href="/fonts/cormorant-garamond-v16-latin-700.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/inter-v13-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
@@ -27,7 +23,7 @@
         "@type": "Blog",
         "name": "Blog Oleificio Cabriolu",
         "url": "https://www.oleificiocabriolu.it/blog",
-        "description": "Approfondimenti sull'olio extravergine d'oliva sardo, frangitura, cultivar, ricette e curiositÃ .",
+        "description": "Approfondimenti sull'olio extravergine d'oliva sardo, frangitura, cultivar, ricette e curiosità.",
         "publisher": {
             "@type": "Organization",
             "name": "Oleificio Cabriolu",
@@ -64,7 +60,7 @@
             overflow-x: hidden;
         }
 
-        /* â”€â”€ HERO â”€â”€ */
+        /* ── HERO ── */
         .blog-hero {
             position: relative;
             min-height: 60vh;
@@ -124,7 +120,7 @@
             max-width: 520px;
         }
 
-        /* â”€â”€ FILTRI â”€â”€ */
+        /* ── FILTRI ── */
         .blog-filters {
             position: sticky;
             top: 0;
@@ -172,7 +168,7 @@
             color: #000;
         }
 
-        /* â”€â”€ LAYOUT PRINCIPALE â”€â”€ */
+        /* ── LAYOUT PRINCIPALE ── */
         .blog-main {
             max-width: 1200px;
             margin: 80px auto;
@@ -191,7 +187,7 @@
             margin-bottom: 24px;
         }
 
-        /* â”€â”€ CARD IN EVIDENZA â”€â”€ */
+        /* ── CARD IN EVIDENZA ── */
         .blog-card--featured {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -236,7 +232,7 @@
             justify-content: center;
         }
 
-        /* â”€â”€ CARD STANDARD â”€â”€ */
+        /* ── CARD STANDARD ── */
         .blog-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -284,7 +280,7 @@
             transform: scale(1.04);
         }
 
-        /* â”€â”€ BODY CARD â”€â”€ */
+        /* ── BODY CARD ── */
         .blog-card__body {
             padding: 28px 28px 32px;
             display: flex;
@@ -359,7 +355,7 @@
             gap: 12px;
         }
 
-        /* â”€â”€ NEWSLETTER â”€â”€ */
+        /* ── NEWSLETTER ── */
         .blog-newsletter {
             background: linear-gradient(135deg, #0d0d0d 0%, #111008 100%);
             border: 1px solid rgba(200, 169, 110, .15);
@@ -454,7 +450,7 @@
             color: rgba(255, 255, 255, .4);
         }
 
-        /* â”€â”€ TOPICS â”€â”€ */
+        /* ── TOPICS ── */
         .blog-topics {
             max-width: 1200px;
             margin: 0 auto 80px;
@@ -522,7 +518,7 @@
             letter-spacing: 1px;
         }
 
-        /* â”€â”€ WATERMARK â”€â”€ */
+        /* ── WATERMARK ── */
         .watermark-wrap {
             position: fixed;
             top: 50%;
@@ -562,7 +558,7 @@
             }
         }
 
-        /* â”€â”€ ANIMAZIONI â”€â”€ */
+        /* ── ANIMAZIONI ── */
         .ani {
             opacity: 0;
             transform: translateY(28px);
@@ -574,7 +570,7 @@
             transform: translateY(0);
         }
 
-        /* â”€â”€ RESPONSIVE â”€â”€ */
+        /* ── RESPONSIVE ── */
         @media (max-width: 1024px) {
             .blog-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -629,60 +625,44 @@
 
 <body>
 
-
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/storia">La Nostra Storia</a></li>
+                <li><a href="/frangitura">Frangitura</a></li>
+                <li><a href="/territorio">Territorio</a></li>
+                <li><a href="/blog" aria-current="page">Blog</a></li>
+                <li><a href="/contatti">Contatti</a></li>
+                <li><a href="/shop">Shop</a></li>
+            </ul>
+        </nav>
+    </div>
 
     <!-- NAV -->
-<nav id="nav" class="nav">
-    <div class="nav__inner">
-        <a href="/" class="nav__logo" aria-label="Oleificio Cabriolu">
-            <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu" class="nav__logo-img">
-        </a>
-        <ul class="nav__links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/storia">La Nostra Storia</a></li>
-            <li><a href="/frangitura">Frangitura</a></li>
-            <li><a href="/territorio">Territorio</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/contatti">Contatti</a></li>
-            <li class="nav__dropdown">
-                <a href="/shop" class="nav__cta">Shop <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style="margin-left:4px;vertical-align:middle"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                <ul class="nav__sub">
-                    <li><a href="/shop/evo-puro">Extravergine Puro</a></li>
-                    <li><a href="/shop/olio-peperoncino">Olio al Peperoncino</a></li>
-                    <li><a href="/shop/olio-basilico">Olio al Basilico</a></li>
-                    <li><a href="/shop/olio-limone">Olio al Limone</a></li>
-                    <li><a href="/shop/latte">Latte Professionali</a></li>
-                    <li><a href="/shop/cofanetto">Cofanetto Luxury</a></li>
-                </ul>
-            </li>
-        </ul>
-        <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false">
-            <span></span><span></span><span></span>
-        </button>
-    </div>
-</nav>
+    <nav id="nav" class="nav">
+        <div class="nav__inner">
+            <a href="/" class="nav__logo" aria-label="Oleificio Cabriolu">
+                <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu"
+                    class="nav__logo-img">
+            </a>
+            <ul class="nav__links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/storia">La Nostra Storia</a></li>
+                <li><a href="/frangitura">Frangitura</a></li>
+                <li><a href="/territorio">Territorio</a></li>
+                <li><a href="/blog" aria-current="page">Blog</a></li>
+                <li><a href="/contatti">Contatti</a></li>
+                <li><a href="/shop" class="nav__cta">Shop</a></li>
+            </ul>
+            <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/storia">La Nostra Storia</a></li>
-        <li><a href="/frangitura">Frangitura</a></li>
-        <li><a href="/territorio">Territorio</a></li>
-        <li><a href="/blog">Blog</a></li>
-        <li><a href="/contatti">Contatti</a></li>
-        <li><a href="/shop">Shop</a></li>
-        <li class="mobile-menu__divider"></li>
-        <li><a href="/shop/evo-puro" class="mobile-menu__sub">Extravergine Puro</a></li>
-        <li><a href="/shop/olio-peperoncino" class="mobile-menu__sub">Olio al Peperoncino</a></li>
-        <li><a href="/shop/olio-basilico" class="mobile-menu__sub">Olio al Basilico</a></li>
-        <li><a href="/shop/olio-limone" class="mobile-menu__sub">Olio al Limone</a></li>
-        <li><a href="/shop/latte" class="mobile-menu__sub">Latte Professionali</a></li>
-        <li><a href="/shop/cofanetto" class="mobile-menu__sub">Cofanetto Luxury</a></li>
-    </ul>
-</div>
-
-<!-- HERO BLOG -->
+    <!-- HERO BLOG -->
     <header class="blog-hero">
         <div class="blog-hero__bg">
             <img src="/img/blog/blog-hero.webp" alt="Olive e olio extravergine Cabriolu" loading="eager">
@@ -692,7 +672,7 @@
             <p class="blog-hero__overtitle">Dal Frantoio di Villacidro</p>
             <h1 class="blog-hero__title">Storie di Olio,<br>Terra e Sapori.</h1>
             <p class="blog-hero__desc">Approfondimenti sulla frangitura a freddo, le cultivar sarde, le ricette della
-                tradizione e tutto ciÃ² che rende l'olio extravergine Cabriolu unico dal 1890.</p>
+                tradizione e tutto ciò che rende l'olio extravergine Cabriolu unico dal 1890.</p>
         </div>
     </header>
 
@@ -705,7 +685,7 @@
             <button class="blog-filter-btn" data-filter="salute">Salute & Polifenoli</button>
             <button class="blog-filter-btn" data-filter="ricette">Ricette</button>
             <button class="blog-filter-btn" data-filter="guide">Guide all'Acquisto</button>
-            <button class="blog-filter-btn" data-filter="curiosita">CuriositÃ </button>
+            <button class="blog-filter-btn" data-filter="curiosita">Curiosità</button>
         </div>
     </div>
 
@@ -723,11 +703,11 @@
                 </div>
                 <div class="blog-card__body">
                     <span class="blog-card__cat">Salute & Polifenoli</span>
-                    <h2 class="blog-card__title">Polifenoli nell'Olio EVO: cosa sono, a cosa servono e perchÃ© il
-                        Cabriolu ne ha cosÃ¬ tanti</h2>
-                    <p class="blog-card__excerpt">Oltre 350 mg/kg di polifenoli. Non Ã¨ solo un numero su una scheda
-                        tecnica â€” Ã¨ la differenza tra un olio che ti fa bene davvero e uno che sa solo di grasso. Ti
-                        spieghiamo tutto: dalla biochimica al perchÃ© le olive Bosana di Villacidro sono eccezionali.</p>
+                    <h2 class="blog-card__title">Polifenoli nell'Olio EVO: cosa sono, a cosa servono e perché il
+                        Cabriolu ne ha così tanti</h2>
+                    <p class="blog-card__excerpt">Oltre 350 mg/kg di polifenoli. Non è solo un numero su una scheda
+                        tecnica — è la differenza tra un olio che ti fa bene davvero e uno che sa solo di grasso. Ti
+                        spieghiamo tutto: dalla biochimica al perché le olive Bosana di Villacidro sono eccezionali.</p>
                     <div class="blog-card__meta">
                         <span>Mattia Cabriolu</span>
                         <span class="blog-card__meta-dot"></span>
@@ -735,7 +715,7 @@
                         <span class="blog-card__meta-dot"></span>
                         <span>Marzo 2025</span>
                     </div>
-                    <span class="blog-card__read-more">Leggi l'articolo â†’</span>
+                    <span class="blog-card__read-more">Leggi l'articolo →</span>
                 </div>
             </a>
         </section>
@@ -751,7 +731,7 @@
                     </div>
                     <div class="blog-card__body">
                         <span class="blog-card__cat">Frangitura</span>
-                        <h2 class="blog-card__title">Guida completa alla frangitura a freddo: come funziona e perchÃ©
+                        <h2 class="blog-card__title">Guida completa alla frangitura a freddo: come funziona e perché
                             cambia tutto</h2>
                         <p class="blog-card__excerpt">Dal momento in cui le olive entrano nel frantoio a quando l'olio
                             finisce in bottiglia: ogni passaggio del ciclo continuo a due fasi spiegato passo passo.</p>
@@ -760,7 +740,7 @@
                             <span>9 min</span><span class="blog-card__meta-dot"></span>
                             <span>Feb 2025</span>
                         </div>
-                        <span class="blog-card__read-more">Leggi â†’</span>
+                        <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
@@ -771,16 +751,16 @@
                     </div>
                     <div class="blog-card__body">
                         <span class="blog-card__cat">Cultivar & Territorio</span>
-                        <h2 class="blog-card__title">Bosana: la cultivar sarda che produce l'olio piÃ¹ ricco di
+                        <h2 class="blog-card__title">Bosana: la cultivar sarda che produce l'olio più ricco di
                             polifenoli d'Italia</h2>
                         <p class="blog-card__excerpt">Autoctona della Sardegna settentrionale, adattata al microclima di
-                            Villacidro. Ecco perchÃ© la Bosana regala oli straordinari e irripetibili altrove.</p>
+                            Villacidro. Ecco perché la Bosana regala oli straordinari e irripetibili altrove.</p>
                         <div class="blog-card__meta">
                             <span>Jessica Cabriolu</span><span class="blog-card__meta-dot"></span>
                             <span>7 min</span><span class="blog-card__meta-dot"></span>
                             <span>Gen 2025</span>
                         </div>
-                        <span class="blog-card__read-more">Leggi â†’</span>
+                        <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
@@ -800,7 +780,7 @@
                             <span>4 min</span><span class="blog-card__meta-dot"></span>
                             <span>Dic 2024</span>
                         </div>
-                        <span class="blog-card__read-more">Leggi â†’</span>
+                        <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
@@ -811,16 +791,16 @@
                     </div>
                     <div class="blog-card__body">
                         <span class="blog-card__cat">Guide all'Acquisto</span>
-                        <h2 class="blog-card__title">Come riconoscere un olio extravergine di qualitÃ  (e non farti
+                        <h2 class="blog-card__title">Come riconoscere un olio extravergine di qualità (e non farti
                             fregare)</h2>
-                        <p class="blog-card__excerpt">Colore, profumo, aciditÃ , polifenoli, data di raccolta: la guida
+                        <p class="blog-card__excerpt">Colore, profumo, acidità, polifenoli, data di raccolta: la guida
                             pratica per scegliere davvero bene al supermercato, online e al frantoio.</p>
                         <div class="blog-card__meta">
                             <span>Mattia Cabriolu</span><span class="blog-card__meta-dot"></span>
                             <span>8 min</span><span class="blog-card__meta-dot"></span>
                             <span>Nov 2024</span>
                         </div>
-                        <span class="blog-card__read-more">Leggi â†’</span>
+                        <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
@@ -831,16 +811,16 @@
                     </div>
                     <div class="blog-card__body">
                         <span class="blog-card__cat">Frangitura</span>
-                        <h2 class="blog-card__title">Co-molitura: perchÃ© i nostri oli aromatizzati sono diversi da tutti
+                        <h2 class="blog-card__title">Co-molitura: perché i nostri oli aromatizzati sono diversi da tutti
                             gli altri</h2>
                         <p class="blog-card__excerpt">Peperoncino, basilico e limone freschi moliti insieme alle olive
-                            nel frantoio. Non Ã¨ un'infusione: Ã¨ un'altra cosa. Scopri il processo e perchÃ© conta.</p>
+                            nel frantoio. Non è un'infusione: è un'altra cosa. Scopri il processo e perché conta.</p>
                         <div class="blog-card__meta">
                             <span>Mattia Cabriolu</span><span class="blog-card__meta-dot"></span>
                             <span>6 min</span><span class="blog-card__meta-dot"></span>
                             <span>Ott 2024</span>
                         </div>
-                        <span class="blog-card__read-more">Leggi â†’</span>
+                        <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
@@ -861,7 +841,7 @@
                             <span>6 min</span><span class="blog-card__meta-dot"></span>
                             <span>Set 2024</span>
                         </div>
-                        <span class="blog-card__read-more">Leggi â†’</span>
+                        <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
@@ -875,13 +855,13 @@
                         <h2 class="blog-card__title">L'olio extravergine d'oliva fa davvero bene alla salute? La scienza
                             risponde</h2>
                         <p class="blog-card__excerpt">Dieta mediterranea, oleocantale, squalene, vitamina E. Cosa dice
-                            davvero la ricerca scientifica sull'EVO e perchÃ© la qualitÃ  fa tutta la differenza.</p>
+                            davvero la ricerca scientifica sull'EVO e perché la qualità fa tutta la differenza.</p>
                         <div class="blog-card__meta">
                             <span>Jessica Cabriolu</span><span class="blog-card__meta-dot"></span>
                             <span>10 min</span><span class="blog-card__meta-dot"></span>
                             <span>Ago 2024</span>
                         </div>
-                        <span class="blog-card__read-more">Leggi â†’</span>
+                        <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
@@ -902,7 +882,7 @@
                             <span>5 min</span><span class="blog-card__meta-dot"></span>
                             <span>Lug 2024</span>
                         </div>
-                        <span class="blog-card__read-more">Leggi â†’</span>
+                        <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
@@ -923,7 +903,7 @@
                             <span>5 min</span><span class="blog-card__meta-dot"></span>
                             <span>Giu 2024</span>
                         </div>
-                        <span class="blog-card__read-more">Leggi â†’</span>
+                        <span class="blog-card__read-more">Leggi →</span>
                     </div>
                 </a>
 
@@ -935,7 +915,7 @@
     <section class="blog-newsletter ani" aria-label="Iscriviti alla newsletter">
         <p class="blog-newsletter__overtitle">Non perdere nulla</p>
         <h2 class="blog-newsletter__title">Ricevi i nuovi articoli direttamente in inbox.</h2>
-        <p class="blog-newsletter__desc">Un'email al mese: approfondimenti, ricette stagionali e novitÃ  dal frantoio di
+        <p class="blog-newsletter__desc">Un'email al mese: approfondimenti, ricette stagionali e novità dal frantoio di
             Villacidro. Zero spam, disiscrizione in un click.</p>
         <form class="blog-newsletter__form" id="newsletterForm" novalidate>
             <input type="email" class="blog-newsletter__input" id="newsletterEmail" placeholder="la-tua@email.it"
@@ -951,42 +931,42 @@
         <h2 class="blog-topics__title">Esplora per Argomento</h2>
         <div class="blog-topics__grid">
             <a href="/blog/categoria/frangitura" class="blog-topic-card ani">
-                <span class="blog-topic-card__icon">âš™ï¸</span>
+                <span class="blog-topic-card__icon">⚙️</span>
                 <p class="blog-topic-card__name">Frangitura</p>
                 <p class="blog-topic-card__count">4 articoli</p>
             </a>
             <a href="/blog/categoria/cultivar" class="blog-topic-card ani">
-                <span class="blog-topic-card__icon">ðŸŒ¿</span>
+                <span class="blog-topic-card__icon">🌿</span>
                 <p class="blog-topic-card__name">Cultivar & Territorio</p>
                 <p class="blog-topic-card__count">3 articoli</p>
             </a>
             <a href="/blog/categoria/salute" class="blog-topic-card ani">
-                <span class="blog-topic-card__icon">ðŸ«€</span>
+                <span class="blog-topic-card__icon">🫀</span>
                 <p class="blog-topic-card__name">Salute & Polifenoli</p>
                 <p class="blog-topic-card__count">3 articoli</p>
             </a>
             <a href="/blog/categoria/ricette" class="blog-topic-card ani">
-                <span class="blog-topic-card__icon">ðŸ½ï¸</span>
+                <span class="blog-topic-card__icon">🍽️</span>
                 <p class="blog-topic-card__name">Ricette</p>
                 <p class="blog-topic-card__count">4 articoli</p>
             </a>
             <a href="/blog/categoria/guide" class="blog-topic-card ani">
-                <span class="blog-topic-card__icon">ðŸ“–</span>
+                <span class="blog-topic-card__icon">📖</span>
                 <p class="blog-topic-card__name">Guide all'Acquisto</p>
                 <p class="blog-topic-card__count">3 articoli</p>
             </a>
             <a href="/blog/categoria/curiosita" class="blog-topic-card ani">
-                <span class="blog-topic-card__icon">ðŸ’¡</span>
-                <p class="blog-topic-card__name">CuriositÃ </p>
+                <span class="blog-topic-card__icon">💡</span>
+                <p class="blog-topic-card__name">Curiosità</p>
                 <p class="blog-topic-card__count">2 articoli</p>
             </a>
             <a href="/blog/categoria/storia" class="blog-topic-card ani">
-                <span class="blog-topic-card__icon">ðŸ•°ï¸</span>
+                <span class="blog-topic-card__icon">🕰️</span>
                 <p class="blog-topic-card__name">La Nostra Storia</p>
                 <p class="blog-topic-card__count">2 articoli</p>
             </a>
             <a href="/blog" class="blog-topic-card ani">
-                <span class="blog-topic-card__icon">ðŸ«’</span>
+                <span class="blog-topic-card__icon">🫒</span>
                 <p class="blog-topic-card__name">Tutti gli Articoli</p>
                 <p class="blog-topic-card__count">25 articoli</p>
             </a>
@@ -997,9 +977,9 @@
     <footer class="footer" id="contatti">
         <div class="footer__inner">
             <div class="footer__brand">
-                <a href="/">
+                <a href="/" class="nav__logo">
                     <img src="/img/oleificio_cabriolu_logo_500-403051a0.webp" alt="Oleificio Cabriolu"
-                        style="width:160px;height:auto;display:block;margin-bottom:12px;">
+                        class="nav__logo-img" width="160" height="auto">
                 </a>
                 <span class="footer__logo-sub">Oleificio · Dal 1890</span>
                 <p class="footer__tagline">Olio extravergine d'oliva artigianale, non filtrato, dal cuore della
@@ -1007,14 +987,14 @@
                 <div class="footer__social">
                     <a href="https://www.instagram.com/oleificio.cabriolu/" target="_blank" rel="noopener"
                         aria-label="Instagram">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                         </svg>
                     </a>
                     <a href="https://www.facebook.com/oleificiocabriolu/" target="_blank" rel="noopener"
                         aria-label="Facebook">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                         </svg>
@@ -1065,7 +1045,6 @@
         </div>
     </footer>
 
-
     <!-- WATERMARK -->
     <div class="watermark-wrap">
         <div class="watermark-track">
@@ -1083,7 +1062,7 @@
     <div class="chatbot-panel" id="chatbotPanel" aria-hidden="true">
         <div class="chatbot-panel__header">
             <span>Assistente Cabriolu</span>
-            <button id="chatbotClose">âœ•</button>
+            <button id="chatbotClose">✕</button>
         </div>
         <div class="chatbot-panel__body" id="chatbotBody">
             <p class="chatbot-panel__welcome">Ciao! Chiedimi tutto sui nostri oli, spedizioni, o prenota una visita al
@@ -1091,7 +1070,7 @@
         </div>
         <div class="chatbot-panel__input">
             <input type="text" id="chatbotInput" placeholder="Scrivi un messaggio..." aria-label="Messaggio">
-            <button id="chatbotSend">â†’</button>
+            <button id="chatbotSend">→</button>
         </div>
     </div>
 
@@ -1153,7 +1132,7 @@
                     return;
                 }
                 var btn = form.querySelector('.blog-newsletter__btn');
-                btn.textContent = 'âœ“ Iscritto!';
+                btn.textContent = '✓ Iscritto!';
                 btn.style.cssText = 'background:#4ecb71;color:#000';
                 form.querySelector('input').value = '';
                 setTimeout(function () { btn.textContent = 'Iscriviti'; btn.style.cssText = ''; }, 3500);
@@ -1186,7 +1165,7 @@
                 setTimeout(function () {
                     var reply = document.createElement('p');
                     reply.style.cssText = 'font-size:.82rem;margin:8px 0;color:rgba(255,255,255,.65)';
-                    reply.textContent = 'Grazie! Un membro del team Cabriolu ti risponderÃ  al piÃ¹ presto ðŸ«’';
+                    reply.textContent = 'Grazie! Un membro del team Cabriolu ti risponderà al più presto 🫒';
                     body.appendChild(reply);
                     body.scrollTop = body.scrollHeight;
                 }, 900);
@@ -1197,9 +1176,8 @@
             input.addEventListener('keydown', function (e) { if (e.key === 'Enter') sendMessage(); });
 
         })();
-
     </script>
-    <script src="/js/common.js"></script>
+
 </body>
 
 </html>
